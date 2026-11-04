@@ -6,7 +6,7 @@ so check back to github every so often if you can.
 
 Website for BOC TJ & CO. A place for you to share website info
 
-👀 Watch Site Being Built As Changes Happen: https://comingsoon/ 👀 
+👀 Watch Site Being Built As Changes Happen: https://geoffstengel.github.io/boc_TJ/ 👀 
 
 🗺️ Site Map: ✅ index.html Is Main Landing Page
 
@@ -17,7 +17,7 @@ Website for BOC TJ & CO. A place for you to share website info
 ✅ images_logo Folder has variations of your logo
 
 ✅ images_flyers Folder has flyers for events or sponsorships etc..
-💡 To Make The Site Yours Fully U Need The Code, 1. Download ZIP Folder From Green Code Button @ https://comingsoon, 2. Make A Repository On Github In Your Account (Create Account If U Dont Have) 3. Unzip & Extract Those Files & Folders From Step 1 & Upload to Github
+💡 To Make The Site Yours Fully U Need The Code, 1. Download ZIP Folder From Green Code Button @ https://github.com/GeoffStengel/boc_TJ, 2. Make A Repository On Github In Your Account (Create Account If U Dont Have) 3. Unzip & Extract Those Files & Folders From Step 1 & Upload to Github
 
 🗲 Make Site Live: 1. Create Github Pages To Make Site Live & Link Your Domain After 2. In Repo U Just Created Go To Settings & On Sidebar Click "Pages" 3. Select Deploy From Branch Choose "Master" Or "Main" & SAVE 🎉 4. Congratulations! (URL is Above give a sec or refresh browser)
 

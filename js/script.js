@@ -1,174 +1,206 @@
 
 "use strict";
 
-/* === PRODUCT CONFIGURATION START === */
+/* === SITE CONFIGURATION START === */
+
 const FLAVORS = [
   {
     id: "original",
     name: "Original",
     edition: "01 / ORIGINAL",
     title: "AWAKEN THE <em>POWER.</em>",
-    description: "The original Blood Of Christ design. A bold identity in a compact 40 mL bottle.",
+    description:
+      "The original Blood Of Christ design. A bold identity in a compact 40 mL bottle.",
     color: "#a52c45",
-    singleImage: "images/product_img_02_trans BKGD.png",
-    caseImage: "images/product_img_showing_display_02_trans_BKGD.png"
+    singleImage: "images/product_img_05_original.png",
+    caseImage:
+      "images/product_img_showing_display_02_trans_BKGD.png"
   },
   {
     id: "grape",
     name: "Grape Blast",
     edition: "02 / GRAPE BLAST",
     title: "UNLEASH THE <em>BLAST.</em>",
-    description: "Discover Grape Blast, featuring a distinctive purple and black design.",
+    description:
+      "Discover Grape Blast, featuring a distinctive purple and black design.",
     color: "#8c38cc",
     singleImage: "images/product_img_03_grape.png",
-    caseImage: "images/product_img_showing_display_03_trans_BKGD_grape.png"
+    caseImage:
+      "images/product_img_showing_display_03_trans_BKGD_grape.png"
   },
   {
     id: "tropical",
     name: "Tropical Rush",
     edition: "03 / TROPICAL RUSH",
     title: "FEEL THE <em>RUSH.</em>",
-    description: "Explore Tropical Rush, with vivid orange accents and tropical-inspired artwork.",
+    description:
+      "Explore Tropical Rush, with vivid orange accents and tropical-inspired artwork.",
     color: "#d97822",
     singleImage: "images/product_img_04_tropical_rush.png",
-    caseImage: "images/product_img_showing_display_04_trans_BKGD_tropical_rush.png"
+    caseImage:
+      "images/product_img_showing_display_04_trans_BKGD_tropical_rush.png"
   }
 ];
 
 const PRODUCTS = FLAVORS.flatMap(flavor => [
   {
     id: `${flavor.id}-single`,
+    flavorId: flavor.id,
     flavor: flavor.name,
     name: `${flavor.name} · Single Bottle`,
     type: "single",
     size: "1 × 40 mL",
     image: flavor.singleImage,
     color: flavor.color,
-    priceCents: null
+    priceCents: 329
   },
   {
     id: `${flavor.id}-case`,
+    flavorId: flavor.id,
     flavor: flavor.name,
     name: `${flavor.name} · 12 Pack`,
     type: "case",
     size: "12 × 40 mL",
     image: flavor.caseImage,
     color: flavor.color,
-    priceCents: null
+    priceCents: 3100
   }
 ]);
 
 const INGREDIENTS = [
   {
-    name: "Beta-Alanine",
-    summary: "An amino acid found in sports supplements.",
-    detail: "Beta-alanine is involved in muscle carnosine production. It may cause temporary tingling. Its individual amount is not disclosed."
-  },
-  {
-    name: "L-Citrulline Malate",
-    summary: "A compound commonly included in pre-workout formulas.",
-    detail: "Citrulline participates in pathways associated with nitric oxide production. The label lists a 2:1 malate ratio."
-  },
-  {
-    name: "GABA",
-    summary: "Gamma-aminobutyric acid, a naturally occurring neurotransmitter.",
-    detail: "GABA is involved in inhibitory signaling in the nervous system. The effects of oral supplementation may differ from its natural function."
-  },
-  {
     name: "Caffeine",
-    summary: "The label lists caffeine anhydrous and dicaffeine malate.",
-    detail: "Caffeine is a stimulant. It can affect alertness, heart rate, anxiety, and sleep. Total caffeine content is not disclosed."
-  },
-  {
-    name: "Theobromine",
-    summary: "A methylxanthine naturally found in cacao.",
-    detail: "Theobromine is chemically related to caffeine and has stimulant properties. Combined stimulant exposure warrants caution."
+    category: "STIMULANT",
+    description:
+      "A central nervous system stimulant commonly found in coffee, tea, and energy products.",
+    details:
+      "Caffeine may increase alertness, but it can also cause insomnia, anxiety, elevated heart rate, and other adverse effects. The supplied label does not disclose the caffeine amount per serving."
   },
   {
     name: "Yohimbine HCl",
-    summary: "A potent stimulant ingredient.",
-    detail: "Yohimbine has been associated with elevated blood pressure, rapid heartbeat, anxiety, and serious adverse events. Qualified safety review is essential."
+    category: "STIMULANT",
+    description:
+      "A pharmacologically active compound associated with adrenergic nervous system effects.",
+    details:
+      "Yohimbine can increase heart rate and blood pressure and may interact with medications. Its suitability for use in a dietary supplement depends on the applicable regulations and formulation."
   },
   {
-    name: "Rauwolfia Vomitoria",
-    summary: "A botanical extract listed as standardized for alpha-yohimbine.",
-    detail: "Alpha-yohimbine is a potent adrenergic compound. Its safety, interactions, and regulatory status require careful review."
+    name: "Rauwolfia Vomitoria Extract",
+    category: "BOTANICAL EXTRACT",
+    description:
+      "A botanical extract identified on the supplied label as standardized to alpha-yohimbine.",
+    details:
+      "Alpha-yohimbine is a potent adrenergic compound. Standardization does not establish that a finished product is safe, and the label does not disclose its individual amount."
   },
   {
-    name: "AMPiberry®",
-    summary: "A branded juniper berry ingredient listed on the label.",
-    detail: "The label identifies Juniperus communis berry. Supplier specifications and product claims should be verified."
+    name: "L-Tyrosine",
+    category: "AMINO ACID",
+    description:
+      "An amino acid involved in the body's production of several signaling molecules.",
+    details:
+      "L-tyrosine is a precursor to catecholamines and thyroid hormones. The amount in this proprietary blend is not individually disclosed."
   },
   {
-    name: "Ketones",
-    summary: "An ingredient category identified in the proprietary blend.",
-    detail: "The supplied label does not specify the exact ketone compound or its individual quantity."
+    name: "Taurine",
+    category: "AMINO SULFONIC ACID",
+    description:
+      "A naturally occurring compound involved in multiple physiological processes.",
+    details:
+      "Taurine is found in human tissues and is used in some energy products. Its inclusion alone does not establish a particular performance benefit."
+  },
+  {
+    name: "Theobromine",
+    category: "METHYLXANTHINE",
+    description:
+      "A naturally occurring compound found in cacao and related plants.",
+    details:
+      "Theobromine belongs to the same broad chemical family as caffeine. Its effects and interactions depend on dose and individual sensitivity."
   }
 ];
 
-const CART_STORAGE_KEY = "bloodOfChristCartV5";
-const REVIEW_STORAGE_KEY = "bloodOfChristReviewsV5";
-const MAX_CART_QUANTITY = 99;
-const $ = id => document.getElementById(id);
-/* === PRODUCT CONFIGURATION END === */
+const STORAGE_KEYS = {
+  cart: "boc-shopping-cart-v6",
+  reviews: "boc-demo-reviews-v6"
+};
 
-/* === SHARED UTILITIES START === */
-function createElement(tag, className = "", content) {
-  const node = document.createElement(tag);
-  if (className) node.className = className;
-  if (content !== undefined) node.textContent = content;
-  return node;
+const SLIDE_INTERVAL_MS = 6500;
+const SLIDE_FADE_MS = 350;
+const MAX_CART_QUANTITY = 99;
+const MAX_REVIEWS = 100;
+
+/* === SITE CONFIGURATION END === */
+
+
+/* === DOM HELPERS START === */
+
+function $(id) {
+  return document.getElementById(id);
 }
 
 function formatPrice(cents) {
-  if (cents === null) return "Price pending";
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD"
   }).format(cents / 100);
 }
 
-function safeReadStorage(key, fallback) {
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, character => {
+    const entities = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    };
+
+    return entities[character];
+  });
+}
+
+function readStoredJSON(key, fallback) {
   try {
-    const stored = localStorage.getItem(key);
-    return stored === null ? fallback : JSON.parse(stored);
-  } catch {
+    const rawValue = localStorage.getItem(key);
+
+    return rawValue === null
+      ? fallback
+      : JSON.parse(rawValue);
+  } catch (error) {
+    console.warn(`Unable to read ${key}:`, error);
     return fallback;
   }
 }
 
-function safeWriteStorage(key, value) {
+function saveStoredJSON(key, value) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
     return true;
-  } catch {
+  } catch (error) {
+    console.warn(`Unable to save ${key}:`, error);
     return false;
   }
 }
 
-function updateBodyLock() {
-  const isOpen = !$("cartDrawer").hidden || !$("labelModal").hidden;
-  document.body.classList.toggle("modal-open", isOpen);
+function getProduct(productId) {
+  return PRODUCTS.find(product => product.id === productId);
 }
 
-function trapDialogFocus(event, dialog) {
-  if (event.key !== "Tab") return;
+function lockPageScroll() {
+  document.body.classList.add("modal-open");
+}
 
-  const controls = [...dialog.querySelectorAll(
-    'button:not(:disabled), a[href], input:not(:disabled), textarea:not(:disabled)'
-  )].filter(node => !node.hidden);
+function unlockPageScroll() {
+  const hasOpenDialog = [
+    "cartDrawer",
+    "productModal",
+    "labelModal"
+  ].some(id => {
+    const element = $(id);
+    return element && !element.hidden;
+  });
 
-  if (!controls.length) return;
-
-  const first = controls[0];
-  const last = controls[controls.length - 1];
-
-  if (event.shiftKey && document.activeElement === first) {
-    event.preventDefault();
-    last.focus();
-  } else if (!event.shiftKey && document.activeElement === last) {
-    event.preventDefault();
-    first.focus();
+  if (!hasOpenDialog) {
+    document.body.classList.remove("modal-open");
   }
 }
 
@@ -176,586 +208,1192 @@ let toastTimeout;
 
 function showToast(message) {
   const toast = $("toast");
-  clearTimeout(toastTimeout);
+  if (!toast) return;
+
+  window.clearTimeout(toastTimeout);
+
   toast.textContent = message;
   toast.hidden = false;
 
-  toastTimeout = setTimeout(() => {
+  toastTimeout = window.setTimeout(() => {
     toast.hidden = true;
   }, 3000);
 }
-/* === SHARED UTILITIES END === */
 
-/* === HERO SLIDESHOW START === */
-let activeSlide = 0;
-let slideTimer = null;
-let imageChangeTimer = null;
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+/* === DOM HELPERS END === */
 
-function renderSlide(index) {
-  activeSlide = (index + FLAVORS.length) % FLAVORS.length;
-  const flavor = FLAVORS[activeSlide];
 
-  $("heroEdition").textContent = flavor.edition;
-  // Safe: all markup comes from our own static FLAVORS array.
-  $("heroTitle").innerHTML = flavor.title;
-  $("heroDescription").textContent = flavor.description;
-  $("heroShopLink").href = "#shop";
+/* === MOBILE NAVIGATION START === */
 
-  const image = $("heroProductImage");
-  image.classList.add("changing");
-  clearTimeout(imageChangeTimer);
+function closeMobileMenu() {
+  const navigation = $("navLinks");
+  const toggle = $("menuToggle");
 
-  const changeImage = () => {
-    image.src = flavor.singleImage;
-    image.alt = `Blood Of Christ ${flavor.name} 40 mL bottle`;
-    image.classList.remove("changing");
-  };
+  if (!navigation || !toggle) return;
 
-  if (reduceMotion.matches) {
-    changeImage();
-  } else {
-    imageChangeTimer = setTimeout(changeImage, 180);
-  }
+  navigation.classList.remove("open");
+  toggle.setAttribute("aria-expanded", "false");
+  toggle.setAttribute("aria-label", "Open menu");
+}
 
-  $("heroGlow").style.background =
-    `radial-gradient(circle at 73% 45%, ${flavor.color}55, transparent 55%)`;
+function initializeNavigation() {
+  const toggle = $("menuToggle");
+  const navigation = $("navLinks");
 
-  document.querySelectorAll(".slide-indicators button").forEach((button, i) => {
-    const selected = i === activeSlide;
-    button.classList.toggle("active", selected);
-    button.setAttribute("aria-pressed", String(selected));
+  if (!toggle || !navigation) return;
+
+  toggle.addEventListener("click", () => {
+    const isOpen = navigation.classList.toggle("open");
+
+    toggle.setAttribute("aria-expanded", String(isOpen));
+    toggle.setAttribute(
+      "aria-label",
+      isOpen ? "Close menu" : "Open menu"
+    );
+  });
+
+  navigation.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", closeMobileMenu);
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 1000) {
+      closeMobileMenu();
+    }
   });
 }
 
-function stopSlideshow() {
-  if (slideTimer !== null) clearInterval(slideTimer);
+/* === MOBILE NAVIGATION END === */
+
+
+/* === HERO SLIDESHOW START === */
+
+let activeSlide = 0;
+let slideTimer = null;
+let slideTransitionTimer = null;
+let slideRequestId = 0;
+let slidePausedUntil = 0;
+
+const heroImageCache = new Map();
+
+function preloadHeroImage(imagePath) {
+  if (heroImageCache.has(imagePath)) {
+    return heroImageCache.get(imagePath);
+  }
+
+  const imagePromise = new Promise((resolve, reject) => {
+    const image = new Image();
+
+    image.onload = () => resolve(imagePath);
+    image.onerror = () => {
+      reject(new Error(`Could not load image: ${imagePath}`));
+    };
+
+    image.src = imagePath;
+
+    if (image.complete && image.naturalWidth > 0) {
+      resolve(imagePath);
+    }
+  });
+
+  heroImageCache.set(imagePath, imagePromise);
+
+  imagePromise.catch(() => {
+    heroImageCache.delete(imagePath);
+  });
+
+  return imagePromise;
+}
+
+function updateSlideIndicators() {
+  const indicators = $("slideIndicators");
+  if (!indicators) return;
+
+  indicators.querySelectorAll("button").forEach((button, index) => {
+    const isActive = index === activeSlide;
+
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+    button.setAttribute(
+      "aria-label",
+      `${FLAVORS[index].name}${isActive ? ", selected" : ""}`
+    );
+  });
+}
+
+function updateHeroContent(flavor) {
+  const edition = $("heroEdition");
+  const title = $("heroTitle");
+  const description = $("heroDescription");
+  const glow = $("heroGlow");
+  const productLink = $("heroProductLink");
+  const shopLink = $("heroShopLink");
+
+  if (edition) edition.textContent = flavor.edition;
+
+  // Titles come exclusively from the trusted FLAVORS configuration.
+  if (title) title.innerHTML = flavor.title;
+
+  if (description) {
+    description.textContent = flavor.description;
+  }
+
+  if (glow) {
+    glow.style.background = `
+      radial-gradient(
+        circle at 73% 45%,
+        ${flavor.color}55,
+        transparent 58%
+      )
+    `;
+  }
+
+  if (productLink) {
+    productLink.setAttribute(
+      "aria-label",
+      `Shop ${flavor.name} products`
+    );
+
+    productLink.dataset.flavor = flavor.id;
+  }
+
+  if (shopLink) {
+    shopLink.dataset.flavor = flavor.id;
+  }
+}
+
+async function renderSlide(index, { immediate = false } = {}) {
+  const image = $("heroProductImage");
+  if (!image) return;
+
+  const normalizedIndex =
+    (index + FLAVORS.length) % FLAVORS.length;
+
+  const flavor = FLAVORS[normalizedIndex];
+  const requestId = ++slideRequestId;
+
+  try {
+    await preloadHeroImage(flavor.singleImage);
+  } catch (error) {
+    console.error(error);
+    showToast(`Unable to load ${flavor.name} image.`);
+    return;
+  }
+
+  // Ignore older requests if the visitor changed slides quickly.
+  if (requestId !== slideRequestId) return;
+
+  window.clearTimeout(slideTransitionTimer);
+
+  if (!immediate) {
+    image.classList.add("changing");
+
+    await new Promise(resolve => {
+      slideTransitionTimer = window.setTimeout(
+        resolve,
+        SLIDE_FADE_MS
+      );
+    });
+  }
+
+  if (requestId !== slideRequestId) return;
+
+  activeSlide = normalizedIndex;
+
+  image.src = flavor.singleImage;
+  image.alt = `Blood Of Christ ${flavor.name} 40 mL bottle`;
+  image.dataset.flavor = flavor.id;
+
+  updateHeroContent(flavor);
+  updateSlideIndicators();
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      if (requestId === slideRequestId) {
+        image.classList.remove("changing");
+      }
+    });
+  });
+
+  // Preload the next flavor for smoother automatic rotation.
+  const nextFlavor =
+    FLAVORS[(activeSlide + 1) % FLAVORS.length];
+
+  preloadHeroImage(nextFlavor.singleImage).catch(() => {});
+}
+
+function stopSlideTimer() {
+  window.clearInterval(slideTimer);
   slideTimer = null;
 }
 
-function startSlideshow() {
-  stopSlideshow();
+function startSlideTimer() {
+  stopSlideTimer();
 
-  if (reduceMotion.matches || document.hidden) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return;
+  }
 
-  slideTimer = setInterval(() => {
+  slideTimer = window.setInterval(() => {
+    if (document.hidden) return;
+    if (Date.now() < slidePausedUntil) return;
+
     renderSlide(activeSlide + 1);
-  }, 6500);
+  }, SLIDE_INTERVAL_MS);
 }
 
-function selectSlide(index) {
+function selectSlide(index, { userInitiated = false } = {}) {
+  if (userInitiated) {
+    slidePausedUntil = Date.now() + 12000;
+  }
+
   renderSlide(index);
-  startSlideshow();
 }
 
-function initializeSlideshow() {
-  FLAVORS.forEach((flavor, index) => {
-    const button = createElement("button");
-    button.type = "button";
-    button.setAttribute("aria-label", `Show ${flavor.name}`);
-    button.setAttribute("aria-pressed", "false");
-    button.addEventListener("click", () => selectSlide(index));
-    $("slideIndicators").append(button);
+function initializeHeroSlideshow() {
+  const indicators = $("slideIndicators");
+  const previousButton = $("previousSlide");
+  const nextButton = $("nextSlide");
+  const heroProduct = $("heroProduct");
+  const heroLink = $("heroProductLink");
+
+  if (indicators) {
+    indicators.innerHTML = "";
+
+    FLAVORS.forEach((flavor, index) => {
+      const button = document.createElement("button");
+
+      button.type = "button";
+      button.setAttribute(
+        "aria-label",
+        `Show ${flavor.name}`
+      );
+
+      button.addEventListener("click", () => {
+        selectSlide(index, { userInitiated: true });
+      });
+
+      indicators.appendChild(button);
+    });
+  }
+
+  previousButton?.addEventListener("click", () => {
+    selectSlide(activeSlide - 1, { userInitiated: true });
   });
 
-  $("previousSlide").addEventListener("click", () => selectSlide(activeSlide - 1));
-  $("nextSlide").addEventListener("click", () => selectSlide(activeSlide + 1));
-
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) stopSlideshow();
-    else startSlideshow();
+  nextButton?.addEventListener("click", () => {
+    selectSlide(activeSlide + 1, { userInitiated: true });
   });
 
-  reduceMotion.addEventListener?.("change", startSlideshow);
+  let touchStartX = 0;
+  let touchStartY = 0;
 
-  renderSlide(0);
-  startSlideshow();
-}
-/* === HERO SLIDESHOW END === */
+  const swipeTarget =
+    heroLink?.closest(".hero-product") || heroProduct;
 
-/* === PRODUCT SHOP START === */
-let activeFilter = "all";
-
-function createProductCard(product) {
-  const card = createElement("article", "product-card reveal");
-  const imageWrap = createElement("div", "product-image-wrap");
-  imageWrap.style.setProperty("--product-glow", `${product.color}66`);
-
-  const badge = createElement(
-    "span", "product-badge",
-    product.type === "case" ? "12 PACK" : "40 ML"
+  swipeTarget?.addEventListener(
+    "touchstart",
+    event => {
+      const touch = event.changedTouches[0];
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+    },
+    { passive: true }
   );
 
-  const image = createElement("img");
-  image.src = product.image;
-  image.alt = `Blood Of Christ ${product.name}`;
-  image.loading = "lazy";
-  image.decoding = "async";
+  swipeTarget?.addEventListener(
+    "touchend",
+    event => {
+      const touch = event.changedTouches[0];
+      const differenceX = touch.clientX - touchStartX;
+      const differenceY = touch.clientY - touchStartY;
 
-  imageWrap.append(badge, image);
+      if (
+        Math.abs(differenceX) < 45 ||
+        Math.abs(differenceX) < Math.abs(differenceY)
+      ) {
+        return;
+      }
 
-  const details = createElement("div", "product-details");
-  const heading = createElement("h3", "", product.name);
-  const description = createElement("p", "", product.size);
-  const price = createElement("span", "product-price", formatPrice(product.priceCents));
+      selectSlide(
+        activeSlide + (differenceX < 0 ? 1 : -1),
+        { userInitiated: true }
+      );
+    },
+    { passive: true }
+  );
 
-  const addButton = createElement("button", "button button-primary", "ADD TO BAG +");
-  addButton.type = "button";
-  addButton.addEventListener("click", () => {
-    changeCartQuantity(product.id, 1);
-    openCart();
+  heroLink?.addEventListener("click", event => {
+    const selectedFlavor = FLAVORS[activeSlide];
+
+    if (!selectedFlavor) return;
+
+    event.preventDefault();
+    filterProducts("all");
+
+    const targetCard = document.querySelector(
+      `[data-product-id="${selectedFlavor.id}-single"]`
+    );
+
+    $("shop")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+
+    if (targetCard) {
+      targetCard.classList.add("highlighted-product");
+
+      window.setTimeout(() => {
+        targetCard.classList.remove("highlighted-product");
+      }, 1500);
+    }
   });
 
-  details.append(heading, description, price, addButton);
-  card.append(imageWrap, details);
+  renderSlide(0, { immediate: true });
+  startSlideTimer();
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      stopSlideTimer();
+    } else {
+      startSlideTimer();
+    }
+  });
+}
+
+/* === HERO SLIDESHOW END === */
+
+
+/* === PRODUCT COLLECTION START === */
+
+let activeProductFilter = "all";
+let selectedPreviewProductId = null;
+
+function getProductGlow(color) {
+  return `${color}33`;
+}
+
+function renderProductCard(product) {
+  const card = document.createElement("article");
+
+  card.className = "product-card reveal visible";
+  card.dataset.productId = product.id;
+  card.dataset.productType = product.type;
+  card.style.setProperty(
+    "--product-glow",
+    getProductGlow(product.color)
+  );
+
+  const badge =
+    product.type === "case" ? "12-PACK" : "40 mL SINGLE";
+
+  card.innerHTML = `
+    <div class="product-image-wrap">
+      <span class="product-badge">${badge}</span>
+
+      <button
+        type="button"
+        class="product-image-button"
+        data-preview-product="${escapeHTML(product.id)}"
+        aria-label="View ${escapeHTML(product.name)}"
+      >
+        <img
+          src="${escapeHTML(product.image)}"
+          alt="${escapeHTML(product.name)}"
+          loading="lazy"
+        >
+      </button>
+    </div>
+
+    <div class="product-details">
+      <h3>${escapeHTML(product.name)}</h3>
+      <p>${escapeHTML(product.size)}</p>
+
+      <strong class="product-price">
+        ${formatPrice(product.priceCents)}
+      </strong>
+
+      <button
+        type="button"
+        class="button button-primary"
+        data-add-product="${escapeHTML(product.id)}"
+      >
+        ADD TO BAG +
+      </button>
+    </div>
+  `;
+
   return card;
 }
 
 function renderProducts() {
   const grid = $("productGrid");
-  grid.replaceChildren();
+  if (!grid) return;
 
-  PRODUCTS.filter(product =>
-    activeFilter === "all" || product.type === activeFilter
-  ).forEach(product => {
-    grid.append(createProductCard(product));
+  const visibleProducts = PRODUCTS.filter(product => {
+    return (
+      activeProductFilter === "all" ||
+      product.type === activeProductFilter
+    );
   });
 
-  observeReveals(grid.querySelectorAll(".reveal"));
+  const fragment = document.createDocumentFragment();
+
+  visibleProducts.forEach(product => {
+    fragment.appendChild(renderProductCard(product));
+  });
+
+  grid.replaceChildren(fragment);
 }
 
-function initializeShopFilters() {
-  document.querySelectorAll("[data-filter]").forEach(button => {
-    button.addEventListener("click", () => {
-      activeFilter = button.dataset.filter;
+function filterProducts(filter) {
+  if (!["all", "single", "case"].includes(filter)) return;
 
-      document.querySelectorAll("[data-filter]").forEach(tab => {
-        const selected = tab === button;
-        tab.classList.toggle("active", selected);
-        tab.setAttribute("aria-pressed", String(selected));
-      });
+  activeProductFilter = filter;
 
-      renderProducts();
+  $("shopTabs")
+    ?.querySelectorAll("[data-filter]")
+    .forEach(button => {
+      const isActive = button.dataset.filter === filter;
+
+      button.classList.toggle("active", isActive);
+      button.setAttribute("aria-pressed", String(isActive));
     });
-  });
+
+  renderProducts();
 }
-/* === PRODUCT SHOP END === */
 
-/* === SHOPPING CART START === */
-function loadCart() {
-  const stored = safeReadStorage(CART_STORAGE_KEY, {});
-  if (!stored || typeof stored !== "object" || Array.isArray(stored)) return {};
+function openProductPreview(productId) {
+  const product = getProduct(productId);
+  const modal = $("productModal");
 
-  const valid = {};
+  if (!product || !modal) return;
 
-  PRODUCTS.forEach(product => {
-    const quantity = stored[product.id];
-    if (Number.isInteger(quantity) && quantity > 0) {
-      valid[product.id] = Math.min(quantity, MAX_CART_QUANTITY);
+  selectedPreviewProductId = product.id;
+
+  $("productModalImage").src = product.image;
+  $("productModalImage").alt = product.name;
+  $("productModalTitle").textContent = product.name;
+  $("productModalSize").textContent = product.size;
+  $("productModalPrice").textContent =
+    formatPrice(product.priceCents);
+
+  modal.hidden = false;
+  lockPageScroll();
+
+  $("closeProductModal")?.focus();
+}
+
+function closeProductPreview() {
+  const modal = $("productModal");
+  if (!modal || modal.hidden) return;
+
+  modal.hidden = true;
+  selectedPreviewProductId = null;
+
+  unlockPageScroll();
+}
+
+function initializeProductCollection() {
+  renderProducts();
+
+  $("shopTabs")?.addEventListener("click", event => {
+    const button = event.target.closest("[data-filter]");
+    if (!button) return;
+
+    filterProducts(button.dataset.filter);
+  });
+
+  $("productGrid")?.addEventListener("click", event => {
+    const previewButton =
+      event.target.closest("[data-preview-product]");
+
+    if (previewButton) {
+      openProductPreview(previewButton.dataset.previewProduct);
+      return;
+    }
+
+    const addButton =
+      event.target.closest("[data-add-product]");
+
+    if (addButton) {
+      addToCart(addButton.dataset.addProduct);
     }
   });
 
-  return valid;
+  $("closeProductModal")?.addEventListener(
+    "click",
+    closeProductPreview
+  );
+
+  $("productModal")?.addEventListener("click", event => {
+    if (event.target === $("productModal")) {
+      closeProductPreview();
+    }
+  });
+
+  $("productModalAdd")?.addEventListener("click", () => {
+    if (!selectedPreviewProductId) return;
+
+    addToCart(selectedPreviewProductId);
+    closeProductPreview();
+  });
+}
+
+/* === PRODUCT COLLECTION END === */
+
+
+/* === SHOPPING CART START === */
+
+function loadCart() {
+  const storedCart = readStoredJSON(STORAGE_KEYS.cart, {});
+
+  if (
+    !storedCart ||
+    typeof storedCart !== "object" ||
+    Array.isArray(storedCart)
+  ) {
+    return {};
+  }
+
+  const validCart = {};
+
+  for (const [productId, quantity] of Object.entries(storedCart)) {
+    if (!getProduct(productId)) continue;
+    if (!Number.isInteger(quantity)) continue;
+    if (quantity <= 0) continue;
+
+    validCart[productId] = Math.min(
+      quantity,
+      MAX_CART_QUANTITY
+    );
+  }
+
+  return validCart;
 }
 
 let cart = loadCart();
-let previousCartFocus = null;
 
-function changeCartQuantity(productId, difference) {
-  const product = PRODUCTS.find(item => item.id === productId);
-  if (!product) return;
-
-  const next = Math.max(
-    0,
-    Math.min(MAX_CART_QUANTITY, (cart[productId] || 0) + difference)
-  );
-
-  if (next === 0) delete cart[productId];
-  else cart[productId] = next;
-
-  if (!safeWriteStorage(CART_STORAGE_KEY, cart)) {
-    showToast("Cart storage is unavailable in this browser.");
-  }
-
-  renderCart();
+function saveCart() {
+  saveStoredJSON(STORAGE_KEYS.cart, cart);
 }
 
-function createCartItem(product, quantity) {
-  const item = createElement("article", "cart-item");
+function getCartCount() {
+  return Object.values(cart).reduce(
+    (total, quantity) => total + quantity,
+    0
+  );
+}
 
-  const image = createElement("img");
-  image.src = product.image;
-  image.alt = product.name;
+function getCartSubtotalCents() {
+  return Object.entries(cart).reduce(
+    (total, [productId, quantity]) => {
+      const product = getProduct(productId);
 
-  const details = createElement("div");
-  details.append(
-    createElement("h3", "", product.name),
-    createElement("p", "", `${quantity} × ${formatPrice(product.priceCents)}`)
+      return product
+        ? total + product.priceCents * quantity
+        : total;
+    },
+    0
+  );
+}
+
+function addToCart(productId) {
+  const product = getProduct(productId);
+  if (!product) return;
+
+  const currentQuantity = cart[productId] || 0;
+
+  if (currentQuantity >= MAX_CART_QUANTITY) {
+    showToast("Maximum quantity reached.");
+    return;
+  }
+
+  cart[productId] = currentQuantity + 1;
+
+  saveCart();
+  renderCart();
+
+  showToast(`${product.name} added to your bag.`);
+}
+
+function updateCartQuantity(productId, difference) {
+  if (!getProduct(productId)) return;
+
+  const currentQuantity = cart[productId] || 0;
+
+  const nextQuantity = Math.max(
+    0,
+    Math.min(MAX_CART_QUANTITY, currentQuantity + difference)
   );
 
-  const controls = createElement("div", "quantity-controls");
-  const decrease = createElement("button", "", "−");
-  const increase = createElement("button", "", "+");
+  if (nextQuantity === 0) {
+    delete cart[productId];
+  } else {
+    cart[productId] = nextQuantity;
+  }
 
-  decrease.type = increase.type = "button";
-  decrease.setAttribute("aria-label", `Remove one ${product.name}`);
-  increase.setAttribute("aria-label", `Add one ${product.name}`);
-
-  decrease.addEventListener("click", () => changeCartQuantity(product.id, -1));
-  increase.addEventListener("click", () => changeCartQuantity(product.id, 1));
-
-  controls.append(decrease, createElement("span", "", String(quantity)), increase);
-  details.append(controls);
-  item.append(image, details);
-
-  return item;
+  saveCart();
+  renderCart();
 }
 
 function renderCart() {
+  const cartCount = $("cartCount");
   const cartItems = $("cartItems");
-  cartItems.replaceChildren();
+  const cartSubtotal = $("cartSubtotal");
 
-  let count = 0;
-  let totalCents = 0;
-  let hasPendingPrices = false;
-
-  PRODUCTS.forEach(product => {
-    const quantity = cart[product.id] || 0;
-    if (!quantity) return;
-
-    count += quantity;
-
-    if (product.priceCents === null) hasPendingPrices = true;
-    else totalCents += product.priceCents * quantity;
-
-    cartItems.append(createCartItem(product, quantity));
-  });
-
-  if (!count) {
-    cartItems.append(createElement("p", "empty-cart", "Your shopping bag is empty."));
+  if (cartCount) {
+    cartCount.textContent = String(getCartCount());
   }
 
-  $("cartCount").textContent = String(count);
-  $("cartSubtotal").textContent =
-    hasPendingPrices ? "PENDING" : formatPrice(totalCents);
+  if (cartSubtotal) {
+    cartSubtotal.textContent =
+      formatPrice(getCartSubtotalCents());
+  }
+
+  if (!cartItems) return;
+
+  const entries = Object.entries(cart);
+
+  if (entries.length === 0) {
+    cartItems.innerHTML = `
+      <div class="empty-cart">
+        <p>Your bag is empty.</p>
+        <p>Explore the collection and find your flavor.</p>
+      </div>
+    `;
+    return;
+  }
+
+  cartItems.innerHTML = entries.map(([productId, quantity]) => {
+    const product = getProduct(productId);
+    if (!product) return "";
+
+    return `
+      <div class="cart-item">
+        <img
+          src="${escapeHTML(product.image)}"
+          alt="${escapeHTML(product.name)}"
+        >
+
+        <div>
+          <h3>${escapeHTML(product.name)}</h3>
+          <p>${escapeHTML(product.size)}</p>
+
+          <strong>
+            ${formatPrice(product.priceCents * quantity)}
+          </strong>
+
+          <div class="quantity-controls">
+            <button
+              type="button"
+              data-cart-change="-1"
+              data-cart-product="${escapeHTML(product.id)}"
+              aria-label="Remove one ${escapeHTML(product.name)}"
+            >−</button>
+
+            <span>${quantity}</span>
+
+            <button
+              type="button"
+              data-cart-change="1"
+              data-cart-product="${escapeHTML(product.id)}"
+              aria-label="Add one ${escapeHTML(product.name)}"
+            >+</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
 }
 
 function openCart() {
-  previousCartFocus = document.activeElement;
-  $("cartOverlay").hidden = false;
-  $("cartDrawer").hidden = false;
-  updateBodyLock();
-  $("closeCart").focus();
+  const drawer = $("cartDrawer");
+  const overlay = $("cartOverlay");
+
+  if (!drawer || !overlay) return;
+
+  closeProductPreview();
+  closeLabelViewer();
+
+  drawer.hidden = false;
+  overlay.hidden = false;
+
+  lockPageScroll();
+  renderCart();
+
+  $("closeCart")?.focus();
 }
 
 function closeCart() {
-  $("cartOverlay").hidden = true;
-  $("cartDrawer").hidden = true;
-  updateBodyLock();
-  previousCartFocus?.focus?.();
+  const drawer = $("cartDrawer");
+  const overlay = $("cartOverlay");
+
+  if (drawer) drawer.hidden = true;
+  if (overlay) overlay.hidden = true;
+
+  unlockPageScroll();
 }
 
 function initializeCart() {
-  $("cartTrigger").addEventListener("click", openCart);
-  $("closeCart").addEventListener("click", closeCart);
-  $("cartOverlay").addEventListener("click", closeCart);
-  $("continueShopping").addEventListener("click", closeCart);
   renderCart();
+
+  $("cartTrigger")?.addEventListener("click", openCart);
+  $("closeCart")?.addEventListener("click", closeCart);
+  $("cartOverlay")?.addEventListener("click", closeCart);
+  $("continueShopping")?.addEventListener("click", closeCart);
+
+  $("cartItems")?.addEventListener("click", event => {
+    const button =
+      event.target.closest("[data-cart-change]");
+
+    if (!button) return;
+
+    const difference = Number(button.dataset.cartChange);
+    const productId = button.dataset.cartProduct;
+
+    if (difference !== 1 && difference !== -1) return;
+
+    updateCartQuantity(productId, difference);
+  });
 }
+
 /* === SHOPPING CART END === */
 
+
 /* === INGREDIENT EXPLORER START === */
-function initializeIngredients() {
+
+function renderIngredients() {
   const grid = $("ingredientGrid");
+  if (!grid) return;
 
-  INGREDIENTS.forEach((ingredient, index) => {
-    const card = createElement("article", "ingredient-card reveal");
-    const number = createElement(
-      "span", "", String(index + 1).padStart(2, "0")
-    );
-    const heading = createElement("h3", "", ingredient.name);
-    const summary = createElement("p", "", ingredient.summary);
+  grid.innerHTML = INGREDIENTS.map((ingredient, index) => `
+    <article class="ingredient-card reveal visible">
+      <span>
+        ${String(index + 1).padStart(2, "0")}
+        / ${escapeHTML(ingredient.category)}
+      </span>
 
-    const details = createElement("details");
-    const toggle = createElement("summary", "", "LEARN MORE +");
-    const explanation = createElement("p", "", ingredient.detail);
+      <h3>${escapeHTML(ingredient.name)}</h3>
 
-    details.append(toggle, explanation);
-    card.append(number, heading, summary, details);
-    grid.append(card);
-  });
+      <p>${escapeHTML(ingredient.description)}</p>
 
-  observeReveals(grid.querySelectorAll(".reveal"));
+      <details>
+        <summary>LEARN MORE +</summary>
+        <p>${escapeHTML(ingredient.details)}</p>
+      </details>
+    </article>
+  `).join("");
 }
+
 /* === INGREDIENT EXPLORER END === */
 
+
 /* === LABEL VIEWER START === */
+
 let labelZoom = 1;
-let previousLabelFocus = null;
 
-function updateLabelZoom() {
-  $("modalLabelImage").style.width = `${labelZoom * 100}%`;
+function applyLabelZoom() {
+  const image = $("modalLabelImage");
+  if (!image) return;
+
+  image.style.width = `${labelZoom * 100}%`;
 }
 
-function openLabel() {
-  previousLabelFocus = document.activeElement;
+function openLabelViewer() {
+  const modal = $("labelModal");
+  if (!modal) return;
+
+  closeProductPreview();
+  closeCart();
+
   labelZoom = 1;
-  updateLabelZoom();
+  applyLabelZoom();
 
-  $("labelModal").hidden = false;
-  $("labelViewport").scrollTo(0, 0);
-  updateBodyLock();
-  $("closeLabel").focus();
+  modal.hidden = false;
+  lockPageScroll();
+
+  $("closeLabel")?.focus();
 }
 
-function closeLabel() {
-  $("labelModal").hidden = true;
-  updateBodyLock();
-  previousLabelFocus?.focus?.();
+function closeLabelViewer() {
+  const modal = $("labelModal");
+  if (!modal || modal.hidden) return;
+
+  modal.hidden = true;
+  unlockPageScroll();
+}
+
+function changeLabelZoom(amount) {
+  labelZoom = Math.max(
+    1,
+    Math.min(4, Math.round((labelZoom + amount) * 10) / 10)
+  );
+
+  applyLabelZoom();
 }
 
 function initializeLabelViewer() {
-  $("labelPreview").addEventListener("click", openLabel);
-  $("openLabelButton").addEventListener("click", openLabel);
-  $("closeLabel").addEventListener("click", closeLabel);
+  $("openLabelButton")?.addEventListener(
+    "click",
+    openLabelViewer
+  );
 
-  $("zoomIn").addEventListener("click", () => {
-    labelZoom = Math.min(5, labelZoom + .5);
-    updateLabelZoom();
+  $("labelPreview")?.addEventListener(
+    "click",
+    openLabelViewer
+  );
+
+  $("closeLabel")?.addEventListener(
+    "click",
+    closeLabelViewer
+  );
+
+  $("zoomIn")?.addEventListener("click", () => {
+    changeLabelZoom(.25);
   });
 
-  $("zoomOut").addEventListener("click", () => {
-    labelZoom = Math.max(1, labelZoom - .5);
-    updateLabelZoom();
+  $("zoomOut")?.addEventListener("click", () => {
+    changeLabelZoom(-.25);
   });
 
-  const previewImage = $("labelPreview").querySelector("img");
-
-  previewImage.addEventListener("error", () => {
-    $("labelPreview").disabled = true;
-    $("openLabelButton").disabled = true;
-    showToast("Product label image could not be loaded.");
+  $("labelModal")?.addEventListener("click", event => {
+    if (event.target === $("labelModal")) {
+      closeLabelViewer();
+    }
   });
 }
+
 /* === LABEL VIEWER END === */
 
-/* === CUSTOMER REVIEWS START === */
-/*
-  DEMO MODE:
-  Reviews persist in localStorage on the current browser only.
-  They are not shared publicly or verified purchases.
-  A moderated backend is required before launching public reviews.
-*/
 
-function loadReviews() {
-  const stored = safeReadStorage(REVIEW_STORAGE_KEY, []);
-  if (!Array.isArray(stored)) return [];
+/* === DEMO REVIEWS START === */
 
-  return stored.filter(review =>
+function isValidReview(review) {
+  return (
     review &&
+    typeof review === "object" &&
+    typeof review.id === "string" &&
     typeof review.name === "string" &&
-    typeof review.text === "string" &&
+    review.name.trim().length > 0 &&
+    review.name.length <= 60 &&
     typeof review.flavor === "string" &&
+    FLAVORS.some(flavor => flavor.name === review.flavor) &&
     Number.isInteger(review.rating) &&
     review.rating >= 1 &&
-    review.rating <= 5
-  ).slice(0, 100);
+    review.rating <= 5 &&
+    typeof review.text === "string" &&
+    review.text.length >= 10 &&
+    review.text.length <= 1000 &&
+    typeof review.createdAt === "string"
+  );
+}
+
+function loadReviews() {
+  const storedReviews = readStoredJSON(STORAGE_KEYS.reviews, []);
+
+  if (!Array.isArray(storedReviews)) return [];
+
+  return storedReviews
+    .filter(isValidReview)
+    .slice(0, MAX_REVIEWS);
 }
 
 let reviews = loadReviews();
 let selectedRating = 0;
 
-function selectRating(rating) {
-  selectedRating = rating;
+function getStarString(rating) {
+  const filled = Math.max(
+    0,
+    Math.min(5, Math.round(rating))
+  );
 
-  document.querySelectorAll("[data-rating]").forEach(button => {
-    const value = Number(button.dataset.rating);
-    button.classList.toggle("selected", value <= rating);
-    button.setAttribute("aria-pressed", String(value === rating));
-  });
+  return "★".repeat(filled) + "☆".repeat(5 - filled);
 }
 
-function createReviewCard(review) {
-  const card = createElement("article", "review-card");
-  const name = createElement("h3", "", review.name);
-  const flavor = createElement("span", "review-flavor", review.flavor.toUpperCase());
-  const stars = createElement(
-    "div", "rating-stars",
-    "★".repeat(review.rating) + "☆".repeat(5 - review.rating)
-  );
-  stars.setAttribute("aria-label", `${review.rating} out of 5 stars`);
+function renderStarPicker() {
+  $("starPicker")
+    ?.querySelectorAll("[data-rating]")
+    .forEach(button => {
+      const rating = Number(button.dataset.rating);
+      const isSelected = rating <= selectedRating;
 
-  const text = createElement("p", "", review.text);
-  card.append(name, flavor, stars, text);
-  return card;
+      button.classList.toggle("selected", isSelected);
+      button.setAttribute(
+        "aria-pressed",
+        String(rating === selectedRating)
+      );
+    });
 }
 
 function renderReviews() {
   const list = $("reviewList");
-  list.replaceChildren();
+  const count = $("reviewCount");
+  const average = $("averageRating");
+  const stars = $("averageStars");
 
-  const count = reviews.length;
-  const average = count
-    ? reviews.reduce((sum, review) => sum + review.rating, 0) / count
+  const totalReviews = reviews.length;
+
+  const averageRating = totalReviews
+    ? reviews.reduce(
+        (sum, review) => sum + review.rating,
+        0
+      ) / totalReviews
     : 0;
 
-  $("averageRating").textContent = count ? average.toFixed(1) : "—";
-  $("averageStars").textContent = count
-    ? "★".repeat(Math.round(average)) + "☆".repeat(5 - Math.round(average))
-    : "☆☆☆☆☆";
+  if (average) {
+    average.textContent = totalReviews
+      ? averageRating.toFixed(1)
+      : "—";
+  }
 
-  $("reviewCount").textContent =
-    count === 1 ? "1 local demo review" : `${count} local demo reviews`;
+  if (stars) {
+    stars.textContent = getStarString(averageRating);
+  }
 
-  if (!count) {
-    const empty = createElement("div", "review-card");
-    empty.append(
-      createElement("h3", "", "NO REVIEWS YET"),
-      createElement("p", "", "This preview has no reviews saved in this browser.")
-    );
-    list.append(empty);
+  if (count) {
+    count.textContent = totalReviews === 0
+      ? "No reviews yet"
+      : `${totalReviews} review${totalReviews === 1 ? "" : "s"}`;
+  }
+
+  if (!list) return;
+
+  if (totalReviews === 0) {
+    list.innerHTML = `
+      <div class="review-card">
+        <h3>NO REVIEWS YET</h3>
+        <p>
+          Be the first to share your experience.
+          Reviews submitted here are saved in this browser only.
+        </p>
+      </div>
+    `;
     return;
   }
 
-  reviews.forEach(review => list.append(createReviewCard(review)));
+  list.innerHTML = reviews.map(review => {
+    const date = new Date(review.createdAt);
+
+    const displayDate = Number.isNaN(date.getTime())
+      ? ""
+      : date.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric"
+        });
+
+    return `
+      <article class="review-card">
+        <h3>${escapeHTML(review.name)}</h3>
+
+        <span class="review-flavor">
+          ${escapeHTML(review.flavor)}
+          ${displayDate ? ` · ${escapeHTML(displayDate)}` : ""}
+        </span>
+
+        <div
+          class="rating-stars"
+          aria-label="${review.rating} out of 5 stars"
+        >
+          ${getStarString(review.rating)}
+        </div>
+
+        <p>${escapeHTML(review.text)}</p>
+      </article>
+    `;
+  }).join("");
+}
+
+function setReviewStatus(message) {
+  const status = $("reviewStatus");
+
+  if (status) {
+    status.textContent = message;
+  }
 }
 
 function initializeReviews() {
-  document.querySelectorAll("[data-rating]").forEach(button => {
-    button.setAttribute("aria-pressed", "false");
-    button.addEventListener("click", () => {
-      selectRating(Number(button.dataset.rating));
-    });
+  renderReviews();
+  renderStarPicker();
+
+  $("starPicker")?.addEventListener("click", event => {
+    const button = event.target.closest("[data-rating]");
+    if (!button) return;
+
+    selectedRating = Number(button.dataset.rating);
+    renderStarPicker();
   });
 
-  $("reviewForm").addEventListener("submit", event => {
+  $("reviewForm")?.addEventListener("submit", event => {
     event.preventDefault();
 
-    if (!$("reviewForm").reportValidity()) return;
+    const form = event.currentTarget;
 
-    if (!selectedRating) {
-      $("reviewStatus").textContent = "Please select a star rating.";
+    const name = $("reviewName")?.value.trim() || "";
+    const flavor = $("reviewFlavor")?.value || "";
+    const text = $("reviewText")?.value.trim() || "";
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
       return;
     }
 
-    const name = $("reviewName").value.trim();
-    const text = $("reviewText").value.trim();
-    const flavor = $("reviewFlavor").value;
-
-    if (!name || text.length < 10) {
-      $("reviewStatus").textContent =
-        "Enter your name and a review of at least 10 characters.";
+    if (selectedRating < 1 || selectedRating > 5) {
+      setReviewStatus("Please select a star rating.");
       return;
     }
 
-    const updated = [
-      { name, text, flavor, rating: selectedRating },
-      ...reviews
-    ].slice(0, 100);
-
-    if (!safeWriteStorage(REVIEW_STORAGE_KEY, updated)) {
-      $("reviewStatus").textContent =
-        "Unable to save your review. Browser storage may be disabled.";
+    if (
+      name.length < 1 ||
+      name.length > 60 ||
+      text.length < 10 ||
+      text.length > 1000 ||
+      !FLAVORS.some(item => item.name === flavor)
+    ) {
+      setReviewStatus("Please check your review details.");
       return;
     }
 
-    reviews = updated;
+    const review = {
+      id: typeof crypto !== "undefined" && crypto.randomUUID
+        ? crypto.randomUUID()
+        : `review-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+      name,
+      flavor,
+      rating: selectedRating,
+      text,
+      createdAt: new Date().toISOString()
+    };
+
+    reviews.unshift(review);
+    reviews = reviews.slice(0, MAX_REVIEWS);
+
+    const saved = saveStoredJSON(
+      STORAGE_KEYS.reviews,
+      reviews
+    );
+
+    if (!saved) {
+      reviews.shift();
+      setReviewStatus(
+        "Unable to save the review in this browser."
+      );
+      return;
+    }
+
+    form.reset();
+    selectedRating = 0;
+
+    renderStarPicker();
     renderReviews();
-    $("reviewForm").reset();
-    selectRating(0);
-    $("reviewStatus").textContent = "Your demo review was saved on this device.";
-  });
 
-  renderReviews();
-}
-/* === CUSTOMER REVIEWS END === */
+    setReviewStatus(
+      "Review saved in this browser. Thank you!"
+    );
 
-/* === MOBILE NAVIGATION START === */
-function closeNavigation() {
-  $("navLinks").classList.remove("open");
-  $("menuToggle").setAttribute("aria-expanded", "false");
-  $("menuToggle").setAttribute("aria-label", "Open menu");
-  $("menuToggle").textContent = "☰";
-}
-
-function initializeNavigation() {
-  $("menuToggle").addEventListener("click", () => {
-    const isOpen = $("navLinks").classList.toggle("open");
-    $("menuToggle").setAttribute("aria-expanded", String(isOpen));
-    $("menuToggle").setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
-    $("menuToggle").textContent = isOpen ? "×" : "☰";
-  });
-
-  document.querySelectorAll(".nav-links a").forEach(link => {
-    link.addEventListener("click", closeNavigation);
-  });
-
-  document.addEventListener("click", event => {
-    if (!event.target.closest(".navigation")) closeNavigation();
+    showToast("Your review was saved.");
   });
 }
-/* === MOBILE NAVIGATION END === */
+
+/* === DEMO REVIEWS END === */
+
 
 /* === SCROLL ANIMATIONS START === */
-let revealObserver = null;
-
-function observeReveals(elements) {
-  elements.forEach(element => {
-    if (revealObserver) revealObserver.observe(element);
-    else element.classList.add("visible");
-  });
-}
 
 function initializeScrollAnimations() {
-  if ("IntersectionObserver" in window && !reduceMotion.matches) {
-    revealObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add("visible");
-        revealObserver.unobserve(entry.target);
-      });
-    }, { threshold: .05 });
+  const elements = document.querySelectorAll(".reveal");
+
+  if (
+    !("IntersectionObserver" in window) ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  ) {
+    elements.forEach(element => {
+      element.classList.add("visible");
+    });
+
+    return;
   }
 
-  observeReveals(document.querySelectorAll(".reveal"));
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: .12,
+      rootMargin: "0px 0px -35px 0px"
+    }
+  );
+
+  elements.forEach(element => observer.observe(element));
 }
+
 /* === SCROLL ANIMATIONS END === */
 
-/* === KEYBOARD ACCESSIBILITY START === */
+
+/* === GLOBAL KEYBOARD CONTROLS START === */
+
 function initializeKeyboardControls() {
   document.addEventListener("keydown", event => {
-    if (!$("labelModal").hidden) {
-      if (event.key === "Escape") closeLabel();
-      else trapDialogFocus(event, $("labelModal"));
+    if (event.key !== "Escape") return;
+
+    if ($("labelModal") && !$("labelModal").hidden) {
+      closeLabelViewer();
       return;
     }
 
-    if (!$("cartDrawer").hidden) {
-      if (event.key === "Escape") closeCart();
-      else trapDialogFocus(event, $("cartDrawer"));
+    if ($("productModal") && !$("productModal").hidden) {
+      closeProductPreview();
       return;
     }
 
-    if (event.key === "Escape") closeNavigation();
+    if ($("cartDrawer") && !$("cartDrawer").hidden) {
+      closeCart();
+      return;
+    }
+
+    closeMobileMenu();
   });
 }
-/* === KEYBOARD ACCESSIBILITY END === */
+
+/* === GLOBAL KEYBOARD CONTROLS END === */
+
 
 /* === APPLICATION INITIALIZATION START === */
-function initializeApp() {
-  $("currentYear").textContent = new Date().getFullYear();
 
-  initializeScrollAnimations();
+function initializeApplication() {
+  const currentYear = $("currentYear");
+
+  if (currentYear) {
+    currentYear.textContent = String(
+      new Date().getFullYear()
+    );
+  }
+
   initializeNavigation();
-  initializeKeyboardControls();
-  initializeSlideshow();
-  initializeShopFilters();
+  initializeProductCollection();
   initializeCart();
-  initializeIngredients();
+  initializeHeroSlideshow();
+  renderIngredients();
   initializeLabelViewer();
   initializeReviews();
-  renderProducts();
+  initializeScrollAnimations();
+  initializeKeyboardControls();
 }
 
-initializeApp();
+if (document.readyState === "loading") {
+  document.addEventListener(
+    "DOMContentLoaded",
+    initializeApplication,
+    { once: true }
+  );
+} else {
+  initializeApplication();
+}
+
 /* === APPLICATION INITIALIZATION END === */

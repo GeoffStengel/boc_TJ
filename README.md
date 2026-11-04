@@ -6,7 +6,7 @@ so check back to github every so often if you can.
 
 Website for BOC TJ & CO. A place for you to share website info
 
-👀 Watch Site Being Built As Changes Happen: https://comingsoon/ 👀 or it could be viewed at 
+👀 Watch Site Being Built As Changes Happen: https://comingsoon/ 👀 
 
 🗺️ Site Map: ✅ index.html Is Main Landing Page
 

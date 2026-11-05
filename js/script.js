@@ -12,9 +12,9 @@ const FLAVORS = [
     description:
       "The original Blood Of Christ design. A bold identity in a compact 40 mL bottle.",
     color: "#a52c45",
-    singleImage: "images/product_img_05_original.png",
+    singleImage: "images/original_bottle_600x900.png",
     caseImage:
-      "images/product_img_showing_display_02_trans_BKGD.png"
+      "images/original_12pack_900x600.png"
   },
   {
     id: "grape",
@@ -24,9 +24,9 @@ const FLAVORS = [
     description:
       "Discover Grape Blast, featuring a distinctive purple and black design.",
     color: "#8c38cc",
-    singleImage: "images/product_img_03_grape.png",
+    singleImage: "images/grape_bottle_600x900.png",
     caseImage:
-      "images/product_img_showing_display_03_trans_BKGD_grape.png"
+      "images/grape_12pack_900x600.png"
   },
   {
     id: "tropical",
@@ -36,9 +36,9 @@ const FLAVORS = [
     description:
       "Explore Tropical Rush, with vivid orange accents and tropical-inspired artwork.",
     color: "#d97822",
-    singleImage: "images/product_img_04_tropical_rush.png",
+    singleImage: "images/tropical_bottle_600x900.png",
     caseImage:
-      "images/product_img_showing_display_04_trans_BKGD_tropical_rush.png"
+      "images/tropical_12pack_900x600.png"
   }
 ];
 

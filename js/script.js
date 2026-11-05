@@ -1086,28 +1086,278 @@ function initializeCart() {
 
 /* === INGREDIENT EXPLORER START === */
 
+
+/* === INGREDIENT EXPLORER RENDERING START === */
+
 function renderIngredients() {
-  const grid = $("ingredientGrid");
+  const grid = document.getElementById("ingredientGrid");
+
   if (!grid) return;
 
-  grid.innerHTML = INGREDIENTS.map((ingredient, index) => `
-    <article class="ingredient-card reveal visible">
-      <span>
-        ${String(index + 1).padStart(2, "0")}
-        / ${escapeHTML(ingredient.category)}
-      </span>
+  // Find the section containing the existing ingredient grid.
+  const section = grid.closest("section") || grid.parentElement;
 
-      <h3>${escapeHTML(ingredient.name)}</h3>
+  if (!section) return;
 
-      <p>${escapeHTML(ingredient.description)}</p>
+  // Create the search and filter controls once.
+  let controls = document.getElementById("ingredientControls");
 
-      <details>
+  if (!controls) {
+    controls = document.createElement("div");
+    controls.id = "ingredientControls";
+    controls.className = "ingredient-controls";
+
+    controls.innerHTML = `
+      <div class="ingredient-search-wrap">
+        <label
+          class="ingredient-search-label"
+          for="ingredientSearch"
+        >
+          SEARCH THE FORMULA
+        </label>
+
+        <input
+          type="search"
+          id="ingredientSearch"
+          class="ingredient-search"
+          placeholder="Search ingredients..."
+          autocomplete="off"
+        >
+      </div>
+
+      <div
+        class="ingredient-filters"
+        role="group"
+        aria-label="Filter ingredients"
+      >
+        <button
+          type="button"
+          class="ingredient-filter active"
+          data-ingredient-filter="blend"
+          aria-pressed="true"
+        >
+          PROPRIETARY BLEND
+        </button>
+
+        <button
+          type="button"
+          class="ingredient-filter"
+          data-ingredient-filter="other"
+          aria-pressed="false"
+        >
+          OTHER INGREDIENTS
+        </button>
+
+        <button
+          type="button"
+          class="ingredient-filter"
+          data-ingredient-filter="all"
+          aria-pressed="false"
+        >
+          VIEW ALL
+        </button>
+      </div>
+
+      <p
+        id="ingredientResultCount"
+        class="ingredient-result-count"
+        role="status"
+        aria-live="polite"
+      ></p>
+    `;
+
+    grid.before(controls);
+  }
+
+  const searchInput =
+    document.getElementById("ingredientSearch");
+
+  const filterButtons = controls.querySelectorAll(
+    "[data-ingredient-filter]"
+  );
+
+  const resultCount =
+    document.getElementById("ingredientResultCount");
+
+  // The first 10 entries are the proprietary blend,
+  // matching the ingredient order on the supplied label.
+  const BLEND_INGREDIENT_COUNT = 10;
+
+  let activeFilter = "blend";
+
+  function getIngredientGroup(index) {
+    return index < BLEND_INGREDIENT_COUNT
+      ? "blend"
+      : "other";
+  }
+
+  function getFilteredIngredients() {
+    const searchTerm = searchInput.value
+      .trim()
+      .toLowerCase();
+
+    return INGREDIENTS
+      .map((ingredient, index) => ({
+        ...ingredient,
+        originalIndex: index,
+        group: getIngredientGroup(index)
+      }))
+      .filter(ingredient => {
+        const matchesGroup =
+          activeFilter === "all" ||
+          ingredient.group === activeFilter;
+
+        const searchableText = [
+          ingredient.name,
+          ingredient.category,
+          ingredient.description,
+          ingredient.details
+        ]
+          .join(" ")
+          .toLowerCase();
+
+        return (
+          matchesGroup &&
+          searchableText.includes(searchTerm)
+        );
+      });
+  }
+
+  function escapeIngredientHTML(value) {
+    return String(value).replace(
+      /[&<>"']/g,
+      character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[character]
+    );
+  }
+
+  function createIngredientCard(ingredient) {
+    const card = document.createElement("article");
+
+    card.className =
+      "ingredient-card ingredient-explorer-card visible";
+
+    const ingredientNumber = String(
+      ingredient.originalIndex + 1
+    ).padStart(2, "0");
+
+    const name = escapeIngredientHTML(ingredient.name);
+    const category = escapeIngredientHTML(
+      ingredient.category
+    );
+    const description = escapeIngredientHTML(
+      ingredient.description
+    );
+    const details = escapeIngredientHTML(
+      ingredient.details
+    );
+
+    card.innerHTML = `
+      <div class="ingredient-card-heading">
+        <span class="ingredient-number">
+          ${ingredientNumber}
+        </span>
+
+        <div class="ingredient-heading-text">
+          <span class="ingredient-category">
+            ${category}
+          </span>
+
+          <h3>${name}</h3>
+        </div>
+      </div>
+
+      <p class="ingredient-description">
+        ${description}
+      </p>
+
+      <details class="ingredient-more">
         <summary>LEARN MORE +</summary>
-        <p>${escapeHTML(ingredient.details)}</p>
+        <p>${details}</p>
       </details>
-    </article>
-  `).join("");
+    `;
+
+    return card;
+  }
+
+  function updateIngredientGrid() {
+    const filteredIngredients =
+      getFilteredIngredients();
+
+    const fragment =
+      document.createDocumentFragment();
+
+    filteredIngredients.forEach(ingredient => {
+      fragment.appendChild(
+        createIngredientCard(ingredient)
+      );
+    });
+
+    if (filteredIngredients.length === 0) {
+      const emptyMessage =
+        document.createElement("p");
+
+      emptyMessage.className =
+        "ingredient-empty-message";
+
+      emptyMessage.textContent =
+        "No ingredients match your search.";
+
+      fragment.appendChild(emptyMessage);
+    }
+
+    grid.replaceChildren(fragment);
+
+    if (resultCount) {
+      const count = filteredIngredients.length;
+
+      resultCount.textContent =
+        `${count} of ${INGREDIENTS.length} ingredients shown`;
+    }
+  }
+
+  // Search updates results as the visitor types.
+  searchInput.addEventListener(
+    "input",
+    updateIngredientGrid
+  );
+
+  // Category buttons update the active filter.
+  filterButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      activeFilter =
+        button.dataset.ingredientFilter;
+
+      filterButtons.forEach(filterButton => {
+        const isActive =
+          filterButton === button;
+
+        filterButton.classList.toggle(
+          "active",
+          isActive
+        );
+
+        filterButton.setAttribute(
+          "aria-pressed",
+          String(isActive)
+        );
+      });
+
+      updateIngredientGrid();
+    });
+  });
+
+  // Display the proprietary blend initially.
+  updateIngredientGrid();
 }
+
+/* === INGREDIENT EXPLORER RENDERING END === */
+
 
 /* === INGREDIENT EXPLORER END === */
 

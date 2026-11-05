@@ -67,46 +67,58 @@ const PRODUCTS = FLAVORS.flatMap(flavor => [
   }
 ]);
 
+
+/* === INGREDIENT EXPLORER DATA START === */
+
 const INGREDIENTS = [
+  // === PROPRIETARY BLEND INGREDIENTS START ===
   {
-    name: "Caffeine",
-    category: "STIMULANT",
-    description:
-      "A central nervous system stimulant commonly found in coffee, tea, and energy products.",
-    details:
-      "Caffeine may increase alertness, but it can also cause insomnia, anxiety, elevated heart rate, and other adverse effects. The supplied label does not disclose the caffeine amount per serving."
-  },
-  {
-    name: "Yohimbine HCl",
-    category: "STIMULANT",
-    description:
-      "A pharmacologically active compound associated with adrenergic nervous system effects.",
-    details:
-      "Yohimbine can increase heart rate and blood pressure and may interact with medications. Its suitability for use in a dietary supplement depends on the applicable regulations and formulation."
-  },
-  {
-    name: "Rauwolfia Vomitoria Extract",
-    category: "BOTANICAL EXTRACT",
-    description:
-      "A botanical extract identified on the supplied label as standardized to alpha-yohimbine.",
-    details:
-      "Alpha-yohimbine is a potent adrenergic compound. Standardization does not establish that a finished product is safe, and the label does not disclose its individual amount."
-  },
-  {
-    name: "L-Tyrosine",
+    name: "Beta-Alanine",
     category: "AMINO ACID",
     description:
-      "An amino acid involved in the body's production of several signaling molecules.",
+      "A nonessential amino acid used in the body's production of carnosine.",
     details:
-      "L-tyrosine is a precursor to catecholamines and thyroid hormones. The amount in this proprietary blend is not individually disclosed."
+      "Beta-alanine is commonly studied in sports nutrition. It can cause temporary tingling or flushing, sometimes called paresthesia. The amount in this product is not individually disclosed."
   },
   {
-    name: "Taurine",
-    category: "AMINO SULFONIC ACID",
+    name: "L-Citrulline Malate 2:1",
+    category: "AMINO ACID COMPOUND",
     description:
-      "A naturally occurring compound involved in multiple physiological processes.",
+      "A combination of L-citrulline and malate, commonly found in sports nutrition formulas.",
     details:
-      "Taurine is found in human tissues and is used in some energy products. Its inclusion alone does not establish a particular performance benefit."
+      "L-citrulline participates in the body's urea cycle and can be converted to arginine. The 2:1 designation refers to the stated ratio of citrulline to malate. The individual amount is not disclosed."
+  },
+  {
+    name: "Gamma Aminobutyric Acid (GABA)",
+    category: "AMINO ACID DERIVATIVE",
+    description:
+      "A naturally occurring signaling molecule involved in nervous system activity.",
+    details:
+      "GABA is an inhibitory neurotransmitter in the central nervous system. The effects of orally consumed GABA are still being studied, including how much reaches the brain. The label does not disclose its individual quantity."
+  },
+  {
+    name: "Caffeine Anhydrous",
+    category: "STIMULANT",
+    description:
+      "A concentrated, water-free form of caffeine used in some energy and performance products.",
+    details:
+      "Caffeine stimulates the central nervous system and can increase alertness. It may also cause anxiety, insomnia, palpitations, or elevated heart rate. The amount of caffeine anhydrous per bottle is not disclosed."
+  },
+  {
+    name: "Dicaffeine Malate",
+    category: "CAFFEINE COMPOUND",
+    description:
+      "A compound containing caffeine and malic acid, used as another caffeine source.",
+    details:
+      "Dicaffeine malate contributes additional caffeine. The total caffeine content should account for both caffeine anhydrous and dicaffeine malate. The supplied label does not provide a total caffeine amount."
+  },
+  {
+    name: "AMPiberry® (Juniperus communis)",
+    category: "BOTANICAL INGREDIENT",
+    description:
+      "A branded ingredient identified on the label as derived from juniper berries.",
+    details:
+      "The label identifies AMPiberry® as Juniperus communis (berry). Specific effects depend on the extract's composition and amount, neither of which is disclosed here. Product-specific performance claims would require supporting evidence."
   },
   {
     name: "Theobromine",
@@ -114,9 +126,120 @@ const INGREDIENTS = [
     description:
       "A naturally occurring compound found in cacao and related plants.",
     details:
-      "Theobromine belongs to the same broad chemical family as caffeine. Its effects and interactions depend on dose and individual sensitivity."
+      "Theobromine belongs to the methylxanthine family, which also includes caffeine. It has physiological effects that depend on dose and individual sensitivity. Its amount in the proprietary blend is not disclosed."
+  },
+  {
+    name: "Yohimbine HCl (98%)",
+    category: "STIMULANT COMPOUND",
+    description:
+      "A pharmacologically active compound associated with adrenergic nervous system effects.",
+    details:
+      "Yohimbine can increase heart rate and blood pressure and may cause anxiety or other adverse effects. It can also interact with medications. The 98% designation appears on the label, but the individual dose is not provided."
+  },
+  {
+    name: "Rauwolfia Vomitoria Extract",
+    category: "BOTANICAL EXTRACT",
+    description:
+      "A root-bark extract identified as standardized to a minimum of 90% alpha-yohimbine.",
+    details:
+      "The supplied label states 'std. min. 90% alpha yohimbine' and identifies root bark as the source. Alpha-yohimbine is a potent adrenergic compound. The extract's individual amount is not disclosed, and the finished formula requires appropriate safety and regulatory review."
+  },
+  {
+    name: "Ketones",
+    category: "FORMULA COMPONENT",
+    description:
+      "A general ingredient term appearing at the end of the proprietary blend.",
+    details:
+      "The label lists 'Ketones' but does not identify a specific ketone compound, chemical form, or amount. More precise information from the manufacturer is needed before describing its intended function."
+  },
+  // === PROPRIETARY BLEND INGREDIENTS END ===
+
+  // === OTHER INGREDIENTS START ===
+  {
+    name: "Purified Water",
+    category: "OTHER INGREDIENT",
+    description:
+      "The water-based component of the liquid formulation.",
+    details:
+      "Purified water is commonly used as a carrier or solvent in liquid products. It is listed separately from the 9,048 mg proprietary blend."
+  },
+  {
+    name: "Citric Acid",
+    category: "ACIDULANT",
+    description:
+      "An ingredient commonly used to provide tartness and adjust acidity.",
+    details:
+      "Citric acid is used in many beverages and foods. Its specific concentration and function in this formulation are not disclosed."
+  },
+  {
+    name: "Natural & Artificial Flavors",
+    category: "FLAVORING",
+    description:
+      "Flavoring ingredients used to create the product's taste profile.",
+    details:
+      "The label groups natural and artificial flavors together without identifying their individual components. Flavor formulations may differ between product varieties and should be confirmed against each final flavor label."
+  },
+  {
+    name: "Silicon Dioxide",
+    category: "OTHER INGREDIENT",
+    description:
+      "A commonly used food and supplement processing ingredient.",
+    details:
+      "Silicon dioxide is frequently used as an anti-caking or flow-support ingredient in dry formulations. Its specific purpose in this liquid product is not stated on the label."
+  },
+  {
+    name: "Calcium Silicate",
+    category: "OTHER INGREDIENT",
+    description:
+      "An ingredient commonly used in food and supplement manufacturing.",
+    details:
+      "Calcium silicate may be used for processing or formulation purposes. The supplied label does not specify its exact function or quantity."
+  },
+  {
+    name: "Sucralose",
+    category: "SWEETENER",
+    description:
+      "A high-intensity sweetener used in many reduced-sugar products.",
+    details:
+      "Sucralose provides sweetness in small quantities. The amount used in this formulation is not listed."
+  },
+  {
+    name: "Acesulfame Potassium (Ace K)",
+    category: "SWEETENER",
+    description:
+      "A high-intensity sweetener commonly blended with other sweeteners.",
+    details:
+      "Acesulfame potassium, also called Ace K, is used to provide sweetness. The label does not disclose its concentration."
+  },
+  {
+    name: "FD&C Red #40",
+    category: "COLOR ADDITIVE",
+    description:
+      "A certified color additive used to provide a red appearance.",
+    details:
+      "FD&C Red No. 40 is a synthetic color additive. Color additives are subject to applicable labeling and use requirements. Confirm whether this ingredient appears in every flavor or only in specific formulations."
+  },
+  {
+    name: "Potassium Sorbate",
+    category: "PRESERVATIVE",
+    description:
+      "A preservative commonly used to help control yeast and mold growth.",
+    details:
+      "Potassium sorbate is used in certain foods and beverages to support shelf stability. Its effectiveness depends on factors such as acidity, concentration, and the overall formulation."
+  },
+  {
+    name: "Sodium Benzoate",
+    category: "PRESERVATIVE",
+    description:
+      "A preservative commonly used in acidic beverages and other products.",
+    details:
+      "Sodium benzoate can help inhibit microbial growth under suitable formulation conditions. Its amount is not disclosed on the supplied label."
   }
+  // === OTHER INGREDIENTS END ===
 ];
+
+/* === INGREDIENT EXPLORER DATA END === */
+
 
 const STORAGE_KEYS = {
   cart: "boc-shopping-cart-v6",

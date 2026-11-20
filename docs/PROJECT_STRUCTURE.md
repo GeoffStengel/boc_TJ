@@ -37,7 +37,7 @@ dependencies to keep maintenance and hosting simple.
 - Navigation and hero slideshow
 - Product collection and previews
 - Ingredient search and label viewer
-- Cart placeholder and Google Reviews configuration
+- Ordering information drawer and configurable Google Reviews links
 
 **Interactive tools**
 - Net Carb Calculator

@@ -2,69 +2,37 @@
 "use strict";
 
 /* ============================================================
-   007-NRG WEBSITE — MAIN JAVASCRIPT
-   Updated product images, hero rotation, product collection,
-   ingredient explorer, label zoom, cart preview, and reviews.
+   007-NRG WEBSITE
+   Complete JavaScript — Products, Ingredients, Tools & UI
    ============================================================ */
 
-
-/* === SITE CONFIGURATION START === */
+/* === CONFIGURATION START === */
 
 const SITE_CONFIG = {
-  brandName: "007-NRG",
-  heroRotationInterval: 3500,
-  heroFadeDuration: 250,
-  checkoutEnabled: false,
-  maximumDemoReviews: 100,
-  reviewStorageKey: "007-nrg-demo-reviews-v2"
+  heroRotationInterval: 4000,
+  heroFadeDuration: 180,
+  checkoutEnabled: false
 };
-
-/*
-  IMPORTANT:
-  Image paths are relative to index.html.
-
-  Confirm the label filename, since the complete
-  name was partly hidden in your screenshot.
-*/
-
-
-/* === PRODUCT IMAGE CONFIGURATION START === */
 
 const PRODUCT_IMAGES = {
-  // Original 007-NRG bottle
   singleBottle: "images/007-NRG-single-bottle-600x900.png",
-
-  // New grape bottle
-  grapeBottle: "images/007-NRG-Grape-single bottle-600x900.png",
-
-  // New blue raspberry bottle
-  blueRaspberryBottle: "images/007-NRG-Blue;-Raspberrysingle-600x900.png",
-
-  // Promotional photography
+  grapeBottle: "images/007-NRG-Grape-single-bottle-600x900.png",
   waterSplashBottle: "images/007-NRG-600x900-Water-Splash-Bottle.png",
-  backSplashBottle: "images/007-NRG-Single-Bottle-Back-Splash.png",
-  bottleWithBackground: "images/007-NRG-single-bottle-with-background.png",
-
-  // Product packaging
+  blueRaspberryBottle: "images/007-NRG-Blue-Raspberry-Single-600x900.png",
+  backSplashBottle: "images/007-NRG-Single_Bottle_Back_Splash.png",
   displayCase: "images/007-NRG-20pck-Display.png",
   displayBox: "images/007-NRG-20pck-Bottles-In-Box.png",
-
-  // Product information
-  productLabel: "images/007-NRG-Label-no-bkgd-1536x1024.png",
-  originalIngredients: "images/007-NRG-ingredients.png",
-
-  // Original client artwork
-  originalCase: "images/007-NRG-30pck-case-img.png",
-  originalFrontCase: "images/007-NRG-product-full-case-frontview.png"
+  productLabel: "images/007-NRG-Label-no-bkgd-1536x1024.png"
 };
 
-/* === PRODUCT IMAGE CONFIGURATION END === */
+/* === CONFIGURATION END === */
 
 
-/* === SITE CONFIGURATION END === */
+/* ============================================================
+   PRODUCT DATA
+   ============================================================ */
 
-
-/* === PRODUCT DATA START === */
+/* === PRODUCTS START === */
 
 const PRODUCTS = [
   {
@@ -72,100 +40,137 @@ const PRODUCTS = [
     name: "007-NRG Single Bottle",
     type: "single",
     size: "40 mL",
-    description: "Explore the 007-NRG single-bottle design and product information.",
     image: PRODUCT_IMAGES.singleBottle,
     badge: "SINGLE BOTTLE",
+    description: "The signature 007-NRG bottle.",
     priceCents: null
   },
   {
     id: "007-nrg-display",
-    name: "007-NRG Display Case",
+    name: "007-NRG 20-Bottle Display",
     type: "case",
     size: "20 × 40 mL",
-    description: "Explore the redesigned 20-bottle display packaging.",
     image: PRODUCT_IMAGES.displayCase,
     badge: "20-BOTTLE DISPLAY",
+    description: "Twenty individual bottles in a branded retail display.",
     priceCents: null
   },
   {
     id: "007-nrg-box",
-    name: "007-NRG Bottles in Box",
+    name: "007-NRG Display Packaging",
     type: "case",
-    size: "Display Packaging",
-    description: "A closer look at the 007-NRG bottles and display box.",
+    size: "20-Bottle Packaging",
     image: PRODUCT_IMAGES.displayBox,
-    badge: "PACKAGING PREVIEW",
+    badge: "DISPLAY PACKAGING",
+    description: "Explore the 007-NRG display packaging.",
     priceCents: null
   }
 ];
 
-/* === PRODUCT DATA END === */
+/* === PRODUCTS END === */
 
 
+/* ============================================================
+   HERO CAROUSEL DATA
+   ============================================================ */
 
-
-/* === HERO SLIDESHOW DATA START === */
+/* === HERO SLIDES START === */
 
 const HERO_SLIDES = [
   {
-    edition: "01 / ORIGINAL 007-NRG",
-
+    edition: "01 / ORIGINAL",
     title: "HYPER FOCUSED <em>ENERGY.</em>",
-
-    description:
-      "Meet the original 007-NRG. Discover our bold 40 mL product and explore the collection.",
-
+    description: "Meet the signature 007-NRG bottle. Bold design, unmistakable identity.",
     image: PRODUCT_IMAGES.singleBottle,
-
-    alt: "Original 007-NRG red single bottle, 40 mL",
-
-    productId: "007-nrg-single"
+    alt: "Original 007-NRG single bottle"
   },
-
   {
     edition: "02 / GRAPE",
-
-    title: "DISCOVER <em>GRAPE.</em>",
-
-    description:
-      "A striking grape-inspired concept featuring a clear bottle filled with vibrant purple liquid.",
-
+    title: "A BOLDER <em>PURPLE.</em>",
+    description: "A rich grape-inspired look with deep purple color and signature 007-NRG styling.",
     image: PRODUCT_IMAGES.grapeBottle,
-
-    alt: "007-NRG grape concept bottle with purple liquid",
-
-    productId: "007-nrg-single"
+    alt: "007-NRG grape bottle design"
   },
-
   {
-    edition: "03 / BLUE RASPBERRY",
-
-    title: "GO BOLD. <em>GO BLUE.</em>",
-
-    description:
-      "Explore our blue raspberry concept with brilliant blue liquid and the signature 007-NRG design.",
-
+    edition: "03 / SIGNATURE SPLASH",
+    title: "MAKE A <em>SPLASH.</em>",
+    description: "The signature 007-NRG bottle in a striking, high-impact presentation.",
+    image: PRODUCT_IMAGES.waterSplashBottle,
+    alt: "007-NRG bottle with water splash"
+  },
+  {
+    edition: "04 / BLUE RASPBERRY",
+    title: "BRING THE <em>BLUE.</em>",
+    description: "A vibrant blue raspberry-inspired look with the unmistakable 007-NRG identity.",
     image: PRODUCT_IMAGES.blueRaspberryBottle,
-
-    alt: "007-NRG blue raspberry concept bottle with blue liquid",
-
-    productId: "007-nrg-single"
+    alt: "007-NRG blue raspberry bottle design"
   }
 ];
 
-/* === HERO SLIDESHOW DATA END === */
+/* === HERO SLIDES END === */
 
 
+/* ============================================================
+   PRODUCT LABEL INFORMATION
+   ============================================================ */
+
+/* === LABEL DATA START === */
+
+/*
+  Ingredient names are based on the supplied original
+  007-NRG ingredient artwork.
+
+  The 9,048 mg amount is the TOTAL proprietary blend,
+  not an amount for any individual ingredient.
+
+  Confirm final artwork, exact ingredient wording,
+  and warnings with the client before publication.
+*/
+
+const PRODUCT_LABEL_INFORMATION = {
+  servingSize: "1 Bottle (40 mL)",
+  servingsPerContainer: 1,
+  proprietaryBlendAmount: "9,048 mg",
+
+  proprietaryBlend: [
+    "Beta-Alanine",
+    "L-Citrulline Malate 2:1",
+    "Gamma Aminobutyric Acid (GABA)",
+    "Caffeine Anhydrous",
+    "Dicaffeine Malate",
+    "AMPiberry® (Juniperus communis) (berry)",
+    "Theobromine",
+    "Yohimbine HCl (98%)",
+    "Rauwolfia Vomitoria Extract (std. min. 90% alpha-yohimbine) (root bark)",
+    "Ketones"
+  ],
+
+  otherIngredients: [
+    "Purified Water",
+    "Citric Acid",
+    "Natural & Artificial Flavors",
+    "Silicon Dioxide",
+    "Calcium Silicate",
+    "Sucralose",
+    "Acesulfame Potassium (Ace K)",
+    "FD&C Red #40",
+    "Potassium Sorbate",
+    "Sodium Benzoate"
+  ]
+};
+
+/* === LABEL DATA END === */
+
+
+/* ============================================================
+   INGREDIENT KNOWLEDGE BASE
+   ============================================================ */
 
 /* === INGREDIENT DATA START === */
 
 /*
-  Ingredient names are based on the client's
-  original supplied artwork, not the generated
-  promotional label.
-
-  The original artwork lists a proprietary blend
-  of 9,048 mg without individual ingredient amounts.
+  These are general educational ingredient facts.
+  They are not claims about the finished 007-NRG product.
 */
 
 const INGREDIENTS = [
@@ -173,214 +178,184 @@ const INGREDIENTS = [
     name: "Beta-Alanine",
     category: "Amino Acid",
     group: "blend",
-    description: "An amino acid involved in carnosine production.",
-    details: "Beta-alanine is commonly studied in sports nutrition. The individual amount in this product has not been disclosed."
+    description: "An amino acid involved in the production of carnosine.",
+    details: "Carnosine is found in skeletal muscle and helps buffer acidity. Beta-alanine supplementation can cause temporary skin tingling, called paresthesia."
   },
   {
     name: "L-Citrulline Malate 2:1",
     category: "Amino Acid Compound",
     group: "blend",
     description: "A combination of L-citrulline and malate.",
-    details: "The 2:1 designation describes the stated ingredient ratio. The individual quantity is not provided."
+    details: "L-citrulline participates in the body's urea cycle and can be converted into arginine, which is involved in nitric oxide production. Malate participates in cellular energy metabolism."
   },
   {
-    name: "GABA",
-    category: "Amino Acid Derivative",
+    name: "Gamma Aminobutyric Acid (GABA)",
+    category: "Neurotransmitter",
     group: "blend",
-    description: "Gamma-aminobutyric acid is a naturally occurring signaling molecule.",
-    details: "The effects of orally consumed GABA are still being studied. The individual amount is not disclosed."
+    description: "A naturally occurring inhibitory neurotransmitter.",
+    details: "GABA helps regulate nerve signaling in the central nervous system. Research is ongoing into whether orally consumed GABA produces meaningful effects in the brain."
   },
   {
     name: "Caffeine Anhydrous",
     category: "Stimulant",
     group: "blend",
-    description: "A concentrated form of caffeine.",
-    details: "Caffeine can cause insomnia, anxiety, palpitations and increased heart rate. The amount in this blend is not individually disclosed."
+    description: "A concentrated, dehydrated form of caffeine.",
+    details: "Caffeine stimulates the central nervous system primarily by blocking adenosine receptors. Excess intake can cause insomnia, anxiety, rapid heartbeat, and other adverse effects."
   },
   {
     name: "Dicaffeine Malate",
     category: "Caffeine Compound",
     group: "blend",
-    description: "A compound containing caffeine and malic acid.",
-    details: "This is an additional caffeine source. Total caffeine content from all ingredients has not been confirmed."
+    description: "A compound combining caffeine with malic acid.",
+    details: "Dicaffeine malate is another source of caffeine. When assessing total caffeine exposure, caffeine from all ingredients and beverages should be considered."
   },
   {
-    name: "AMPiberry",
+    name: "AMPiberry®",
     category: "Botanical Ingredient",
     group: "blend",
-    description: "A branded ingredient identified with Juniperus communis.",
-    details: "The original artwork identifies juniper berry. The individual quantity is not disclosed."
+    description: "A branded ingredient associated with juniper berry.",
+    details: "Juniperus communis is an evergreen plant whose berry-like cones have a history of culinary use. The properties of a specific branded extract depend on its composition and manufacturing specifications."
   },
   {
     name: "Theobromine",
     category: "Methylxanthine",
     group: "blend",
-    description: "A naturally occurring compound also found in cacao.",
-    details: "Theobromine belongs to the same general chemical family as caffeine. Its effects depend on dose and individual sensitivity."
+    description: "A naturally occurring compound found in cacao.",
+    details: "Theobromine is chemically related to caffeine. It has different effects on the nervous and cardiovascular systems and may contribute to overall methylxanthine exposure."
   },
   {
-    name: "Yohimbine HCl 98%",
-    category: "Stimulant Compound",
+    name: "Yohimbine HCl (98%)",
+    category: "Adrenergic Compound",
     group: "blend",
-    description: "A pharmacologically active adrenergic compound.",
-    details: "Yohimbine may increase heart rate or blood pressure and may interact with medications. Its individual amount is not disclosed."
+    description: "A pharmacologically active alpha-2 adrenergic receptor antagonist.",
+    details: "Yohimbine can affect blood pressure, heart rate, and anxiety. It can interact with medications and other stimulants. Its presence warrants particular attention to product safety information."
   },
   {
     name: "Rauwolfia Vomitoria Extract",
     category: "Botanical Extract",
     group: "blend",
-    description: "An extract identified as standardized to at least 90% alpha-yohimbine.",
-    details: "Alpha-yohimbine is a potent adrenergic compound. This ingredient warrants qualified safety and regulatory review."
+    description: "A botanical extract identified on the supplied label as standardized for alpha-yohimbine.",
+    details: "Alpha-yohimbine, also known as rauwolscine, is an adrenergically active alkaloid. Its safety profile and potential interactions require caution, especially alongside other stimulants."
   },
   {
     name: "Ketones",
     category: "Formula Component",
     group: "blend",
-    description: "A component identified as ketones on the original artwork.",
-    details: "The supplied label does not identify the specific ketone compound or its individual quantity."
+    description: "A broad term for a class of chemical compounds.",
+    details: "Ketone bodies such as beta-hydroxybutyrate are produced during fat metabolism and nutritional ketosis. The label does not specify which ketone ingredient is included, so its properties cannot be established from the name alone."
   },
   {
     name: "Purified Water",
     category: "Other Ingredient",
     group: "other",
-    description: "A water-based formulation ingredient.",
-    details: "Listed separately from the proprietary blend."
+    description: "Water that has undergone purification.",
+    details: "Purified water is commonly used as a liquid base in beverage and other formulations."
   },
   {
     name: "Citric Acid",
     category: "Acidulant",
     group: "other",
-    description: "Commonly used to adjust acidity or add tartness.",
-    details: "The specific amount is not disclosed."
+    description: "An organic acid naturally found in citrus fruits.",
+    details: "Citric acid is widely used in foods and beverages to contribute tartness and help adjust acidity."
   },
   {
-    name: "Natural and Artificial Flavors",
+    name: "Natural & Artificial Flavors",
     category: "Flavoring",
     group: "other",
-    description: "Ingredients used to create the product's flavor.",
-    details: "Individual flavor components are not disclosed."
+    description: "Ingredients used to create or adjust flavor.",
+    details: "Natural and artificial flavoring substances can come from different sources. The exact flavor components are not individually identified in this ingredient declaration."
   },
   {
     name: "Silicon Dioxide",
-    category: "Other Ingredient",
+    category: "Processing Ingredient",
     group: "other",
-    description: "An ingredient used in food and supplement manufacturing.",
-    details: "The exact function in this formulation is not stated."
+    description: "A compound of silicon and oxygen.",
+    details: "Silicon dioxide is used in some food and supplement manufacturing applications, including as an anti-caking agent in dry mixtures."
   },
   {
     name: "Calcium Silicate",
-    category: "Other Ingredient",
+    category: "Processing Ingredient",
     group: "other",
-    description: "A food and supplement processing ingredient.",
-    details: "The amount and specific purpose are not disclosed."
+    description: "A calcium-containing silicate compound.",
+    details: "Calcium silicate is used in certain food manufacturing applications, including as an anti-caking or processing aid."
   },
   {
     name: "Sucralose",
     category: "Sweetener",
     group: "other",
     description: "A high-intensity sweetener.",
-    details: "The amount used is not disclosed."
+    details: "Sucralose provides sweetness in much smaller amounts than table sugar. It is used in a variety of reduced-sugar food and beverage products."
   },
   {
-    name: "Acesulfame Potassium",
+    name: "Acesulfame Potassium (Ace K)",
     category: "Sweetener",
     group: "other",
     description: "A high-intensity sweetener also called Ace K.",
-    details: "The amount used is not disclosed."
+    details: "Acesulfame potassium is often combined with other sweeteners to achieve a desired sweetness profile."
   },
   {
-    name: "FD&C Red 40",
+    name: "FD&C Red #40",
     category: "Color Additive",
     group: "other",
-    description: "A certified red color additive.",
-    details: "Confirm this declaration against the final approved formula."
+    description: "A certified synthetic red color additive.",
+    details: "FD&C Red No. 40 is used to provide color in certain foods and beverages. Its use is subject to applicable color additive regulations."
   },
   {
     name: "Potassium Sorbate",
     category: "Preservative",
     group: "other",
-    description: "A preservative used in certain food and beverage products.",
-    details: "The individual amount is not disclosed."
+    description: "A preservative used in certain foods and beverages.",
+    details: "Potassium sorbate is commonly used to inhibit the growth of some yeasts and molds in suitable formulations."
   },
   {
     name: "Sodium Benzoate",
     category: "Preservative",
     group: "other",
-    description: "A preservative commonly used in acidic formulations.",
-    details: "The individual amount is not disclosed."
+    description: "A preservative often used in acidic products.",
+    details: "Sodium benzoate is used to inhibit certain microorganisms. Its effectiveness depends in part on the acidity of the formulation."
   }
 ];
 
 /* === INGREDIENT DATA END === */
 
 
-/* === GENERAL HELPERS START === */
+/* ============================================================
+   SHARED HELPERS
+   ============================================================ */
 
-function getElement(elementId) {
-  return document.getElementById(elementId);
+/* === HELPERS START === */
+
+function getElement(id) {
+  return document.getElementById(id);
 }
 
-function setElementText(elementId, value) {
-  const element = getElement(elementId);
+function setElementText(id, value) {
+  const element = getElement(id);
   if (element) element.textContent = String(value);
 }
 
 function escapeHTML(value) {
-  const characters = {
+  return String(value).replace(/[&<>"']/g, character => ({
     "&": "&amp;",
     "<": "&lt;",
     ">": "&gt;",
     '"': "&quot;",
     "'": "&#39;"
-  };
-
-  return String(value).replace(
-    /[&<>"']/g,
-    character => characters[character]
-  );
+  })[character]);
 }
 
-function getProductById(productId) {
-  return PRODUCTS.find(product => product.id === productId);
+function getProductById(id) {
+  return PRODUCTS.find(product => product.id === id);
 }
 
 function formatProductPrice(product) {
-  if (!product || typeof product.priceCents !== "number") {
-    return "PRICE COMING SOON";
-  }
+  if (product.priceCents == null) return "DETAILS AVAILABLE";
 
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD"
   }).format(product.priceCents / 100);
 }
-
-function safelyReadStorage(storageKey, fallbackValue) {
-  try {
-    const storedValue = localStorage.getItem(storageKey);
-    return storedValue === null
-      ? fallbackValue
-      : JSON.parse(storedValue);
-  } catch (error) {
-    console.warn("[007-NRG] Storage read failed:", error);
-    return fallbackValue;
-  }
-}
-
-function safelyWriteStorage(storageKey, value) {
-  try {
-    localStorage.setItem(storageKey, JSON.stringify(value));
-    return true;
-  } catch (error) {
-    console.warn("[007-NRG] Storage write failed:", error);
-    return false;
-  }
-}
-
-/* === GENERAL HELPERS END === */
-
-
-/* === TOAST NOTIFICATIONS START === */
 
 let toastTimeoutId = null;
 
@@ -392,129 +367,110 @@ function showToast(message) {
 
   toast.textContent = message;
   toast.hidden = false;
+  toast.classList.add("visible");
 
   toastTimeoutId = setTimeout(() => {
+    toast.classList.remove("visible");
     toast.hidden = true;
-  }, 3500);
+  }, 3000);
 }
 
-/* === TOAST NOTIFICATIONS END === */
+/* === HELPERS END === */
 
 
-/* === MODAL SCROLL MANAGEMENT START === */
-
-function lockBodyScroll() {
-  document.body.classList.add("modal-open");
-}
-
-function unlockBodyScroll() {
-  const anyDialogOpen = [
-    "cartDrawer",
-    "productModal",
-    "labelModal"
-  ].some(dialogId => {
-    const dialog = getElement(dialogId);
-    return dialog && !dialog.hidden;
-  });
-
-  if (!anyDialogOpen) {
-    document.body.classList.remove("modal-open");
-  }
-}
-
-/* === MODAL SCROLL MANAGEMENT END === */
-
+/* ============================================================
+   MOBILE NAVIGATION
+   ============================================================ */
 
 /* === MOBILE NAVIGATION START === */
 
-function closeMobileNavigation() {
-  const navigation = getElement("navLinks");
-  const menuToggle = getElement("menuToggle");
-
-  if (!navigation || !menuToggle) return;
-
-  navigation.classList.remove("open");
-  menuToggle.setAttribute("aria-expanded", "false");
-  menuToggle.setAttribute("aria-label", "Open menu");
-}
-
 function initializeMobileNavigation() {
-  const navigation = getElement("navLinks");
-  const menuToggle = getElement("menuToggle");
+  const toggle = getElement("menuToggle");
+  const links = getElement("navLinks");
 
-  if (!navigation || !menuToggle) return;
+  if (!toggle || !links) return;
 
-  menuToggle.addEventListener("click", () => {
-    const isOpen = navigation.classList.toggle("open");
+  function closeMenu() {
+    links.classList.remove("open", "active");
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-label", "Open menu");
+  }
 
-    menuToggle.setAttribute("aria-expanded", String(isOpen));
-    menuToggle.setAttribute(
-      "aria-label",
-      isOpen ? "Close menu" : "Open menu"
-    );
+  toggle.addEventListener("click", () => {
+    const open = toggle.getAttribute("aria-expanded") === "true";
+
+    links.classList.toggle("open", !open);
+    links.classList.toggle("active", !open);
+
+    toggle.setAttribute("aria-expanded", String(!open));
+    toggle.setAttribute("aria-label", open ? "Open menu" : "Close menu");
   });
 
-  navigation.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", closeMobileNavigation);
+  links.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", closeMenu);
   });
 
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 850) {
-      closeMobileNavigation();
+  document.addEventListener("click", event => {
+    if (!links.contains(event.target) && !toggle.contains(event.target)) {
+      closeMenu();
     }
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeMenu();
   });
 }
 
 /* === MOBILE NAVIGATION END === */
 
 
-/* === HERO SLIDESHOW START === */
+/* ============================================================
+   HERO CAROUSEL
+   ============================================================ */
+
+/* === HERO CAROUSEL START === */
 
 let currentHeroSlideIndex = 0;
 let heroRotationTimer = null;
 let heroTransitionRequestId = 0;
 
-const preloadedHeroImages = new Map();
+const heroImageCache = new Map();
 
-function preloadHeroImage(imagePath) {
-  if (preloadedHeroImages.has(imagePath)) {
-    return preloadedHeroImages.get(imagePath);
+function preloadHeroImage(source) {
+  if (heroImageCache.has(source)) {
+    return heroImageCache.get(source);
   }
 
-  const imagePromise = new Promise((resolve, reject) => {
+  const promise = new Promise((resolve, reject) => {
     const image = new Image();
 
-    image.onload = () => resolve(imagePath);
-
-    image.onerror = () => {
-      reject(new Error(`Could not load hero image: ${imagePath}`));
-    };
-
-    image.src = imagePath;
+    image.onload = () => resolve();
+    image.onerror = () => reject(new Error(`Image not found: ${source}`));
+    image.src = source;
   });
 
-  preloadedHeroImages.set(imagePath, imagePromise);
-  return imagePromise;
+  heroImageCache.set(source, promise);
+  return promise;
 }
 
 function updateHeroIndicators() {
-  const container = getElement("slideIndicators");
-  if (!container) return;
+  getElement("slideIndicators")
+    ?.querySelectorAll("button")
+    .forEach((button, index) => {
+      const active = index === currentHeroSlideIndex;
 
-  container.querySelectorAll("button").forEach((button, index) => {
-    const isActive = index === currentHeroSlideIndex;
-
-    button.classList.toggle("active", isActive);
-    button.setAttribute("aria-pressed", String(isActive));
-  });
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
 }
 
-async function displayHeroSlide(requestedIndex, immediate = false) {
-  const heroImage = getElement("heroProductImage");
-  if (!heroImage || !HERO_SLIDES.length) return;
+async function displayHeroSlide(index, immediate = false) {
+  const image = getElement("heroProductImage");
+  if (!image) return;
 
   const normalizedIndex =
-    (requestedIndex + HERO_SLIDES.length) % HERO_SLIDES.length;
+    ((index % HERO_SLIDES.length) + HERO_SLIDES.length) %
+    HERO_SLIDES.length;
 
   const slide = HERO_SLIDES[normalizedIndex];
   const requestId = ++heroTransitionRequestId;
@@ -528,12 +484,16 @@ async function displayHeroSlide(requestedIndex, immediate = false) {
 
   if (requestId !== heroTransitionRequestId) return;
 
-  if (!immediate) {
-    heroImage.classList.add("changing");
+  const reducedMotion = matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
 
-    await new Promise(resolve => {
-      setTimeout(resolve, SITE_CONFIG.heroFadeDuration);
-    });
+  if (!immediate && !reducedMotion) {
+    image.classList.add("changing");
+
+    await new Promise(resolve =>
+      setTimeout(resolve, SITE_CONFIG.heroFadeDuration)
+    );
 
     if (requestId !== heroTransitionRequestId) return;
   }
@@ -543,47 +503,38 @@ async function displayHeroSlide(requestedIndex, immediate = false) {
   setElementText("heroEdition", slide.edition);
   setElementText("heroDescription", slide.description);
 
-  const heroTitle = getElement("heroTitle");
-  if (heroTitle) heroTitle.innerHTML = slide.title;
+  const title = getElement("heroTitle");
+  if (title) title.innerHTML = slide.title;
 
-  heroImage.src = slide.image;
-  heroImage.alt = slide.alt;
-  heroImage.classList.remove("changing");
-
-  const productLink = getElement("heroProductLink");
-
-  if (productLink) {
-    productLink.href = "#shop";
-    productLink.setAttribute(
-      "aria-label",
-      "Explore 007-NRG products"
-    );
-  }
+  image.src = slide.image;
+  image.alt = slide.alt;
+  image.width = 600;
+  image.height = 900;
 
   updateHeroIndicators();
+
+  requestAnimationFrame(() => {
+    image.classList.remove("changing");
+  });
 }
 
 function stopHeroRotation() {
-  if (heroRotationTimer !== null) {
-    clearInterval(heroRotationTimer);
-    heroRotationTimer = null;
-  }
+  clearInterval(heroRotationTimer);
+  heroRotationTimer = null;
 }
 
 function startHeroRotation() {
   stopHeroRotation();
 
   if (
-    HERO_SLIDES.length < 2 ||
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    document.hidden ||
+    matchMedia("(prefers-reduced-motion: reduce)").matches
   ) {
     return;
   }
 
   heroRotationTimer = setInterval(() => {
-    if (!document.hidden) {
-      displayHeroSlide(currentHeroSlideIndex + 1);
-    }
+    displayHeroSlide(currentHeroSlideIndex + 1);
   }, SITE_CONFIG.heroRotationInterval);
 }
 
@@ -593,25 +544,23 @@ function selectHeroSlide(index) {
 }
 
 function initializeHeroSlideshow() {
-  const indicatorContainer = getElement("slideIndicators");
-  if (!indicatorContainer) return;
+  const indicators = getElement("slideIndicators");
+  if (!indicators) return;
 
-  indicatorContainer.innerHTML = "";
+  indicators.innerHTML = "";
 
   HERO_SLIDES.forEach((slide, index) => {
-    const indicator = document.createElement("button");
+    const button = document.createElement("button");
 
-    indicator.type = "button";
-    indicator.setAttribute(
-      "aria-label",
-      `Show product slide ${index + 1}`
-    );
+    button.type = "button";
+    button.setAttribute("aria-label", `Show slide ${index + 1}`);
+    button.setAttribute("aria-pressed", "false");
 
-    indicator.addEventListener("click", () => {
+    button.addEventListener("click", () => {
       selectHeroSlide(index);
     });
 
-    indicatorContainer.appendChild(indicator);
+    indicators.appendChild(button);
 
     preloadHeroImage(slide.image).catch(() => {});
   });
@@ -624,48 +573,37 @@ function initializeHeroSlideshow() {
     selectHeroSlide(currentHeroSlideIndex + 1);
   });
 
-  const heroSection = getElement("home");
-
-
-  heroSection?.addEventListener("focusin", stopHeroRotation);
-
-  heroSection?.addEventListener("focusout", event => {
-    if (!heroSection.contains(event.relatedTarget)) {
-      startHeroRotation();
-    }
-  });
-
   document.addEventListener("visibilitychange", () => {
-    if (document.hidden) {
-      stopHeroRotation();
-    } else {
-      startHeroRotation();
-    }
+    if (document.hidden) stopHeroRotation();
+    else startHeroRotation();
   });
 
   displayHeroSlide(0, true);
   startHeroRotation();
 }
 
-/* === HERO SLIDESHOW END === */
+/* === HERO CAROUSEL END === */
 
+
+/* ============================================================
+   PRODUCT COLLECTION
+   ============================================================ */
 
 /* === PRODUCT COLLECTION START === */
 
 let activeProductFilter = "all";
-let selectedPreviewProductId = null;
 
 function generateProductCard(product) {
   return `
-    <article class="product-card reveal">
+    <article class="product-card reveal visible">
       <div class="product-image-wrap">
         <span class="product-badge">
           ${escapeHTML(product.badge)}
         </span>
 
         <button
-          type="button"
           class="product-image-button"
+          type="button"
           data-preview-product="${escapeHTML(product.id)}"
           aria-label="View ${escapeHTML(product.name)}"
         >
@@ -673,7 +611,6 @@ function generateProductCard(product) {
             src="${escapeHTML(product.image)}"
             alt="${escapeHTML(product.name)}"
             loading="lazy"
-            decoding="async"
           >
         </button>
       </div>
@@ -692,8 +629,8 @@ function generateProductCard(product) {
         </strong>
 
         <button
-          type="button"
           class="button button-secondary"
+          type="button"
           data-preview-product="${escapeHTML(product.id)}"
         >
           VIEW DETAILS
@@ -704,50 +641,217 @@ function generateProductCard(product) {
 }
 
 function renderProductCollection() {
-  const productGrid = getElement("productGrid");
-  if (!productGrid) return;
+  const grid = getElement("productGrid");
+  if (!grid) return;
 
-  const filteredProducts = PRODUCTS.filter(product => {
-    return activeProductFilter === "all" ||
-      product.type === activeProductFilter;
-  });
+  const filtered = PRODUCTS.filter(product =>
+    activeProductFilter === "all" ||
+    product.type === activeProductFilter
+  );
 
-  if (!filteredProducts.length) {
-    productGrid.innerHTML = `
-      <p class="empty-reviews">No products found.</p>
-    `;
-    return;
-  }
+  grid.innerHTML = filtered.map(generateProductCard).join("");
 
-  productGrid.innerHTML = filteredProducts
-    .map(generateProductCard)
-    .join("");
-
-  productGrid.querySelectorAll("[data-preview-product]")
-    .forEach(button => {
-      button.addEventListener("click", () => {
-        openProductPreview(button.dataset.previewProduct);
-      });
+  grid.querySelectorAll("[data-preview-product]").forEach(button => {
+    button.addEventListener("click", () => {
+      openProductPreview(button.dataset.previewProduct);
     });
-
-  productGrid.querySelectorAll(".reveal").forEach(element => {
-    element.classList.add("visible");
   });
 }
 
-function setProductFilter(filter) {
-  if (!["all", "single", "case"].includes(filter)) return;
-
-  activeProductFilter = filter;
-
+function initializeProductCollection() {
   document.querySelectorAll(".shop-tab").forEach(button => {
-    const isActive = button.dataset.filter === filter;
+    button.addEventListener("click", () => {
+      activeProductFilter = button.dataset.filter;
 
-    button.classList.toggle("active", isActive);
-    button.setAttribute("aria-pressed", String(isActive));
+      document.querySelectorAll(".shop-tab").forEach(tab => {
+        const active = tab === button;
+        tab.classList.toggle("active", active);
+        tab.setAttribute("aria-pressed", String(active));
+      });
+
+      renderProductCollection();
+    });
   });
 
   renderProductCollection();
+}
+
+/* === PRODUCT COLLECTION END === */
+
+
+/* ============================================================
+   DIALOG HELPERS
+   ============================================================ */
+
+/* === DIALOG HELPERS START === */
+
+let lastFocusedElement = null;
+
+function openDialog(element, focusTarget) {
+  if (!element) return;
+
+  lastFocusedElement = document.activeElement;
+
+  element.hidden = false;
+  element.classList.add("open", "active", "visible");
+
+  document.body.style.overflow = "hidden";
+
+  requestAnimationFrame(() => {
+    (focusTarget || element.querySelector("button"))?.focus();
+  });
+}
+
+function closeDialog(element) {
+  if (!element) return;
+
+  element.hidden = true;
+  element.classList.remove("open", "active", "visible");
+
+  const anotherOpen = [
+    "productModal",
+    "labelModal",
+    "cartDrawer"
+  ].some(id => {
+    const dialog = getElement(id);
+    return dialog && !dialog.hidden;
+  });
+
+  if (!anotherOpen) {
+    document.body.style.overflow = "";
+  }
+
+  if (lastFocusedElement?.isConnected) {
+    lastFocusedElement.focus();
+  }
+}
+
+/* === DIALOG HELPERS END === */
+
+
+/* ============================================================
+   PRODUCT INGREDIENT DISCLOSURE
+   ============================================================ */
+
+/* === PRODUCT INGREDIENT DISCLOSURE START === */
+
+function createProductIngredientDisclosure() {
+  const label = PRODUCT_LABEL_INFORMATION;
+
+  const createList = items =>
+    items.map(item => `<li>${escapeHTML(item)}</li>`).join("");
+
+  return `
+    <section class="product-ingredient-information">
+
+      <details class="product-ingredient-disclosure" open>
+
+        <summary>
+          <span>INGREDIENTS & PRODUCT INFORMATION</span>
+          <span class="disclosure-chevron" aria-hidden="true"></span>
+        </summary>
+
+        <div class="product-ingredient-content">
+
+          <div class="product-serving-information">
+            <span>
+              <strong>Serving Size</strong>
+              ${escapeHTML(label.servingSize)}
+            </span>
+
+            <span>
+              <strong>Servings Per Container</strong>
+              ${label.servingsPerContainer}
+            </span>
+          </div>
+
+          <div class="product-ingredient-group">
+
+            <h3>PROPRIETARY BLEND</h3>
+
+            <p class="blend-amount">
+              ${escapeHTML(label.proprietaryBlendAmount)} total
+            </p>
+
+            <ul class="product-ingredient-list">
+              ${createList(label.proprietaryBlend)}
+            </ul>
+
+            <p class="ingredient-footnote">
+              The listed amount is for the entire blend.
+              Individual ingredient amounts are not specified.
+            </p>
+
+          </div>
+
+          <div class="product-ingredient-group">
+
+            <h3>OTHER INGREDIENTS</h3>
+
+            <ul class="product-ingredient-list">
+              ${createList(label.otherIngredients)}
+            </ul>
+
+          </div>
+
+          <div class="product-warning-information">
+
+            <h3>IMPORTANT PRODUCT INFORMATION</h3>
+
+            <p>
+              Contains caffeine and other stimulant ingredients,
+              including yohimbine compounds.
+            </p>
+
+            <p>
+              Review the full product label for the
+              manufacturer's directions and warnings.
+            </p>
+
+          </div>
+
+          <a
+            class="product-ingredient-label-link"
+            href="#label"
+            data-view-full-label
+          >
+            VIEW FULL PRODUCT LABEL
+          </a>
+
+        </div>
+      </details>
+    </section>
+  `;
+}
+
+/* === PRODUCT INGREDIENT DISCLOSURE END === */
+
+
+/* ============================================================
+   PRODUCT QUICK VIEW
+   ============================================================ */
+
+/* === PRODUCT QUICK VIEW START === */
+
+function initializeProductIngredientPopups() {
+  const modal = getElement("productModal");
+  const button = getElement("productModalAdd");
+
+  if (!modal || !button) return;
+
+  if (!modal.querySelector(".product-ingredient-information")) {
+    button.insertAdjacentHTML(
+      "afterend",
+      createProductIngredientDisclosure()
+    );
+  }
+
+  modal.querySelector("[data-view-full-label]")
+    ?.addEventListener("click", event => {
+      event.preventDefault();
+      closeProductPreview();
+      openProductLabel();
+    });
 }
 
 function openProductPreview(productId) {
@@ -755,8 +859,6 @@ function openProductPreview(productId) {
   const modal = getElement("productModal");
 
   if (!product || !modal) return;
-
-  selectedPreviewProductId = productId;
 
   setElementText("productModalTitle", product.name);
   setElementText("productModalSize", product.size);
@@ -769,44 +871,31 @@ function openProductPreview(productId) {
     image.alt = product.name;
   }
 
-  const orderButton = getElement("productModalAdd");
+  const button = getElement("productModalAdd");
 
-  if (orderButton) {
-    orderButton.disabled = true;
-    orderButton.textContent = "ORDERING COMING SOON";
+  if (button) {
+    button.disabled = true;
+    button.textContent = "ORDERING COMING SOON";
   }
 
-  modal.hidden = false;
-  lockBodyScroll();
+  const disclosure = modal.querySelector(
+    ".product-ingredient-disclosure"
+  );
 
-  getElement("closeProductModal")?.focus();
+  if (disclosure) disclosure.open = true;
+
+  const details = modal.querySelector(".product-modal-details");
+  if (details) details.scrollTop = 0;
+
+  openDialog(modal, getElement("closeProductModal"));
 }
 
 function closeProductPreview() {
-  const modal = getElement("productModal");
-  if (!modal || modal.hidden) return;
-
-  modal.hidden = true;
-  unlockBodyScroll();
-
-  const previousId = selectedPreviewProductId;
-  selectedPreviewProductId = null;
-
-  const previousButton = Array.from(
-    document.querySelectorAll("[data-preview-product]")
-  ).find(button => button.dataset.previewProduct === previousId);
-
-  previousButton?.focus();
+  closeDialog(getElement("productModal"));
 }
 
-function initializeProductCollection() {
-  renderProductCollection();
-
-  document.querySelectorAll(".shop-tab").forEach(button => {
-    button.addEventListener("click", () => {
-      setProductFilter(button.dataset.filter);
-    });
-  });
+function initializeProductPreview() {
+  initializeProductIngredientPopups();
 
   getElement("closeProductModal")?.addEventListener(
     "click",
@@ -814,76 +903,55 @@ function initializeProductCollection() {
   );
 
   getElement("productModal")?.addEventListener("click", event => {
-    if (event.target === getElement("productModal")) {
+    if (event.target.id === "productModal") {
       closeProductPreview();
     }
   });
 }
 
-/* === PRODUCT COLLECTION END === */
+/* === PRODUCT QUICK VIEW END === */
 
+
+/* ============================================================
+   SHOPPING CART
+   ============================================================ */
 
 /* === SHOPPING CART START === */
 
-/*
-  Checkout is intentionally inactive.
-  No orders or payments are processed.
-*/
-
-function renderShoppingCart() {
+function updateCartDisplay() {
   setElementText("cartCount", "0");
   setElementText("cartSubtotal", "—");
 
-  const cartItems = getElement("cartItems");
-  if (!cartItems) return;
+  const items = getElement("cartItems");
 
-  cartItems.innerHTML = `
-    <div class="empty-cart">
-      <h3>ORDERING COMING SOON</h3>
-
-      <p>
-        The 007-NRG product collection
-        is available for preview.
-      </p>
-
-      <p>
-        Pricing and availability
-        have not been confirmed.
-      </p>
-    </div>
-  `;
+  if (items) {
+    items.innerHTML = `
+      <div class="empty-cart">
+        <p>YOUR BAG IS EMPTY.</p>
+        <p>Explore the 007-NRG collection.</p>
+      </div>
+    `;
+  }
 }
 
 function openShoppingCart() {
-  const drawer = getElement("cartDrawer");
+  updateCartDisplay();
+
   const overlay = getElement("cartOverlay");
+  if (overlay) overlay.hidden = false;
 
-  if (!drawer || !overlay) return;
-
-  renderShoppingCart();
-
-  drawer.hidden = false;
-  overlay.hidden = false;
-
-  lockBodyScroll();
-  getElement("closeCart")?.focus();
+  openDialog(getElement("cartDrawer"), getElement("closeCart"));
 }
 
 function closeShoppingCart() {
-  const drawer = getElement("cartDrawer");
+  closeDialog(getElement("cartDrawer"));
+
   const overlay = getElement("cartOverlay");
-
-  if (!drawer || !overlay) return;
-
-  drawer.hidden = true;
-  overlay.hidden = true;
-
-  unlockBodyScroll();
-  getElement("cartTrigger")?.focus();
+  if (overlay) overlay.hidden = true;
 }
 
 function initializeShoppingCart() {
-  renderShoppingCart();
+  updateCartDisplay();
 
   getElement("cartTrigger")?.addEventListener(
     "click",
@@ -895,12 +963,12 @@ function initializeShoppingCart() {
     closeShoppingCart
   );
 
-  getElement("cartOverlay")?.addEventListener(
+  getElement("continueShopping")?.addEventListener(
     "click",
     closeShoppingCart
   );
 
-  getElement("continueShopping")?.addEventListener(
+  getElement("cartOverlay")?.addEventListener(
     "click",
     closeShoppingCart
   );
@@ -909,67 +977,33 @@ function initializeShoppingCart() {
 /* === SHOPPING CART END === */
 
 
+/* ============================================================
+   INGREDIENT EXPLORER
+   ============================================================ */
+
 /* === INGREDIENT EXPLORER START === */
 
-let ingredientSearchTerm = "";
+let ingredientSearchQuery = "";
 let activeIngredientFilter = "all";
 
-function getFilteredIngredients() {
-  return INGREDIENTS.filter(ingredient => {
-    const matchesCategory =
-      activeIngredientFilter === "all" ||
-      ingredient.group === activeIngredientFilter;
-
-    const searchableContent = [
-      ingredient.name,
-      ingredient.category,
-      ingredient.description,
-      ingredient.details
-    ].join(" ").toLowerCase();
-
-    return matchesCategory &&
-      searchableContent.includes(ingredientSearchTerm.toLowerCase());
-  });
-}
-
-function generateIngredientCard(ingredient, index) {
-  const detailsId = `ingredient-details-${index}`;
-
+function generateIngredientCard(ingredient) {
   return `
-    <article class="ingredient-card">
-      <div class="ingredient-card-heading">
-        <span class="ingredient-number">
-          ${String(index + 1).padStart(2, "0")}
-        </span>
+    <article class="ingredient-card reveal visible">
 
-        <div class="ingredient-heading-text">
-          <h3>${escapeHTML(ingredient.name)}</h3>
+      <span class="eyebrow">
+        ${escapeHTML(ingredient.category)}
+      </span>
 
-          <span class="ingredient-category">
-            ${escapeHTML(ingredient.category)}
-          </span>
-        </div>
-      </div>
+      <h3>${escapeHTML(ingredient.name)}</h3>
 
-      <p class="ingredient-description">
-        ${escapeHTML(ingredient.description)}
-      </p>
+      <p>${escapeHTML(ingredient.description)}</p>
 
-      <button
-        type="button"
-        class="ingredient-more"
-        data-ingredient-toggle="${detailsId}"
-        aria-expanded="false"
-        aria-controls="${detailsId}"
-      >
-        LEARN MORE +
-      </button>
+      <details class="ingredient-details">
+        <summary>LEARN MORE</summary>
 
-      <div id="${detailsId}" hidden>
-        <p class="ingredient-description">
-          ${escapeHTML(ingredient.details)}
-        </p>
-      </div>
+        <p>${escapeHTML(ingredient.details)}</p>
+      </details>
+
     </article>
   `;
 }
@@ -978,30 +1012,31 @@ function renderIngredientExplorer() {
   const grid = getElement("ingredientGrid");
   if (!grid) return;
 
-  const ingredients = getFilteredIngredients();
+  const filtered = INGREDIENTS.filter(ingredient => {
+    const groupMatches =
+      activeIngredientFilter === "all" ||
+      ingredient.group === activeIngredientFilter;
 
-  grid.innerHTML = ingredients.length
-    ? ingredients.map(generateIngredientCard).join("")
-    : `<p class="empty-reviews">No ingredients match your search.</p>`;
+    const searchable = [
+      ingredient.name,
+      ingredient.category,
+      ingredient.description,
+      ingredient.details
+    ].join(" ").toLowerCase();
 
-  setElementText(
-    "ingredientResultCount",
-    `${ingredients.length} of ${INGREDIENTS.length} ingredients`
-  );
-
-  grid.querySelectorAll("[data-ingredient-toggle]").forEach(button => {
-    button.addEventListener("click", () => {
-      const details = getElement(button.dataset.ingredientToggle);
-      if (!details) return;
-
-      details.hidden = !details.hidden;
-
-      const expanded = !details.hidden;
-
-      button.setAttribute("aria-expanded", String(expanded));
-      button.textContent = expanded ? "SHOW LESS −" : "LEARN MORE +";
-    });
+    return (
+      groupMatches &&
+      searchable.includes(ingredientSearchQuery)
+    );
   });
+
+  grid.innerHTML = filtered.length
+    ? filtered.map(generateIngredientCard).join("")
+    : `
+      <p class="empty-reviews">
+        No ingredients match your search.
+      </p>
+    `;
 }
 
 function initializeIngredientExplorer() {
@@ -1012,16 +1047,12 @@ function initializeIngredientExplorer() {
   controls.className = "ingredient-controls";
 
   controls.innerHTML = `
-    <div class="ingredient-search-wrap">
-      <label
-        class="ingredient-search-label"
-        for="ingredientSearch"
-      >
+    <div class="ingredient-search">
+      <label for="ingredientSearch">
         SEARCH INGREDIENTS
       </label>
 
       <input
-        class="ingredient-search"
         id="ingredientSearch"
         type="search"
         placeholder="Search ingredients..."
@@ -1040,7 +1071,7 @@ function initializeIngredientExplorer() {
         data-ingredient-filter="all"
         aria-pressed="true"
       >
-        ALL
+        ALL INGREDIENTS
       </button>
 
       <button
@@ -1061,38 +1092,35 @@ function initializeIngredientExplorer() {
         OTHER INGREDIENTS
       </button>
     </div>
-
-    <p
-      class="ingredient-result-count"
-      id="ingredientResultCount"
-      aria-live="polite"
-    ></p>
   `;
 
   grid.before(controls);
 
-  getElement("ingredientSearch")?.addEventListener("input", event => {
-    ingredientSearchTerm = event.target.value.trim();
-    renderIngredientExplorer();
-  });
-
-  controls.querySelectorAll("[data-ingredient-filter]").forEach(button => {
-    button.addEventListener("click", () => {
-      activeIngredientFilter = button.dataset.ingredientFilter;
-
-      controls.querySelectorAll("[data-ingredient-filter]")
-        .forEach(filterButton => {
-          const isActive =
-            filterButton.dataset.ingredientFilter ===
-            activeIngredientFilter;
-
-          filterButton.classList.toggle("active", isActive);
-          filterButton.setAttribute("aria-pressed", String(isActive));
-        });
+  controls.querySelector("#ingredientSearch")
+    ?.addEventListener("input", event => {
+      ingredientSearchQuery =
+        event.target.value.trim().toLowerCase();
 
       renderIngredientExplorer();
     });
-  });
+
+  controls.querySelectorAll("[data-ingredient-filter]")
+    .forEach(button => {
+      button.addEventListener("click", () => {
+        activeIngredientFilter =
+          button.dataset.ingredientFilter;
+
+        controls.querySelectorAll("[data-ingredient-filter]")
+          .forEach(tab => {
+            const active = tab === button;
+
+            tab.classList.toggle("active", active);
+            tab.setAttribute("aria-pressed", String(active));
+          });
+
+        renderIngredientExplorer();
+      });
+    });
 
   renderIngredientExplorer();
 }
@@ -1100,102 +1128,139 @@ function initializeIngredientExplorer() {
 /* === INGREDIENT EXPLORER END === */
 
 
-/* === PRODUCT LABEL VIEWER START === */
+/* ============================================================
+   COMPACT INGREDIENT LABEL SUMMARY
+   ============================================================ */
+
+/* === LABEL SUMMARY START === */
+
+function initializeIngredientLabelSummary() {
+  const grid = getElement("ingredientGrid");
+  if (!grid || getElement("ingredientLabelSummary")) return;
+
+  const label = PRODUCT_LABEL_INFORMATION;
+
+  const summary = document.createElement("div");
+
+  summary.id = "ingredientLabelSummary";
+  summary.className = "ingredient-label-summary";
+
+  summary.innerHTML = `
+    <div class="ingredient-label-summary-heading">
+      <span class="eyebrow">INSIDE THE FORMULA</span>
+
+      <h3>WHAT'S ON THE LABEL</h3>
+
+      <p>
+        A quick overview of the ingredients
+        identified on the supplied product artwork.
+      </p>
+    </div>
+
+    <div class="ingredient-label-groups">
+
+      <details class="ingredient-label-group" open>
+        <summary>
+          <span>
+            <strong>PROPRIETARY BLEND</strong>
+            <small>
+              ${escapeHTML(label.proprietaryBlendAmount)}
+              · ${label.proprietaryBlend.length} ingredients
+            </small>
+          </span>
+
+          <span class="disclosure-chevron" aria-hidden="true"></span>
+        </summary>
+
+        <div class="ingredient-label-group-content">
+          <p>
+            ${label.proprietaryBlend.map(escapeHTML).join(", ")}.
+          </p>
+
+          <p class="ingredient-footnote">
+            The stated amount is for the entire blend.
+          </p>
+        </div>
+      </details>
+
+      <details class="ingredient-label-group">
+        <summary>
+          <span>
+            <strong>OTHER INGREDIENTS</strong>
+            <small>
+              ${label.otherIngredients.length} ingredients
+            </small>
+          </span>
+
+          <span class="disclosure-chevron" aria-hidden="true"></span>
+        </summary>
+
+        <div class="ingredient-label-group-content">
+          <p>
+            ${label.otherIngredients.map(escapeHTML).join(", ")}.
+          </p>
+        </div>
+      </details>
+
+    </div>
+
+    <p class="ingredient-label-summary-note">
+      Search or browse the cards below to learn
+      more about each ingredient.
+    </p>
+  `;
+
+  const controls = grid.previousElementSibling;
+
+  if (controls?.classList.contains("ingredient-controls")) {
+    controls.before(summary);
+  } else {
+    grid.before(summary);
+  }
+}
+
+/* === LABEL SUMMARY END === */
+
+
+/* ============================================================
+   PRODUCT LABEL LIGHTBOX
+   ============================================================ */
+
+/* === LABEL VIEWER START === */
 
 let labelZoomLevel = 1;
-let previousLabelFocus = null;
-
-const LABEL_ZOOM_SETTINGS = {
-  minimum: 0.5,
-  maximum: 3,
-  increment: 0.25,
-  baseWidth: 900
-};
 
 function updateLabelZoom() {
   const image = getElement("modalLabelImage");
   if (!image) return;
 
-  image.style.width =
-    `${Math.round(LABEL_ZOOM_SETTINGS.baseWidth * labelZoomLevel)}px`;
-
-  image.style.height = "auto";
-}
-
-function synchronizeProductLabelImages() {
-  const preview = getElement("labelPreview");
-  const modalImage = getElement("modalLabelImage");
-
-  /*
-    Override old HTML filenames, including
-    outdated data-full-src attributes.
-  */
-
-  if (preview instanceof HTMLImageElement) {
-    preview.src = PRODUCT_IMAGES.productLabel;
-    preview.alt = "007-NRG promotional label design preview";
-  } else if (preview) {
-    const nestedImage = preview.querySelector("img");
-
-    if (nestedImage) {
-      nestedImage.src = PRODUCT_IMAGES.productLabel;
-      nestedImage.alt = "007-NRG promotional label design preview";
-    }
-  }
-
-  if (modalImage) {
-    modalImage.src = PRODUCT_IMAGES.productLabel;
-    modalImage.dataset.fullSrc = PRODUCT_IMAGES.productLabel;
-    modalImage.alt = "Enlarged 007-NRG promotional label design preview";
-  }
+  image.style.transform = `scale(${labelZoomLevel})`;
+  image.style.transformOrigin = "center center";
 }
 
 function openProductLabel() {
   const modal = getElement("labelModal");
-  const image = getElement("modalLabelImage");
-
-  if (!modal || !image) return;
-
-  previousLabelFocus = document.activeElement;
-
-  image.src = PRODUCT_IMAGES.productLabel;
+  if (!modal) return;
 
   labelZoomLevel = 1;
+
+  const image = getElement("modalLabelImage");
+
+  if (image) {
+    image.src = PRODUCT_IMAGES.productLabel;
+    image.alt = "007-NRG product label artwork";
+  }
+
   updateLabelZoom();
 
-  modal.hidden = false;
-  lockBodyScroll();
-
-  getElement("closeLabel")?.focus();
+  openDialog(modal, getElement("closeLabel"));
 }
 
 function closeProductLabel() {
-  const modal = getElement("labelModal");
-  if (!modal || modal.hidden) return;
-
-  modal.hidden = true;
-  unlockBodyScroll();
-
-  if (previousLabelFocus?.focus) {
-    previousLabelFocus.focus();
-  }
-}
-
-function changeLabelZoom(amount) {
-  labelZoomLevel = Math.max(
-    LABEL_ZOOM_SETTINGS.minimum,
-    Math.min(
-      LABEL_ZOOM_SETTINGS.maximum,
-      labelZoomLevel + amount
-    )
-  );
-
-  updateLabelZoom();
+  closeDialog(getElement("labelModal"));
 }
 
 function initializeProductLabelViewer() {
-  synchronizeProductLabelImages();
-
   getElement("openLabelButton")?.addEventListener(
     "click",
     openProductLabel
@@ -1212,249 +1277,480 @@ function initializeProductLabelViewer() {
   );
 
   getElement("zoomIn")?.addEventListener("click", () => {
-    changeLabelZoom(LABEL_ZOOM_SETTINGS.increment);
+    labelZoomLevel = Math.min(3, labelZoomLevel + 0.25);
+    updateLabelZoom();
   });
 
   getElement("zoomOut")?.addEventListener("click", () => {
-    changeLabelZoom(-LABEL_ZOOM_SETTINGS.increment);
+    labelZoomLevel = Math.max(0.5, labelZoomLevel - 0.25);
+    updateLabelZoom();
+  });
+
+  getElement("labelModal")?.addEventListener("click", event => {
+    if (event.target.id === "labelModal") {
+      closeProductLabel();
+    }
   });
 }
 
-/* === PRODUCT LABEL VIEWER END === */
+/* === LABEL VIEWER END === */
 
 
-/* === BROWSER-LOCAL REVIEWS START === */
+/* ============================================================
+   FITNESS & NUTRITION TOOL NAVIGATION
+   ============================================================ */
 
-/*
-  These are local demo reviews only.
-  They are not shared between visitors.
-*/
+/* === TOOL NAVIGATION START === */
 
-let selectedReviewRating = 0;
+function initializeToolNavigation() {
+  const tabs = document.querySelectorAll("[data-tool]");
+  const panels = document.querySelectorAll("[data-tool-panel]");
 
-function isValidStoredReview(review) {
-  return Boolean(
-    review &&
-    typeof review === "object" &&
-    typeof review.name === "string" &&
-    review.name.trim().length >= 1 &&
-    review.name.length <= 60 &&
-    typeof review.text === "string" &&
-    review.text.trim().length >= 10 &&
-    review.text.length <= 1000 &&
-    Number.isInteger(review.rating) &&
-    review.rating >= 1 &&
-    review.rating <= 5 &&
-    typeof review.createdAt === "string"
-  );
-}
+  if (!tabs.length || !panels.length) return;
 
-function loadDemoReviews() {
-  const storedReviews = safelyReadStorage(
-    SITE_CONFIG.reviewStorageKey,
-    []
-  );
+  function selectTool(toolId) {
+    tabs.forEach(tab => {
+      const active = tab.dataset.tool === toolId;
 
-  if (!Array.isArray(storedReviews)) return [];
+      tab.classList.toggle("active", active);
+      tab.setAttribute("aria-pressed", String(active));
+    });
 
-  return storedReviews
-    .filter(isValidStoredReview)
-    .slice(0, SITE_CONFIG.maximumDemoReviews);
-}
+    panels.forEach(panel => {
+      const active = panel.dataset.toolPanel === toolId;
 
-let demoReviews = loadDemoReviews();
+      panel.hidden = !active;
+      panel.classList.toggle("active", active);
+    });
+  }
 
-function generateStarDisplay(rating) {
-  const normalizedRating = Math.max(
-    0,
-    Math.min(5, Math.round(rating))
-  );
-
-  return "★".repeat(normalizedRating) +
-    "☆".repeat(5 - normalizedRating);
-}
-
-function updateReviewStarPicker() {
-  const picker = getElement("starPicker");
-  if (!picker) return;
-
-  picker.querySelectorAll("[data-rating]").forEach(button => {
-    const rating = Number(button.dataset.rating);
-
-    button.classList.toggle(
-      "selected",
-      rating <= selectedReviewRating
-    );
-
-    button.setAttribute(
-      "aria-pressed",
-      String(rating === selectedReviewRating)
-    );
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      selectTool(tab.dataset.tool);
+    });
   });
+
+  selectTool("net-carbs");
 }
 
-function renderDemoReviews() {
-  const list = getElement("reviewList");
-  if (!list) return;
+/* === TOOL NAVIGATION END === */
 
-  if (!demoReviews.length) {
-    list.innerHTML = `
-      <div class="empty-reviews panel">
-        <h3>NO DEMO REVIEWS YET</h3>
 
-        <p>
-          Add a review to preview
-          the customer feedback layout.
-        </p>
-      </div>
-    `;
+/* ============================================================
+   NET CARB CALCULATOR
+   ============================================================ */
 
-    setElementText("averageRating", "—");
-    setElementText("averageStars", "☆☆☆☆☆");
-    setElementText("reviewCount", "No reviews yet");
+/* === NET CARB CALCULATOR START === */
+
+function calculateNetCarbs() {
+  const totalCarbs = Number(getElement("totalCarbs")?.value);
+  const fiber = Number(getElement("dietaryFiber")?.value);
+  const servings = Number(getElement("carbServings")?.value);
+
+  const valid = [
+    totalCarbs,
+    fiber,
+    servings
+  ].every(Number.isFinite);
+
+  if (
+    !valid ||
+    totalCarbs < 0 ||
+    fiber < 0 ||
+    fiber > totalCarbs ||
+    servings <= 0 ||
+    totalCarbs > 10000 ||
+    fiber > 10000 ||
+    servings > 1000
+  ) {
+    setElementText("netCarbValue", "—");
+
+    setElementText(
+      "netCarbExplanation",
+      "Enter valid amounts. Dietary fiber cannot exceed total carbohydrates."
+    );
 
     return;
   }
 
-  const totalRating = demoReviews.reduce(
-    (total, review) => total + review.rating,
-    0
-  );
+  const netPerServing = Math.max(0, totalCarbs - fiber);
+  const totalNetCarbs = netPerServing * servings;
 
-  const averageRating = totalRating / demoReviews.length;
+  const format = number =>
+    Number(number.toFixed(2)).toLocaleString("en-US", {
+      maximumFractionDigits: 2
+    });
 
-  setElementText("averageRating", averageRating.toFixed(1));
-  setElementText("averageStars", generateStarDisplay(averageRating));
+  setElementText("netCarbValue", format(totalNetCarbs));
 
   setElementText(
-    "reviewCount",
-    `${demoReviews.length} browser-local demo review${demoReviews.length === 1 ? "" : "s"}`
+    "netCarbExplanation",
+    `${format(netPerServing)} g net carbs per serving × ` +
+    `${format(servings)} serving${servings === 1 ? "" : "s"}.`
   );
-
-  list.innerHTML = demoReviews.map(review => {
-    const date = new Date(review.createdAt);
-
-    const formattedDate = Number.isNaN(date.getTime())
-      ? "Date unavailable"
-      : date.toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "short",
-          day: "numeric"
-        });
-
-    return `
-      <article class="review-card">
-        <div
-          class="rating-stars"
-          aria-label="${review.rating} out of 5 stars"
-        >
-          ${generateStarDisplay(review.rating)}
-        </div>
-
-        <h3>${escapeHTML(review.name)}</h3>
-
-        <span class="review-flavor">
-          007-NRG · ${escapeHTML(formattedDate)}
-        </span>
-
-        <p>${escapeHTML(review.text)}</p>
-      </article>
-    `;
-  }).join("");
 }
 
-function initializeDemoReviews() {
-  const form = getElement("reviewForm");
-  const picker = getElement("starPicker");
-
-  if (!form || !picker) return;
-
-  picker.querySelectorAll("[data-rating]").forEach(button => {
-    button.addEventListener("click", () => {
-      selectedReviewRating = Number(button.dataset.rating);
-      updateReviewStarPicker();
-    });
-  });
+function initializeNetCarbCalculator() {
+  const form = getElement("netCarbForm");
+  if (!form) return;
 
   form.addEventListener("submit", event => {
     event.preventDefault();
-
-    const reviewName = getElement("reviewName")?.value.trim() || "";
-    const reviewText = getElement("reviewText")?.value.trim() || "";
-
-    if (reviewName.length < 1 || reviewName.length > 60) {
-      setElementText(
-        "reviewStatus",
-        "Please enter a valid display name."
-      );
-      return;
-    }
-
-    if (selectedReviewRating < 1 || selectedReviewRating > 5) {
-      setElementText(
-        "reviewStatus",
-        "Please select a star rating."
-      );
-      return;
-    }
-
-    if (reviewText.length < 10 || reviewText.length > 1000) {
-      setElementText(
-        "reviewStatus",
-        "Your review must contain 10 to 1000 characters."
-      );
-      return;
-    }
-
-    const newReview = {
-      id: `review-${Date.now()}`,
-      name: reviewName,
-      text: reviewText,
-      rating: selectedReviewRating,
-      createdAt: new Date().toISOString()
-    };
-
-    demoReviews.unshift(newReview);
-
-    demoReviews = demoReviews.slice(
-      0,
-      SITE_CONFIG.maximumDemoReviews
-    );
-
-    const wasSaved = safelyWriteStorage(
-      SITE_CONFIG.reviewStorageKey,
-      demoReviews
-    );
-
-    renderDemoReviews();
-    form.reset();
-
-    selectedReviewRating = 0;
-    updateReviewStarPicker();
-
-    setElementText(
-      "reviewStatus",
-      wasSaved
-        ? "Demo review saved in this browser only."
-        : "Review displayed, but browser storage is unavailable."
-    );
-
-    showToast("Demo review added.");
+    calculateNetCarbs();
   });
 
-  updateReviewStarPicker();
-  renderDemoReviews();
+  ["totalCarbs", "dietaryFiber", "carbServings"].forEach(id => {
+    getElement(id)?.addEventListener("input", calculateNetCarbs);
+  });
+
+  form.addEventListener("reset", () => {
+    requestAnimationFrame(calculateNetCarbs);
+  });
+
+  calculateNetCarbs();
 }
 
-/* === BROWSER-LOCAL REVIEWS END === */
+/* === NET CARB CALCULATOR END === */
 
+
+/* ============================================================
+   WORKOUT INTERVAL TIMER
+   ============================================================ */
+
+/* === WORKOUT TIMER START === */
+
+const WORKOUT_TIMER = {
+  workSeconds: 30,
+  restSeconds: 15,
+  totalRounds: 8,
+
+  currentRound: 1,
+  phase: "ready",
+
+  remainingMilliseconds: 30000,
+  phaseDurationMilliseconds: 30000,
+
+  deadline: null,
+  intervalId: null,
+  running: false
+};
+
+function formatTimerTime(milliseconds) {
+  const seconds = Math.max(0, Math.ceil(milliseconds / 1000));
+
+  const minutes = Math.floor(seconds / 60);
+  const remainder = seconds % 60;
+
+  return (
+    String(minutes).padStart(2, "0") +
+    ":" +
+    String(remainder).padStart(2, "0")
+  );
+}
+
+function readTimerSettings() {
+  const work = Number(getElement("workSeconds")?.value);
+  const rest = Number(getElement("restSeconds")?.value);
+  const rounds = Number(getElement("timerRounds")?.value);
+
+  if (
+    !Number.isInteger(work) ||
+    !Number.isInteger(rest) ||
+    !Number.isInteger(rounds) ||
+    work < 5 ||
+    work > 3600 ||
+    rest < 0 ||
+    rest > 3600 ||
+    rounds < 1 ||
+    rounds > 100
+  ) {
+    showToast("Please enter valid workout timer settings.");
+    return null;
+  }
+
+  return { work, rest, rounds };
+}
+
+function renderWorkoutTimer() {
+  const timer = WORKOUT_TIMER;
+
+  const phaseLabels = {
+    ready: "READY",
+    work: "WORK",
+    rest: "REST",
+    complete: "WORKOUT COMPLETE"
+  };
+
+  setElementText("timerPhase", phaseLabels[timer.phase]);
+  setElementText(
+    "timerClock",
+    formatTimerTime(timer.remainingMilliseconds)
+  );
+
+  setElementText(
+    "timerRound",
+    timer.phase === "complete"
+      ? `${timer.totalRounds} ROUNDS COMPLETE`
+      : `ROUND ${timer.currentRound} OF ${timer.totalRounds}`
+  );
+
+  const progress = getElement("timerProgressBar");
+
+  if (progress) {
+    const duration = Math.max(
+      1,
+      timer.phaseDurationMilliseconds
+    );
+
+    const elapsed = duration - timer.remainingMilliseconds;
+
+    const percentage = timer.phase === "complete"
+      ? 100
+      : Math.min(100, Math.max(0, elapsed / duration * 100));
+
+    progress.style.width = `${percentage}%`;
+  }
+
+  const startButton = getElement("startTimer");
+  const pauseButton = getElement("pauseTimer");
+
+  if (startButton) {
+    startButton.disabled = timer.running;
+
+    startButton.textContent =
+      timer.phase === "ready" || timer.phase === "complete"
+        ? "START"
+        : "RESUME";
+  }
+
+  if (pauseButton) {
+    pauseButton.disabled = !timer.running;
+  }
+
+  ["workSeconds", "restSeconds", "timerRounds"].forEach(id => {
+    const input = getElement(id);
+    if (input) input.disabled = timer.running;
+  });
+}
+
+function stopWorkoutTimerInterval() {
+  clearInterval(WORKOUT_TIMER.intervalId);
+  WORKOUT_TIMER.intervalId = null;
+}
+
+function advanceWorkoutTimerPhase() {
+  const timer = WORKOUT_TIMER;
+
+  if (timer.phase === "work") {
+    if (timer.currentRound === timer.totalRounds) {
+      timer.phase = "complete";
+      timer.remainingMilliseconds = 0;
+      timer.running = false;
+      timer.deadline = null;
+
+      stopWorkoutTimerInterval();
+      showToast("Workout complete!");
+      return;
+    }
+
+    if (timer.restSeconds > 0) {
+      timer.phase = "rest";
+      timer.phaseDurationMilliseconds =
+        timer.restSeconds * 1000;
+    } else {
+      timer.currentRound++;
+      timer.phase = "work";
+      timer.phaseDurationMilliseconds =
+        timer.workSeconds * 1000;
+    }
+  } else if (timer.phase === "rest") {
+    timer.currentRound++;
+    timer.phase = "work";
+    timer.phaseDurationMilliseconds =
+      timer.workSeconds * 1000;
+  }
+
+  timer.remainingMilliseconds =
+    timer.phaseDurationMilliseconds;
+}
+
+function updateWorkoutTimer() {
+  const timer = WORKOUT_TIMER;
+
+  if (!timer.running || timer.deadline === null) return;
+
+  /*
+    Date.now() keeps the countdown aligned with
+    elapsed real time even when browser intervals
+    are throttled in a background tab.
+  */
+
+  let remaining = timer.deadline - Date.now();
+  let transitions = 0;
+
+  while (remaining <= 0 && timer.running && transitions < 300) {
+    const overshoot = -remaining;
+
+    advanceWorkoutTimerPhase();
+    transitions++;
+
+    if (!timer.running) break;
+
+    remaining = timer.phaseDurationMilliseconds - overshoot;
+
+    timer.deadline = Date.now() + remaining;
+  }
+
+  if (timer.running) {
+    timer.remainingMilliseconds = Math.max(0, remaining);
+  }
+
+  renderWorkoutTimer();
+}
+
+function startWorkoutTimer() {
+  const timer = WORKOUT_TIMER;
+
+  if (timer.running) return;
+
+  if (timer.phase === "ready" || timer.phase === "complete") {
+    const settings = readTimerSettings();
+    if (!settings) return;
+
+    timer.workSeconds = settings.work;
+    timer.restSeconds = settings.rest;
+    timer.totalRounds = settings.rounds;
+
+    timer.currentRound = 1;
+    timer.phase = "work";
+
+    timer.phaseDurationMilliseconds =
+      timer.workSeconds * 1000;
+
+    timer.remainingMilliseconds =
+      timer.phaseDurationMilliseconds;
+  }
+
+  timer.running = true;
+  timer.deadline = Date.now() + timer.remainingMilliseconds;
+
+  stopWorkoutTimerInterval();
+
+  timer.intervalId = setInterval(updateWorkoutTimer, 100);
+
+  renderWorkoutTimer();
+}
+
+function pauseWorkoutTimer() {
+  const timer = WORKOUT_TIMER;
+
+  if (!timer.running) return;
+
+  timer.remainingMilliseconds = Math.max(
+    0,
+    timer.deadline - Date.now()
+  );
+
+  timer.running = false;
+  timer.deadline = null;
+
+  stopWorkoutTimerInterval();
+  renderWorkoutTimer();
+}
+
+function resetWorkoutTimer() {
+  const timer = WORKOUT_TIMER;
+
+  stopWorkoutTimerInterval();
+
+  timer.running = false;
+  timer.deadline = null;
+  timer.phase = "ready";
+  timer.currentRound = 1;
+
+  const settings = readTimerSettings();
+
+  if (settings) {
+    timer.workSeconds = settings.work;
+    timer.restSeconds = settings.rest;
+    timer.totalRounds = settings.rounds;
+  }
+
+  timer.phaseDurationMilliseconds =
+    timer.workSeconds * 1000;
+
+  timer.remainingMilliseconds =
+    timer.phaseDurationMilliseconds;
+
+  renderWorkoutTimer();
+}
+
+function initializeWorkoutTimer() {
+  if (!getElement("timerClock")) return;
+
+  getElement("startTimer")?.addEventListener(
+    "click",
+    startWorkoutTimer
+  );
+
+  getElement("pauseTimer")?.addEventListener(
+    "click",
+    pauseWorkoutTimer
+  );
+
+  getElement("resetTimer")?.addEventListener(
+    "click",
+    resetWorkoutTimer
+  );
+
+  document.querySelectorAll(".timer-preset").forEach(button => {
+    button.addEventListener("click", () => {
+      if (WORKOUT_TIMER.running) {
+        showToast("Pause or reset the timer before changing presets.");
+        return;
+      }
+
+      getElement("workSeconds").value = button.dataset.work;
+      getElement("restSeconds").value = button.dataset.rest;
+      getElement("timerRounds").value = button.dataset.rounds;
+
+      resetWorkoutTimer();
+    });
+  });
+
+  ["workSeconds", "restSeconds", "timerRounds"].forEach(id => {
+    getElement(id)?.addEventListener("change", () => {
+      if (!WORKOUT_TIMER.running) {
+        resetWorkoutTimer();
+      }
+    });
+  });
+
+  /*
+    Update immediately when the tab becomes visible.
+    The timer also accounts for elapsed time while hidden.
+  */
+
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) updateWorkoutTimer();
+  });
+
+  resetWorkoutTimer();
+}
+
+/* === WORKOUT TIMER END === */
+
+
+/* ============================================================
+   SCROLL ANIMATIONS
+   ============================================================ */
 
 /* === SCROLL ANIMATIONS START === */
 
 function initializeScrollAnimations() {
   const elements = document.querySelectorAll(".reveal");
 
-  const reducedMotion = window.matchMedia(
+  const reducedMotion = matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
@@ -1465,7 +1761,6 @@ function initializeScrollAnimations() {
     elements.forEach(element => {
       element.classList.add("visible");
     });
-
     return;
   }
 
@@ -1478,7 +1773,7 @@ function initializeScrollAnimations() {
     });
   }, {
     threshold: 0.08,
-    rootMargin: "0px 0px 40px 0px"
+    rootMargin: "0px 0px 35px 0px"
   });
 
   elements.forEach(element => observer.observe(element));
@@ -1487,70 +1782,67 @@ function initializeScrollAnimations() {
 /* === SCROLL ANIMATIONS END === */
 
 
+/* ============================================================
+   KEYBOARD ACCESSIBILITY
+   ============================================================ */
+
 /* === KEYBOARD ACCESSIBILITY START === */
 
 function initializeKeyboardControls() {
   document.addEventListener("keydown", event => {
-    if (event.key === "Escape") {
-      const labelModal = getElement("labelModal");
-      const productModal = getElement("productModal");
-      const cartDrawer = getElement("cartDrawer");
-
-      if (labelModal && !labelModal.hidden) {
-        closeProductLabel();
-        return;
-      }
-
-      if (productModal && !productModal.hidden) {
-        closeProductPreview();
-        return;
-      }
-
-      if (cartDrawer && !cartDrawer.hidden) {
-        closeShoppingCart();
-        return;
-      }
-
-      closeMobileNavigation();
-    }
-
-    if (event.key !== "Tab") return;
-
-    const activeDialog = [
+    const dialogs = [
       getElement("labelModal"),
       getElement("productModal"),
       getElement("cartDrawer")
-    ].find(dialog => dialog && !dialog.hidden);
+    ];
 
-    if (!activeDialog) return;
+    const activeDialog = dialogs.find(
+      dialog => dialog && !dialog.hidden
+    );
 
-    const focusableElements = Array.from(
+    if (event.key === "Escape") {
+      if (activeDialog?.id === "labelModal") {
+        closeProductLabel();
+      } else if (activeDialog?.id === "productModal") {
+        closeProductPreview();
+      } else if (activeDialog?.id === "cartDrawer") {
+        closeShoppingCart();
+      }
+
+      return;
+    }
+
+    if (event.key !== "Tab" || !activeDialog) return;
+
+    const focusable = Array.from(
       activeDialog.querySelectorAll(
-        'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        'button:not([disabled]), a[href], ' +
+        'input:not([disabled]), textarea:not([disabled]), ' +
+        '[tabindex]:not([tabindex="-1"])'
       )
-    ).filter(element => element.getClientRects().length > 0);
+    ).filter(element =>
+      element.getClientRects().length > 0
+    );
 
-    if (!focusableElements.length) return;
+    if (!focusable.length) return;
 
-    const first = focusableElements[0];
-    const last = focusableElements[focusableElements.length - 1];
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
 
-    if (event.shiftKey) {
-      if (
-        document.activeElement === first ||
-        !activeDialog.contains(document.activeElement)
-      ) {
-        event.preventDefault();
-        last.focus();
-      }
-    } else {
-      if (
-        document.activeElement === last ||
-        !activeDialog.contains(document.activeElement)
-      ) {
-        event.preventDefault();
-        first.focus();
-      }
+    if (
+      event.shiftKey &&
+      (document.activeElement === first ||
+       !activeDialog.contains(document.activeElement))
+    ) {
+      event.preventDefault();
+      last.focus();
+    } else if (
+      !event.shiftKey &&
+      (document.activeElement === last ||
+       !activeDialog.contains(document.activeElement))
+    ) {
+      event.preventDefault();
+      first.focus();
     }
   });
 }
@@ -1558,28 +1850,29 @@ function initializeKeyboardControls() {
 /* === KEYBOARD ACCESSIBILITY END === */
 
 
-/* === IMAGE ERROR HANDLING START === */
+/* ============================================================
+   IMAGE ERROR REPORTING
+   ============================================================ */
+
+/* === IMAGE ERROR REPORTING START === */
 
 function initializeImageErrorHandling() {
   document.addEventListener("error", event => {
-    const image = event.target;
-
-    if (!(image instanceof HTMLImageElement)) return;
+    if (!(event.target instanceof HTMLImageElement)) return;
 
     console.warn(
       "[007-NRG] Image could not be loaded:",
-      image.currentSrc || image.src
+      event.target.currentSrc || event.target.src
     );
-
-    /*
-      Image failures are logged instead of
-      silently replacing them with old artwork.
-    */
   }, true);
 }
 
-/* === IMAGE ERROR HANDLING END === */
+/* === IMAGE ERROR REPORTING END === */
 
+
+/* ============================================================
+   APPLICATION INITIALIZATION
+   ============================================================ */
 
 /* === APPLICATION INITIALIZATION START === */
 
@@ -1588,12 +1881,21 @@ function initializeApplication() {
 
   initializeImageErrorHandling();
   initializeMobileNavigation();
+
   initializeHeroSlideshow();
+
   initializeProductCollection();
+  initializeProductPreview();
   initializeShoppingCart();
+
   initializeIngredientExplorer();
+  initializeIngredientLabelSummary();
   initializeProductLabelViewer();
-  initializeDemoReviews();
+
+  initializeToolNavigation();
+  initializeNetCarbCalculator();
+  initializeWorkoutTimer();
+
   initializeScrollAnimations();
   initializeKeyboardControls();
 

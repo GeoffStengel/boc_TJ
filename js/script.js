@@ -1,387 +1,466 @@
 
 "use strict";
 
+/* ============================================================
+   007-NRG WEBSITE — MAIN JAVASCRIPT
+   Updated product images, hero rotation, product collection,
+   ingredient explorer, label zoom, cart preview, and reviews.
+   ============================================================ */
+
+
 /* === SITE CONFIGURATION START === */
 
-const FLAVORS = [
-  {
-    id: "original",
-    name: "Original",
-    edition: "01 / ORIGINAL",
-    title: "AWAKEN THE <em>POWER.</em>",
-    description:
-      "The original Blood Of Christ design. A bold identity in a compact 40 mL bottle.",
-    color: "#a52c45",
-    singleImage: "images/original_bottle_600x900.png",
-    caseImage:
-      "images/original_12pack_900x600.png"
-  },
-  {
-    id: "grape",
-    name: "Grape Blast",
-    edition: "02 / GRAPE BLAST",
-    title: "UNLEASH THE <em>BLAST.</em>",
-    description:
-      "Discover Grape Blast, featuring a distinctive purple and black design.",
-    color: "#8c38cc",
-    singleImage: "images/grape_bottle_600x900.png",
-    caseImage:
-      "images/grape_12pack_900x600.png"
-  },
-  {
-    id: "tropical",
-    name: "Tropical Rush",
-    edition: "03 / TROPICAL RUSH",
-    title: "FEEL THE <em>RUSH.</em>",
-    description:
-      "Explore Tropical Rush, with vivid orange accents and tropical-inspired artwork.",
-    color: "#d97822",
-    singleImage: "images/tropical_bottle_600x900.png",
-    caseImage:
-      "images/tropical_12pack_900x600.png"
-  }
-];
-
-const PRODUCTS = FLAVORS.flatMap(flavor => [
-  {
-    id: `${flavor.id}-single`,
-    flavorId: flavor.id,
-    flavor: flavor.name,
-    name: `${flavor.name} · Single Bottle`,
-    type: "single",
-    size: "1 × 40 mL",
-    image: flavor.singleImage,
-    color: flavor.color,
-    priceCents: 329
-  },
-  {
-    id: `${flavor.id}-case`,
-    flavorId: flavor.id,
-    flavor: flavor.name,
-    name: `${flavor.name} · 12 Pack`,
-    type: "case",
-    size: "12 × 40 mL",
-    image: flavor.caseImage,
-    color: flavor.color,
-    priceCents: 3100
-  }
-]);
-
-
-/* === INGREDIENT EXPLORER DATA START === */
-
-const INGREDIENTS = [
-  // === PROPRIETARY BLEND INGREDIENTS START ===
-  {
-    name: "Beta-Alanine",
-    category: "AMINO ACID",
-    description:
-      "A nonessential amino acid used in the body's production of carnosine.",
-    details:
-      "Beta-alanine is commonly studied in sports nutrition. It can cause temporary tingling or flushing, sometimes called paresthesia. The amount in this product is not individually disclosed."
-  },
-  {
-    name: "L-Citrulline Malate 2:1",
-    category: "AMINO ACID COMPOUND",
-    description:
-      "A combination of L-citrulline and malate, commonly found in sports nutrition formulas.",
-    details:
-      "L-citrulline participates in the body's urea cycle and can be converted to arginine. The 2:1 designation refers to the stated ratio of citrulline to malate. The individual amount is not disclosed."
-  },
-  {
-    name: "Gamma Aminobutyric Acid (GABA)",
-    category: "AMINO ACID DERIVATIVE",
-    description:
-      "A naturally occurring signaling molecule involved in nervous system activity.",
-    details:
-      "GABA is an inhibitory neurotransmitter in the central nervous system. The effects of orally consumed GABA are still being studied, including how much reaches the brain. The label does not disclose its individual quantity."
-  },
-  {
-    name: "Caffeine Anhydrous",
-    category: "STIMULANT",
-    description:
-      "A concentrated, water-free form of caffeine used in some energy and performance products.",
-    details:
-      "Caffeine stimulates the central nervous system and can increase alertness. It may also cause anxiety, insomnia, palpitations, or elevated heart rate. The amount of caffeine anhydrous per bottle is not disclosed."
-  },
-  {
-    name: "Dicaffeine Malate",
-    category: "CAFFEINE COMPOUND",
-    description:
-      "A compound containing caffeine and malic acid, used as another caffeine source.",
-    details:
-      "Dicaffeine malate contributes additional caffeine. The total caffeine content should account for both caffeine anhydrous and dicaffeine malate. The supplied label does not provide a total caffeine amount."
-  },
-  {
-    name: "AMPiberry® (Juniperus communis)",
-    category: "BOTANICAL INGREDIENT",
-    description:
-      "A branded ingredient identified on the label as derived from juniper berries.",
-    details:
-      "The label identifies AMPiberry® as Juniperus communis (berry). Specific effects depend on the extract's composition and amount, neither of which is disclosed here. Product-specific performance claims would require supporting evidence."
-  },
-  {
-    name: "Theobromine",
-    category: "METHYLXANTHINE",
-    description:
-      "A naturally occurring compound found in cacao and related plants.",
-    details:
-      "Theobromine belongs to the methylxanthine family, which also includes caffeine. It has physiological effects that depend on dose and individual sensitivity. Its amount in the proprietary blend is not disclosed."
-  },
-  {
-    name: "Yohimbine HCl (98%)",
-    category: "STIMULANT COMPOUND",
-    description:
-      "A pharmacologically active compound associated with adrenergic nervous system effects.",
-    details:
-      "Yohimbine can increase heart rate and blood pressure and may cause anxiety or other adverse effects. It can also interact with medications. The 98% designation appears on the label, but the individual dose is not provided."
-  },
-  {
-    name: "Rauwolfia Vomitoria Extract",
-    category: "BOTANICAL EXTRACT",
-    description:
-      "A root-bark extract identified as standardized to a minimum of 90% alpha-yohimbine.",
-    details:
-      "The supplied label states 'std. min. 90% alpha yohimbine' and identifies root bark as the source. Alpha-yohimbine is a potent adrenergic compound. The extract's individual amount is not disclosed, and the finished formula requires appropriate safety and regulatory review."
-  },
-  {
-    name: "Ketones",
-    category: "FORMULA COMPONENT",
-    description:
-      "A general ingredient term appearing at the end of the proprietary blend.",
-    details:
-      "The label lists 'Ketones' but does not identify a specific ketone compound, chemical form, or amount. More precise information from the manufacturer is needed before describing its intended function."
-  },
-  // === PROPRIETARY BLEND INGREDIENTS END ===
-
-  // === OTHER INGREDIENTS START ===
-  {
-    name: "Purified Water",
-    category: "OTHER INGREDIENT",
-    description:
-      "The water-based component of the liquid formulation.",
-    details:
-      "Purified water is commonly used as a carrier or solvent in liquid products. It is listed separately from the 9,048 mg proprietary blend."
-  },
-  {
-    name: "Citric Acid",
-    category: "ACIDULANT",
-    description:
-      "An ingredient commonly used to provide tartness and adjust acidity.",
-    details:
-      "Citric acid is used in many beverages and foods. Its specific concentration and function in this formulation are not disclosed."
-  },
-  {
-    name: "Natural & Artificial Flavors",
-    category: "FLAVORING",
-    description:
-      "Flavoring ingredients used to create the product's taste profile.",
-    details:
-      "The label groups natural and artificial flavors together without identifying their individual components. Flavor formulations may differ between product varieties and should be confirmed against each final flavor label."
-  },
-  {
-    name: "Silicon Dioxide",
-    category: "OTHER INGREDIENT",
-    description:
-      "A commonly used food and supplement processing ingredient.",
-    details:
-      "Silicon dioxide is frequently used as an anti-caking or flow-support ingredient in dry formulations. Its specific purpose in this liquid product is not stated on the label."
-  },
-  {
-    name: "Calcium Silicate",
-    category: "OTHER INGREDIENT",
-    description:
-      "An ingredient commonly used in food and supplement manufacturing.",
-    details:
-      "Calcium silicate may be used for processing or formulation purposes. The supplied label does not specify its exact function or quantity."
-  },
-  {
-    name: "Sucralose",
-    category: "SWEETENER",
-    description:
-      "A high-intensity sweetener used in many reduced-sugar products.",
-    details:
-      "Sucralose provides sweetness in small quantities. The amount used in this formulation is not listed."
-  },
-  {
-    name: "Acesulfame Potassium (Ace K)",
-    category: "SWEETENER",
-    description:
-      "A high-intensity sweetener commonly blended with other sweeteners.",
-    details:
-      "Acesulfame potassium, also called Ace K, is used to provide sweetness. The label does not disclose its concentration."
-  },
-  {
-    name: "FD&C Red #40",
-    category: "COLOR ADDITIVE",
-    description:
-      "A certified color additive used to provide a red appearance.",
-    details:
-      "FD&C Red No. 40 is a synthetic color additive. Color additives are subject to applicable labeling and use requirements. Confirm whether this ingredient appears in every flavor or only in specific formulations."
-  },
-  {
-    name: "Potassium Sorbate",
-    category: "PRESERVATIVE",
-    description:
-      "A preservative commonly used to help control yeast and mold growth.",
-    details:
-      "Potassium sorbate is used in certain foods and beverages to support shelf stability. Its effectiveness depends on factors such as acidity, concentration, and the overall formulation."
-  },
-  {
-    name: "Sodium Benzoate",
-    category: "PRESERVATIVE",
-    description:
-      "A preservative commonly used in acidic beverages and other products.",
-    details:
-      "Sodium benzoate can help inhibit microbial growth under suitable formulation conditions. Its amount is not disclosed on the supplied label."
-  }
-  // === OTHER INGREDIENTS END ===
-];
-
-/* === INGREDIENT EXPLORER DATA END === */
-
-
-const STORAGE_KEYS = {
-  cart: "boc-shopping-cart-v6",
-  reviews: "boc-demo-reviews-v6"
+const SITE_CONFIG = {
+  brandName: "007-NRG",
+  heroRotationInterval: 3500,
+  heroFadeDuration: 250,
+  checkoutEnabled: false,
+  maximumDemoReviews: 100,
+  reviewStorageKey: "007-nrg-demo-reviews-v2"
 };
 
-const SLIDE_INTERVAL_MS = 6500;
-const SLIDE_FADE_MS = 350;
-const MAX_CART_QUANTITY = 99;
-const MAX_REVIEWS = 100;
+/*
+  IMPORTANT:
+  Image paths are relative to index.html.
+
+  Confirm the label filename, since the complete
+  name was partly hidden in your screenshot.
+*/
+
+
+/* === PRODUCT IMAGE CONFIGURATION START === */
+
+const PRODUCT_IMAGES = {
+  // Original 007-NRG bottle
+  singleBottle: "images/007-NRG-single-bottle-600x900.png",
+
+  // New grape bottle
+  grapeBottle: "images/007-NRG-Grape-single bottle-600x900.png",
+
+  // New blue raspberry bottle
+  blueRaspberryBottle: "images/007-NRG-Blue;-Raspberrysingle-600x900.png",
+
+  // Promotional photography
+  waterSplashBottle: "images/007-NRG-600x900-Water-Splash-Bottle.png",
+  backSplashBottle: "images/007-NRG-Single-Bottle-Back-Splash.png",
+  bottleWithBackground: "images/007-NRG-single-bottle-with-background.png",
+
+  // Product packaging
+  displayCase: "images/007-NRG-20pck-Display.png",
+  displayBox: "images/007-NRG-20pck-Bottles-In-Box.png",
+
+  // Product information
+  productLabel: "images/007-NRG-Label-no-bkgd-1536x1024.png",
+  originalIngredients: "images/007-NRG-ingredients.png",
+
+  // Original client artwork
+  originalCase: "images/007-NRG-30pck-case-img.png",
+  originalFrontCase: "images/007-NRG-product-full-case-frontview.png"
+};
+
+/* === PRODUCT IMAGE CONFIGURATION END === */
+
 
 /* === SITE CONFIGURATION END === */
 
 
-/* === DOM HELPERS START === */
+/* === PRODUCT DATA START === */
 
-function $(id) {
-  return document.getElementById(id);
+const PRODUCTS = [
+  {
+    id: "007-nrg-single",
+    name: "007-NRG Single Bottle",
+    type: "single",
+    size: "40 mL",
+    description: "Explore the 007-NRG single-bottle design and product information.",
+    image: PRODUCT_IMAGES.singleBottle,
+    badge: "SINGLE BOTTLE",
+    priceCents: null
+  },
+  {
+    id: "007-nrg-display",
+    name: "007-NRG Display Case",
+    type: "case",
+    size: "20 × 40 mL",
+    description: "Explore the redesigned 20-bottle display packaging.",
+    image: PRODUCT_IMAGES.displayCase,
+    badge: "20-BOTTLE DISPLAY",
+    priceCents: null
+  },
+  {
+    id: "007-nrg-box",
+    name: "007-NRG Bottles in Box",
+    type: "case",
+    size: "Display Packaging",
+    description: "A closer look at the 007-NRG bottles and display box.",
+    image: PRODUCT_IMAGES.displayBox,
+    badge: "PACKAGING PREVIEW",
+    priceCents: null
+  }
+];
+
+/* === PRODUCT DATA END === */
+
+
+
+
+/* === HERO SLIDESHOW DATA START === */
+
+const HERO_SLIDES = [
+  {
+    edition: "01 / ORIGINAL 007-NRG",
+
+    title: "HYPER FOCUSED <em>ENERGY.</em>",
+
+    description:
+      "Meet the original 007-NRG. Discover our bold 40 mL product and explore the collection.",
+
+    image: PRODUCT_IMAGES.singleBottle,
+
+    alt: "Original 007-NRG red single bottle, 40 mL",
+
+    productId: "007-nrg-single"
+  },
+
+  {
+    edition: "02 / GRAPE",
+
+    title: "DISCOVER <em>GRAPE.</em>",
+
+    description:
+      "A striking grape-inspired concept featuring a clear bottle filled with vibrant purple liquid.",
+
+    image: PRODUCT_IMAGES.grapeBottle,
+
+    alt: "007-NRG grape concept bottle with purple liquid",
+
+    productId: "007-nrg-single"
+  },
+
+  {
+    edition: "03 / BLUE RASPBERRY",
+
+    title: "GO BOLD. <em>GO BLUE.</em>",
+
+    description:
+      "Explore our blue raspberry concept with brilliant blue liquid and the signature 007-NRG design.",
+
+    image: PRODUCT_IMAGES.blueRaspberryBottle,
+
+    alt: "007-NRG blue raspberry concept bottle with blue liquid",
+
+    productId: "007-nrg-single"
+  }
+];
+
+/* === HERO SLIDESHOW DATA END === */
+
+
+
+/* === INGREDIENT DATA START === */
+
+/*
+  Ingredient names are based on the client's
+  original supplied artwork, not the generated
+  promotional label.
+
+  The original artwork lists a proprietary blend
+  of 9,048 mg without individual ingredient amounts.
+*/
+
+const INGREDIENTS = [
+  {
+    name: "Beta-Alanine",
+    category: "Amino Acid",
+    group: "blend",
+    description: "An amino acid involved in carnosine production.",
+    details: "Beta-alanine is commonly studied in sports nutrition. The individual amount in this product has not been disclosed."
+  },
+  {
+    name: "L-Citrulline Malate 2:1",
+    category: "Amino Acid Compound",
+    group: "blend",
+    description: "A combination of L-citrulline and malate.",
+    details: "The 2:1 designation describes the stated ingredient ratio. The individual quantity is not provided."
+  },
+  {
+    name: "GABA",
+    category: "Amino Acid Derivative",
+    group: "blend",
+    description: "Gamma-aminobutyric acid is a naturally occurring signaling molecule.",
+    details: "The effects of orally consumed GABA are still being studied. The individual amount is not disclosed."
+  },
+  {
+    name: "Caffeine Anhydrous",
+    category: "Stimulant",
+    group: "blend",
+    description: "A concentrated form of caffeine.",
+    details: "Caffeine can cause insomnia, anxiety, palpitations and increased heart rate. The amount in this blend is not individually disclosed."
+  },
+  {
+    name: "Dicaffeine Malate",
+    category: "Caffeine Compound",
+    group: "blend",
+    description: "A compound containing caffeine and malic acid.",
+    details: "This is an additional caffeine source. Total caffeine content from all ingredients has not been confirmed."
+  },
+  {
+    name: "AMPiberry",
+    category: "Botanical Ingredient",
+    group: "blend",
+    description: "A branded ingredient identified with Juniperus communis.",
+    details: "The original artwork identifies juniper berry. The individual quantity is not disclosed."
+  },
+  {
+    name: "Theobromine",
+    category: "Methylxanthine",
+    group: "blend",
+    description: "A naturally occurring compound also found in cacao.",
+    details: "Theobromine belongs to the same general chemical family as caffeine. Its effects depend on dose and individual sensitivity."
+  },
+  {
+    name: "Yohimbine HCl 98%",
+    category: "Stimulant Compound",
+    group: "blend",
+    description: "A pharmacologically active adrenergic compound.",
+    details: "Yohimbine may increase heart rate or blood pressure and may interact with medications. Its individual amount is not disclosed."
+  },
+  {
+    name: "Rauwolfia Vomitoria Extract",
+    category: "Botanical Extract",
+    group: "blend",
+    description: "An extract identified as standardized to at least 90% alpha-yohimbine.",
+    details: "Alpha-yohimbine is a potent adrenergic compound. This ingredient warrants qualified safety and regulatory review."
+  },
+  {
+    name: "Ketones",
+    category: "Formula Component",
+    group: "blend",
+    description: "A component identified as ketones on the original artwork.",
+    details: "The supplied label does not identify the specific ketone compound or its individual quantity."
+  },
+  {
+    name: "Purified Water",
+    category: "Other Ingredient",
+    group: "other",
+    description: "A water-based formulation ingredient.",
+    details: "Listed separately from the proprietary blend."
+  },
+  {
+    name: "Citric Acid",
+    category: "Acidulant",
+    group: "other",
+    description: "Commonly used to adjust acidity or add tartness.",
+    details: "The specific amount is not disclosed."
+  },
+  {
+    name: "Natural and Artificial Flavors",
+    category: "Flavoring",
+    group: "other",
+    description: "Ingredients used to create the product's flavor.",
+    details: "Individual flavor components are not disclosed."
+  },
+  {
+    name: "Silicon Dioxide",
+    category: "Other Ingredient",
+    group: "other",
+    description: "An ingredient used in food and supplement manufacturing.",
+    details: "The exact function in this formulation is not stated."
+  },
+  {
+    name: "Calcium Silicate",
+    category: "Other Ingredient",
+    group: "other",
+    description: "A food and supplement processing ingredient.",
+    details: "The amount and specific purpose are not disclosed."
+  },
+  {
+    name: "Sucralose",
+    category: "Sweetener",
+    group: "other",
+    description: "A high-intensity sweetener.",
+    details: "The amount used is not disclosed."
+  },
+  {
+    name: "Acesulfame Potassium",
+    category: "Sweetener",
+    group: "other",
+    description: "A high-intensity sweetener also called Ace K.",
+    details: "The amount used is not disclosed."
+  },
+  {
+    name: "FD&C Red 40",
+    category: "Color Additive",
+    group: "other",
+    description: "A certified red color additive.",
+    details: "Confirm this declaration against the final approved formula."
+  },
+  {
+    name: "Potassium Sorbate",
+    category: "Preservative",
+    group: "other",
+    description: "A preservative used in certain food and beverage products.",
+    details: "The individual amount is not disclosed."
+  },
+  {
+    name: "Sodium Benzoate",
+    category: "Preservative",
+    group: "other",
+    description: "A preservative commonly used in acidic formulations.",
+    details: "The individual amount is not disclosed."
+  }
+];
+
+/* === INGREDIENT DATA END === */
+
+
+/* === GENERAL HELPERS START === */
+
+function getElement(elementId) {
+  return document.getElementById(elementId);
 }
 
-function formatPrice(cents) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD"
-  }).format(cents / 100);
+function setElementText(elementId, value) {
+  const element = getElement(elementId);
+  if (element) element.textContent = String(value);
 }
 
 function escapeHTML(value) {
-  return String(value).replace(/[&<>"']/g, character => {
-    const entities = {
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#39;"
-    };
+  const characters = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  };
 
-    return entities[character];
-  });
+  return String(value).replace(
+    /[&<>"']/g,
+    character => characters[character]
+  );
 }
 
-function readStoredJSON(key, fallback) {
-  try {
-    const rawValue = localStorage.getItem(key);
+function getProductById(productId) {
+  return PRODUCTS.find(product => product.id === productId);
+}
 
-    return rawValue === null
-      ? fallback
-      : JSON.parse(rawValue);
+function formatProductPrice(product) {
+  if (!product || typeof product.priceCents !== "number") {
+    return "PRICE COMING SOON";
+  }
+
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD"
+  }).format(product.priceCents / 100);
+}
+
+function safelyReadStorage(storageKey, fallbackValue) {
+  try {
+    const storedValue = localStorage.getItem(storageKey);
+    return storedValue === null
+      ? fallbackValue
+      : JSON.parse(storedValue);
   } catch (error) {
-    console.warn(`Unable to read ${key}:`, error);
-    return fallback;
+    console.warn("[007-NRG] Storage read failed:", error);
+    return fallbackValue;
   }
 }
 
-function saveStoredJSON(key, value) {
+function safelyWriteStorage(storageKey, value) {
   try {
-    localStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(storageKey, JSON.stringify(value));
     return true;
   } catch (error) {
-    console.warn(`Unable to save ${key}:`, error);
+    console.warn("[007-NRG] Storage write failed:", error);
     return false;
   }
 }
 
-function getProduct(productId) {
-  return PRODUCTS.find(product => product.id === productId);
-}
+/* === GENERAL HELPERS END === */
 
-function lockPageScroll() {
-  document.body.classList.add("modal-open");
-}
 
-function unlockPageScroll() {
-  const hasOpenDialog = [
-    "cartDrawer",
-    "productModal",
-    "labelModal"
-  ].some(id => {
-    const element = $(id);
-    return element && !element.hidden;
-  });
+/* === TOAST NOTIFICATIONS START === */
 
-  if (!hasOpenDialog) {
-    document.body.classList.remove("modal-open");
-  }
-}
-
-let toastTimeout;
+let toastTimeoutId = null;
 
 function showToast(message) {
-  const toast = $("toast");
+  const toast = getElement("toast");
   if (!toast) return;
 
-  window.clearTimeout(toastTimeout);
+  clearTimeout(toastTimeoutId);
 
   toast.textContent = message;
   toast.hidden = false;
 
-  toastTimeout = window.setTimeout(() => {
+  toastTimeoutId = setTimeout(() => {
     toast.hidden = true;
-  }, 3000);
+  }, 3500);
 }
 
-/* === DOM HELPERS END === */
+/* === TOAST NOTIFICATIONS END === */
+
+
+/* === MODAL SCROLL MANAGEMENT START === */
+
+function lockBodyScroll() {
+  document.body.classList.add("modal-open");
+}
+
+function unlockBodyScroll() {
+  const anyDialogOpen = [
+    "cartDrawer",
+    "productModal",
+    "labelModal"
+  ].some(dialogId => {
+    const dialog = getElement(dialogId);
+    return dialog && !dialog.hidden;
+  });
+
+  if (!anyDialogOpen) {
+    document.body.classList.remove("modal-open");
+  }
+}
+
+/* === MODAL SCROLL MANAGEMENT END === */
 
 
 /* === MOBILE NAVIGATION START === */
 
-function closeMobileMenu() {
-  const navigation = $("navLinks");
-  const toggle = $("menuToggle");
+function closeMobileNavigation() {
+  const navigation = getElement("navLinks");
+  const menuToggle = getElement("menuToggle");
 
-  if (!navigation || !toggle) return;
+  if (!navigation || !menuToggle) return;
 
   navigation.classList.remove("open");
-  toggle.setAttribute("aria-expanded", "false");
-  toggle.setAttribute("aria-label", "Open menu");
+  menuToggle.setAttribute("aria-expanded", "false");
+  menuToggle.setAttribute("aria-label", "Open menu");
 }
 
-function initializeNavigation() {
-  const toggle = $("menuToggle");
-  const navigation = $("navLinks");
+function initializeMobileNavigation() {
+  const navigation = getElement("navLinks");
+  const menuToggle = getElement("menuToggle");
 
-  if (!toggle || !navigation) return;
+  if (!navigation || !menuToggle) return;
 
-  toggle.addEventListener("click", () => {
+  menuToggle.addEventListener("click", () => {
     const isOpen = navigation.classList.toggle("open");
 
-    toggle.setAttribute("aria-expanded", String(isOpen));
-    toggle.setAttribute(
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.setAttribute(
       "aria-label",
       isOpen ? "Close menu" : "Open menu"
     );
   });
 
   navigation.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", closeMobileMenu);
+    link.addEventListener("click", closeMobileNavigation);
   });
 
   window.addEventListener("resize", () => {
-    if (window.innerWidth > 1000) {
-      closeMobileMenu();
+    if (window.innerWidth > 850) {
+      closeMobileNavigation();
     }
   });
 }
@@ -391,297 +470,181 @@ function initializeNavigation() {
 
 /* === HERO SLIDESHOW START === */
 
-let activeSlide = 0;
-let slideTimer = null;
-let slideTransitionTimer = null;
-let slideRequestId = 0;
-let slidePausedUntil = 0;
+let currentHeroSlideIndex = 0;
+let heroRotationTimer = null;
+let heroTransitionRequestId = 0;
 
-const heroImageCache = new Map();
+const preloadedHeroImages = new Map();
 
 function preloadHeroImage(imagePath) {
-  if (heroImageCache.has(imagePath)) {
-    return heroImageCache.get(imagePath);
+  if (preloadedHeroImages.has(imagePath)) {
+    return preloadedHeroImages.get(imagePath);
   }
 
   const imagePromise = new Promise((resolve, reject) => {
     const image = new Image();
 
     image.onload = () => resolve(imagePath);
+
     image.onerror = () => {
-      reject(new Error(`Could not load image: ${imagePath}`));
+      reject(new Error(`Could not load hero image: ${imagePath}`));
     };
 
     image.src = imagePath;
-
-    if (image.complete && image.naturalWidth > 0) {
-      resolve(imagePath);
-    }
   });
 
-  heroImageCache.set(imagePath, imagePromise);
-
-  imagePromise.catch(() => {
-    heroImageCache.delete(imagePath);
-  });
-
+  preloadedHeroImages.set(imagePath, imagePromise);
   return imagePromise;
 }
 
-function updateSlideIndicators() {
-  const indicators = $("slideIndicators");
-  if (!indicators) return;
+function updateHeroIndicators() {
+  const container = getElement("slideIndicators");
+  if (!container) return;
 
-  indicators.querySelectorAll("button").forEach((button, index) => {
-    const isActive = index === activeSlide;
+  container.querySelectorAll("button").forEach((button, index) => {
+    const isActive = index === currentHeroSlideIndex;
 
     button.classList.toggle("active", isActive);
     button.setAttribute("aria-pressed", String(isActive));
-    button.setAttribute(
-      "aria-label",
-      `${FLAVORS[index].name}${isActive ? ", selected" : ""}`
-    );
   });
 }
 
-function updateHeroContent(flavor) {
-  const edition = $("heroEdition");
-  const title = $("heroTitle");
-  const description = $("heroDescription");
-  const glow = $("heroGlow");
-  const productLink = $("heroProductLink");
-  const shopLink = $("heroShopLink");
-
-  if (edition) edition.textContent = flavor.edition;
-
-  // Titles come exclusively from the trusted FLAVORS configuration.
-  if (title) title.innerHTML = flavor.title;
-
-  if (description) {
-    description.textContent = flavor.description;
-  }
-
-  if (glow) {
-    glow.style.background = `
-      radial-gradient(
-        circle at 73% 45%,
-        ${flavor.color}55,
-        transparent 58%
-      )
-    `;
-  }
-
-  if (productLink) {
-    productLink.setAttribute(
-      "aria-label",
-      `Shop ${flavor.name} products`
-    );
-
-    productLink.dataset.flavor = flavor.id;
-  }
-
-  if (shopLink) {
-    shopLink.dataset.flavor = flavor.id;
-  }
-}
-
-async function renderSlide(index, { immediate = false } = {}) {
-  const image = $("heroProductImage");
-  if (!image) return;
+async function displayHeroSlide(requestedIndex, immediate = false) {
+  const heroImage = getElement("heroProductImage");
+  if (!heroImage || !HERO_SLIDES.length) return;
 
   const normalizedIndex =
-    (index + FLAVORS.length) % FLAVORS.length;
+    (requestedIndex + HERO_SLIDES.length) % HERO_SLIDES.length;
 
-  const flavor = FLAVORS[normalizedIndex];
-  const requestId = ++slideRequestId;
+  const slide = HERO_SLIDES[normalizedIndex];
+  const requestId = ++heroTransitionRequestId;
 
   try {
-    await preloadHeroImage(flavor.singleImage);
+    await preloadHeroImage(slide.image);
   } catch (error) {
-    console.error(error);
-    showToast(`Unable to load ${flavor.name} image.`);
+    console.warn("[007-NRG]", error.message);
     return;
   }
 
-  // Ignore older requests if the visitor changed slides quickly.
-  if (requestId !== slideRequestId) return;
-
-  window.clearTimeout(slideTransitionTimer);
+  if (requestId !== heroTransitionRequestId) return;
 
   if (!immediate) {
-    image.classList.add("changing");
+    heroImage.classList.add("changing");
 
     await new Promise(resolve => {
-      slideTransitionTimer = window.setTimeout(
-        resolve,
-        SLIDE_FADE_MS
-      );
+      setTimeout(resolve, SITE_CONFIG.heroFadeDuration);
     });
+
+    if (requestId !== heroTransitionRequestId) return;
   }
 
-  if (requestId !== slideRequestId) return;
+  currentHeroSlideIndex = normalizedIndex;
 
-  activeSlide = normalizedIndex;
+  setElementText("heroEdition", slide.edition);
+  setElementText("heroDescription", slide.description);
 
-  image.src = flavor.singleImage;
-  image.alt = `Blood Of Christ ${flavor.name} 40 mL bottle`;
-  image.dataset.flavor = flavor.id;
+  const heroTitle = getElement("heroTitle");
+  if (heroTitle) heroTitle.innerHTML = slide.title;
 
-  updateHeroContent(flavor);
-  updateSlideIndicators();
+  heroImage.src = slide.image;
+  heroImage.alt = slide.alt;
+  heroImage.classList.remove("changing");
 
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      if (requestId === slideRequestId) {
-        image.classList.remove("changing");
-      }
-    });
-  });
+  const productLink = getElement("heroProductLink");
 
-  // Preload the next flavor for smoother automatic rotation.
-  const nextFlavor =
-    FLAVORS[(activeSlide + 1) % FLAVORS.length];
+  if (productLink) {
+    productLink.href = "#shop";
+    productLink.setAttribute(
+      "aria-label",
+      "Explore 007-NRG products"
+    );
+  }
 
-  preloadHeroImage(nextFlavor.singleImage).catch(() => {});
+  updateHeroIndicators();
 }
 
-function stopSlideTimer() {
-  window.clearInterval(slideTimer);
-  slideTimer = null;
+function stopHeroRotation() {
+  if (heroRotationTimer !== null) {
+    clearInterval(heroRotationTimer);
+    heroRotationTimer = null;
+  }
 }
 
-function startSlideTimer() {
-  stopSlideTimer();
+function startHeroRotation() {
+  stopHeroRotation();
 
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  if (
+    HERO_SLIDES.length < 2 ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  ) {
     return;
   }
 
-  slideTimer = window.setInterval(() => {
-    if (document.hidden) return;
-    if (Date.now() < slidePausedUntil) return;
-
-    renderSlide(activeSlide + 1);
-  }, SLIDE_INTERVAL_MS);
+  heroRotationTimer = setInterval(() => {
+    if (!document.hidden) {
+      displayHeroSlide(currentHeroSlideIndex + 1);
+    }
+  }, SITE_CONFIG.heroRotationInterval);
 }
 
-function selectSlide(index, { userInitiated = false } = {}) {
-  if (userInitiated) {
-    slidePausedUntil = Date.now() + 12000;
-  }
-
-  renderSlide(index);
+function selectHeroSlide(index) {
+  displayHeroSlide(index);
+  startHeroRotation();
 }
 
 function initializeHeroSlideshow() {
-  const indicators = $("slideIndicators");
-  const previousButton = $("previousSlide");
-  const nextButton = $("nextSlide");
-  const heroProduct = $("heroProduct");
-  const heroLink = $("heroProductLink");
+  const indicatorContainer = getElement("slideIndicators");
+  if (!indicatorContainer) return;
 
-  if (indicators) {
-    indicators.innerHTML = "";
+  indicatorContainer.innerHTML = "";
 
-    FLAVORS.forEach((flavor, index) => {
-      const button = document.createElement("button");
+  HERO_SLIDES.forEach((slide, index) => {
+    const indicator = document.createElement("button");
 
-      button.type = "button";
-      button.setAttribute(
-        "aria-label",
-        `Show ${flavor.name}`
-      );
-
-      button.addEventListener("click", () => {
-        selectSlide(index, { userInitiated: true });
-      });
-
-      indicators.appendChild(button);
-    });
-  }
-
-  previousButton?.addEventListener("click", () => {
-    selectSlide(activeSlide - 1, { userInitiated: true });
-  });
-
-  nextButton?.addEventListener("click", () => {
-    selectSlide(activeSlide + 1, { userInitiated: true });
-  });
-
-  let touchStartX = 0;
-  let touchStartY = 0;
-
-  const swipeTarget =
-    heroLink?.closest(".hero-product") || heroProduct;
-
-  swipeTarget?.addEventListener(
-    "touchstart",
-    event => {
-      const touch = event.changedTouches[0];
-      touchStartX = touch.clientX;
-      touchStartY = touch.clientY;
-    },
-    { passive: true }
-  );
-
-  swipeTarget?.addEventListener(
-    "touchend",
-    event => {
-      const touch = event.changedTouches[0];
-      const differenceX = touch.clientX - touchStartX;
-      const differenceY = touch.clientY - touchStartY;
-
-      if (
-        Math.abs(differenceX) < 45 ||
-        Math.abs(differenceX) < Math.abs(differenceY)
-      ) {
-        return;
-      }
-
-      selectSlide(
-        activeSlide + (differenceX < 0 ? 1 : -1),
-        { userInitiated: true }
-      );
-    },
-    { passive: true }
-  );
-
-  heroLink?.addEventListener("click", event => {
-    const selectedFlavor = FLAVORS[activeSlide];
-
-    if (!selectedFlavor) return;
-
-    event.preventDefault();
-    filterProducts("all");
-
-    const targetCard = document.querySelector(
-      `[data-product-id="${selectedFlavor.id}-single"]`
+    indicator.type = "button";
+    indicator.setAttribute(
+      "aria-label",
+      `Show product slide ${index + 1}`
     );
 
-    $("shop")?.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
+    indicator.addEventListener("click", () => {
+      selectHeroSlide(index);
     });
 
-    if (targetCard) {
-      targetCard.classList.add("highlighted-product");
+    indicatorContainer.appendChild(indicator);
 
-      window.setTimeout(() => {
-        targetCard.classList.remove("highlighted-product");
-      }, 1500);
-    }
+    preloadHeroImage(slide.image).catch(() => {});
   });
 
-  renderSlide(0, { immediate: true });
-  startSlideTimer();
+  getElement("previousSlide")?.addEventListener("click", () => {
+    selectHeroSlide(currentHeroSlideIndex - 1);
+  });
+
+  getElement("nextSlide")?.addEventListener("click", () => {
+    selectHeroSlide(currentHeroSlideIndex + 1);
+  });
+
+  const heroSection = getElement("home");
+
+
+  heroSection?.addEventListener("focusin", stopHeroRotation);
+
+  heroSection?.addEventListener("focusout", event => {
+    if (!heroSection.contains(event.relatedTarget)) {
+      startHeroRotation();
+    }
+  });
 
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
-      stopSlideTimer();
+      stopHeroRotation();
     } else {
-      startSlideTimer();
+      startHeroRotation();
     }
   });
+
+  displayHeroSlide(0, true);
+  startHeroRotation();
 }
 
 /* === HERO SLIDESHOW END === */
@@ -692,174 +655,168 @@ function initializeHeroSlideshow() {
 let activeProductFilter = "all";
 let selectedPreviewProductId = null;
 
-function getProductGlow(color) {
-  return `${color}33`;
-}
+function generateProductCard(product) {
+  return `
+    <article class="product-card reveal">
+      <div class="product-image-wrap">
+        <span class="product-badge">
+          ${escapeHTML(product.badge)}
+        </span>
 
-function renderProductCard(product) {
-  const card = document.createElement("article");
-
-  card.className = "product-card reveal visible";
-  card.dataset.productId = product.id;
-  card.dataset.productType = product.type;
-  card.style.setProperty(
-    "--product-glow",
-    getProductGlow(product.color)
-  );
-
-  const badge =
-    product.type === "case" ? "12-PACK" : "40 mL SINGLE";
-
-  card.innerHTML = `
-    <div class="product-image-wrap">
-      <span class="product-badge">${badge}</span>
-
-      <button
-        type="button"
-        class="product-image-button"
-        data-preview-product="${escapeHTML(product.id)}"
-        aria-label="View ${escapeHTML(product.name)}"
-      >
-        <img
-          src="${escapeHTML(product.image)}"
-          alt="${escapeHTML(product.name)}"
-          loading="lazy"
+        <button
+          type="button"
+          class="product-image-button"
+          data-preview-product="${escapeHTML(product.id)}"
+          aria-label="View ${escapeHTML(product.name)}"
         >
-      </button>
-    </div>
+          <img
+            src="${escapeHTML(product.image)}"
+            alt="${escapeHTML(product.name)}"
+            loading="lazy"
+            decoding="async"
+          >
+        </button>
+      </div>
 
-    <div class="product-details">
-      <h3>${escapeHTML(product.name)}</h3>
-      <p>${escapeHTML(product.size)}</p>
+      <div class="product-details">
+        <span class="eyebrow">
+          ${escapeHTML(product.size)}
+        </span>
 
-      <strong class="product-price">
-        ${formatPrice(product.priceCents)}
-      </strong>
+        <h3>${escapeHTML(product.name)}</h3>
 
-      <button
-        type="button"
-        class="button button-primary"
-        data-add-product="${escapeHTML(product.id)}"
-      >
-        ADD TO BAG +
-      </button>
-    </div>
+        <p>${escapeHTML(product.description)}</p>
+
+        <strong class="product-price">
+          ${formatProductPrice(product)}
+        </strong>
+
+        <button
+          type="button"
+          class="button button-secondary"
+          data-preview-product="${escapeHTML(product.id)}"
+        >
+          VIEW DETAILS
+        </button>
+      </div>
+    </article>
   `;
-
-  return card;
 }
 
-function renderProducts() {
-  const grid = $("productGrid");
-  if (!grid) return;
+function renderProductCollection() {
+  const productGrid = getElement("productGrid");
+  if (!productGrid) return;
 
-  const visibleProducts = PRODUCTS.filter(product => {
-    return (
-      activeProductFilter === "all" ||
-      product.type === activeProductFilter
-    );
+  const filteredProducts = PRODUCTS.filter(product => {
+    return activeProductFilter === "all" ||
+      product.type === activeProductFilter;
   });
 
-  const fragment = document.createDocumentFragment();
+  if (!filteredProducts.length) {
+    productGrid.innerHTML = `
+      <p class="empty-reviews">No products found.</p>
+    `;
+    return;
+  }
 
-  visibleProducts.forEach(product => {
-    fragment.appendChild(renderProductCard(product));
+  productGrid.innerHTML = filteredProducts
+    .map(generateProductCard)
+    .join("");
+
+  productGrid.querySelectorAll("[data-preview-product]")
+    .forEach(button => {
+      button.addEventListener("click", () => {
+        openProductPreview(button.dataset.previewProduct);
+      });
+    });
+
+  productGrid.querySelectorAll(".reveal").forEach(element => {
+    element.classList.add("visible");
   });
-
-  grid.replaceChildren(fragment);
 }
 
-function filterProducts(filter) {
+function setProductFilter(filter) {
   if (!["all", "single", "case"].includes(filter)) return;
 
   activeProductFilter = filter;
 
-  $("shopTabs")
-    ?.querySelectorAll("[data-filter]")
-    .forEach(button => {
-      const isActive = button.dataset.filter === filter;
+  document.querySelectorAll(".shop-tab").forEach(button => {
+    const isActive = button.dataset.filter === filter;
 
-      button.classList.toggle("active", isActive);
-      button.setAttribute("aria-pressed", String(isActive));
-    });
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
 
-  renderProducts();
+  renderProductCollection();
 }
 
 function openProductPreview(productId) {
-  const product = getProduct(productId);
-  const modal = $("productModal");
+  const product = getProductById(productId);
+  const modal = getElement("productModal");
 
   if (!product || !modal) return;
 
-  selectedPreviewProductId = product.id;
+  selectedPreviewProductId = productId;
 
-  $("productModalImage").src = product.image;
-  $("productModalImage").alt = product.name;
-  $("productModalTitle").textContent = product.name;
-  $("productModalSize").textContent = product.size;
-  $("productModalPrice").textContent =
-    formatPrice(product.priceCents);
+  setElementText("productModalTitle", product.name);
+  setElementText("productModalSize", product.size);
+  setElementText("productModalPrice", formatProductPrice(product));
+
+  const image = getElement("productModalImage");
+
+  if (image) {
+    image.src = product.image;
+    image.alt = product.name;
+  }
+
+  const orderButton = getElement("productModalAdd");
+
+  if (orderButton) {
+    orderButton.disabled = true;
+    orderButton.textContent = "ORDERING COMING SOON";
+  }
 
   modal.hidden = false;
-  lockPageScroll();
+  lockBodyScroll();
 
-  $("closeProductModal")?.focus();
+  getElement("closeProductModal")?.focus();
 }
 
 function closeProductPreview() {
-  const modal = $("productModal");
+  const modal = getElement("productModal");
   if (!modal || modal.hidden) return;
 
   modal.hidden = true;
+  unlockBodyScroll();
+
+  const previousId = selectedPreviewProductId;
   selectedPreviewProductId = null;
 
-  unlockPageScroll();
+  const previousButton = Array.from(
+    document.querySelectorAll("[data-preview-product]")
+  ).find(button => button.dataset.previewProduct === previousId);
+
+  previousButton?.focus();
 }
 
 function initializeProductCollection() {
-  renderProducts();
+  renderProductCollection();
 
-  $("shopTabs")?.addEventListener("click", event => {
-    const button = event.target.closest("[data-filter]");
-    if (!button) return;
-
-    filterProducts(button.dataset.filter);
+  document.querySelectorAll(".shop-tab").forEach(button => {
+    button.addEventListener("click", () => {
+      setProductFilter(button.dataset.filter);
+    });
   });
 
-  $("productGrid")?.addEventListener("click", event => {
-    const previewButton =
-      event.target.closest("[data-preview-product]");
-
-    if (previewButton) {
-      openProductPreview(previewButton.dataset.previewProduct);
-      return;
-    }
-
-    const addButton =
-      event.target.closest("[data-add-product]");
-
-    if (addButton) {
-      addToCart(addButton.dataset.addProduct);
-    }
-  });
-
-  $("closeProductModal")?.addEventListener(
+  getElement("closeProductModal")?.addEventListener(
     "click",
     closeProductPreview
   );
 
-  $("productModal")?.addEventListener("click", event => {
-    if (event.target === $("productModal")) {
+  getElement("productModal")?.addEventListener("click", event => {
+    if (event.target === getElement("productModal")) {
       closeProductPreview();
     }
-  });
-
-  $("productModalAdd")?.addEventListener("click", () => {
-    if (!selectedPreviewProductId) return;
-
-    addToCart(selectedPreviewProductId);
-    closeProductPreview();
   });
 }
 
@@ -868,217 +825,85 @@ function initializeProductCollection() {
 
 /* === SHOPPING CART START === */
 
-function loadCart() {
-  const storedCart = readStoredJSON(STORAGE_KEYS.cart, {});
+/*
+  Checkout is intentionally inactive.
+  No orders or payments are processed.
+*/
 
-  if (
-    !storedCart ||
-    typeof storedCart !== "object" ||
-    Array.isArray(storedCart)
-  ) {
-    return {};
-  }
+function renderShoppingCart() {
+  setElementText("cartCount", "0");
+  setElementText("cartSubtotal", "—");
 
-  const validCart = {};
-
-  for (const [productId, quantity] of Object.entries(storedCart)) {
-    if (!getProduct(productId)) continue;
-    if (!Number.isInteger(quantity)) continue;
-    if (quantity <= 0) continue;
-
-    validCart[productId] = Math.min(
-      quantity,
-      MAX_CART_QUANTITY
-    );
-  }
-
-  return validCart;
-}
-
-let cart = loadCart();
-
-function saveCart() {
-  saveStoredJSON(STORAGE_KEYS.cart, cart);
-}
-
-function getCartCount() {
-  return Object.values(cart).reduce(
-    (total, quantity) => total + quantity,
-    0
-  );
-}
-
-function getCartSubtotalCents() {
-  return Object.entries(cart).reduce(
-    (total, [productId, quantity]) => {
-      const product = getProduct(productId);
-
-      return product
-        ? total + product.priceCents * quantity
-        : total;
-    },
-    0
-  );
-}
-
-function addToCart(productId) {
-  const product = getProduct(productId);
-  if (!product) return;
-
-  const currentQuantity = cart[productId] || 0;
-
-  if (currentQuantity >= MAX_CART_QUANTITY) {
-    showToast("Maximum quantity reached.");
-    return;
-  }
-
-  cart[productId] = currentQuantity + 1;
-
-  saveCart();
-  renderCart();
-
-  showToast(`${product.name} added to your bag.`);
-}
-
-function updateCartQuantity(productId, difference) {
-  if (!getProduct(productId)) return;
-
-  const currentQuantity = cart[productId] || 0;
-
-  const nextQuantity = Math.max(
-    0,
-    Math.min(MAX_CART_QUANTITY, currentQuantity + difference)
-  );
-
-  if (nextQuantity === 0) {
-    delete cart[productId];
-  } else {
-    cart[productId] = nextQuantity;
-  }
-
-  saveCart();
-  renderCart();
-}
-
-function renderCart() {
-  const cartCount = $("cartCount");
-  const cartItems = $("cartItems");
-  const cartSubtotal = $("cartSubtotal");
-
-  if (cartCount) {
-    cartCount.textContent = String(getCartCount());
-  }
-
-  if (cartSubtotal) {
-    cartSubtotal.textContent =
-      formatPrice(getCartSubtotalCents());
-  }
-
+  const cartItems = getElement("cartItems");
   if (!cartItems) return;
 
-  const entries = Object.entries(cart);
+  cartItems.innerHTML = `
+    <div class="empty-cart">
+      <h3>ORDERING COMING SOON</h3>
 
-  if (entries.length === 0) {
-    cartItems.innerHTML = `
-      <div class="empty-cart">
-        <p>Your bag is empty.</p>
-        <p>Explore the collection and find your flavor.</p>
-      </div>
-    `;
-    return;
-  }
+      <p>
+        The 007-NRG product collection
+        is available for preview.
+      </p>
 
-  cartItems.innerHTML = entries.map(([productId, quantity]) => {
-    const product = getProduct(productId);
-    if (!product) return "";
-
-    return `
-      <div class="cart-item">
-        <img
-          src="${escapeHTML(product.image)}"
-          alt="${escapeHTML(product.name)}"
-        >
-
-        <div>
-          <h3>${escapeHTML(product.name)}</h3>
-          <p>${escapeHTML(product.size)}</p>
-
-          <strong>
-            ${formatPrice(product.priceCents * quantity)}
-          </strong>
-
-          <div class="quantity-controls">
-            <button
-              type="button"
-              data-cart-change="-1"
-              data-cart-product="${escapeHTML(product.id)}"
-              aria-label="Remove one ${escapeHTML(product.name)}"
-            >−</button>
-
-            <span>${quantity}</span>
-
-            <button
-              type="button"
-              data-cart-change="1"
-              data-cart-product="${escapeHTML(product.id)}"
-              aria-label="Add one ${escapeHTML(product.name)}"
-            >+</button>
-          </div>
-        </div>
-      </div>
-    `;
-  }).join("");
+      <p>
+        Pricing and availability
+        have not been confirmed.
+      </p>
+    </div>
+  `;
 }
 
-function openCart() {
-  const drawer = $("cartDrawer");
-  const overlay = $("cartOverlay");
+function openShoppingCart() {
+  const drawer = getElement("cartDrawer");
+  const overlay = getElement("cartOverlay");
 
   if (!drawer || !overlay) return;
 
-  closeProductPreview();
-  closeLabelViewer();
+  renderShoppingCart();
 
   drawer.hidden = false;
   overlay.hidden = false;
 
-  lockPageScroll();
-  renderCart();
-
-  $("closeCart")?.focus();
+  lockBodyScroll();
+  getElement("closeCart")?.focus();
 }
 
-function closeCart() {
-  const drawer = $("cartDrawer");
-  const overlay = $("cartOverlay");
+function closeShoppingCart() {
+  const drawer = getElement("cartDrawer");
+  const overlay = getElement("cartOverlay");
 
-  if (drawer) drawer.hidden = true;
-  if (overlay) overlay.hidden = true;
+  if (!drawer || !overlay) return;
 
-  unlockPageScroll();
+  drawer.hidden = true;
+  overlay.hidden = true;
+
+  unlockBodyScroll();
+  getElement("cartTrigger")?.focus();
 }
 
-function initializeCart() {
-  renderCart();
+function initializeShoppingCart() {
+  renderShoppingCart();
 
-  $("cartTrigger")?.addEventListener("click", openCart);
-  $("closeCart")?.addEventListener("click", closeCart);
-  $("cartOverlay")?.addEventListener("click", closeCart);
-  $("continueShopping")?.addEventListener("click", closeCart);
+  getElement("cartTrigger")?.addEventListener(
+    "click",
+    openShoppingCart
+  );
 
-  $("cartItems")?.addEventListener("click", event => {
-    const button =
-      event.target.closest("[data-cart-change]");
+  getElement("closeCart")?.addEventListener(
+    "click",
+    closeShoppingCart
+  );
 
-    if (!button) return;
+  getElement("cartOverlay")?.addEventListener(
+    "click",
+    closeShoppingCart
+  );
 
-    const difference = Number(button.dataset.cartChange);
-    const productId = button.dataset.cartProduct;
-
-    if (difference !== 1 && difference !== -1) return;
-
-    updateCartQuantity(productId, difference);
-  });
+  getElement("continueShopping")?.addEventListener(
+    "click",
+    closeShoppingCart
+  );
 }
 
 /* === SHOPPING CART END === */
@@ -1086,470 +911,431 @@ function initializeCart() {
 
 /* === INGREDIENT EXPLORER START === */
 
+let ingredientSearchTerm = "";
+let activeIngredientFilter = "all";
 
-/* === INGREDIENT EXPLORER RENDERING START === */
+function getFilteredIngredients() {
+  return INGREDIENTS.filter(ingredient => {
+    const matchesCategory =
+      activeIngredientFilter === "all" ||
+      ingredient.group === activeIngredientFilter;
 
-function renderIngredients() {
-  const grid = document.getElementById("ingredientGrid");
-
-  if (!grid) return;
-
-  // Find the section containing the existing ingredient grid.
-  const section = grid.closest("section") || grid.parentElement;
-
-  if (!section) return;
-
-  // Create the search and filter controls once.
-  let controls = document.getElementById("ingredientControls");
-
-  if (!controls) {
-    controls = document.createElement("div");
-    controls.id = "ingredientControls";
-    controls.className = "ingredient-controls";
-
-    controls.innerHTML = `
-      <div class="ingredient-search-wrap">
-        <label
-          class="ingredient-search-label"
-          for="ingredientSearch"
-        >
-          SEARCH THE FORMULA
-        </label>
-
-        <input
-          type="search"
-          id="ingredientSearch"
-          class="ingredient-search"
-          placeholder="Search ingredients..."
-          autocomplete="off"
-        >
-      </div>
-
-      <div
-        class="ingredient-filters"
-        role="group"
-        aria-label="Filter ingredients"
-      >
-        <button
-          type="button"
-          class="ingredient-filter active"
-          data-ingredient-filter="blend"
-          aria-pressed="true"
-        >
-          PROPRIETARY BLEND
-        </button>
-
-        <button
-          type="button"
-          class="ingredient-filter"
-          data-ingredient-filter="other"
-          aria-pressed="false"
-        >
-          OTHER INGREDIENTS
-        </button>
-
-        <button
-          type="button"
-          class="ingredient-filter"
-          data-ingredient-filter="all"
-          aria-pressed="false"
-        >
-          VIEW ALL
-        </button>
-      </div>
-
-      <p
-        id="ingredientResultCount"
-        class="ingredient-result-count"
-        role="status"
-        aria-live="polite"
-      ></p>
-    `;
-
-    grid.before(controls);
-  }
-
-  const searchInput =
-    document.getElementById("ingredientSearch");
-
-  const filterButtons = controls.querySelectorAll(
-    "[data-ingredient-filter]"
-  );
-
-  const resultCount =
-    document.getElementById("ingredientResultCount");
-
-  // The first 10 entries are the proprietary blend,
-  // matching the ingredient order on the supplied label.
-  const BLEND_INGREDIENT_COUNT = 10;
-
-  let activeFilter = "blend";
-
-  function getIngredientGroup(index) {
-    return index < BLEND_INGREDIENT_COUNT
-      ? "blend"
-      : "other";
-  }
-
-  function getFilteredIngredients() {
-    const searchTerm = searchInput.value
-      .trim()
-      .toLowerCase();
-
-    return INGREDIENTS
-      .map((ingredient, index) => ({
-        ...ingredient,
-        originalIndex: index,
-        group: getIngredientGroup(index)
-      }))
-      .filter(ingredient => {
-        const matchesGroup =
-          activeFilter === "all" ||
-          ingredient.group === activeFilter;
-
-        const searchableText = [
-          ingredient.name,
-          ingredient.category,
-          ingredient.description,
-          ingredient.details
-        ]
-          .join(" ")
-          .toLowerCase();
-
-        return (
-          matchesGroup &&
-          searchableText.includes(searchTerm)
-        );
-      });
-  }
-
-  function escapeIngredientHTML(value) {
-    return String(value).replace(
-      /[&<>"']/g,
-      character => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-      })[character]
-    );
-  }
-
-  function createIngredientCard(ingredient) {
-    const card = document.createElement("article");
-
-    card.className =
-      "ingredient-card ingredient-explorer-card visible";
-
-    const ingredientNumber = String(
-      ingredient.originalIndex + 1
-    ).padStart(2, "0");
-
-    const name = escapeIngredientHTML(ingredient.name);
-    const category = escapeIngredientHTML(
-      ingredient.category
-    );
-    const description = escapeIngredientHTML(
-      ingredient.description
-    );
-    const details = escapeIngredientHTML(
+    const searchableContent = [
+      ingredient.name,
+      ingredient.category,
+      ingredient.description,
       ingredient.details
-    );
+    ].join(" ").toLowerCase();
 
-    card.innerHTML = `
+    return matchesCategory &&
+      searchableContent.includes(ingredientSearchTerm.toLowerCase());
+  });
+}
+
+function generateIngredientCard(ingredient, index) {
+  const detailsId = `ingredient-details-${index}`;
+
+  return `
+    <article class="ingredient-card">
       <div class="ingredient-card-heading">
         <span class="ingredient-number">
-          ${ingredientNumber}
+          ${String(index + 1).padStart(2, "0")}
         </span>
 
         <div class="ingredient-heading-text">
-          <span class="ingredient-category">
-            ${category}
-          </span>
+          <h3>${escapeHTML(ingredient.name)}</h3>
 
-          <h3>${name}</h3>
+          <span class="ingredient-category">
+            ${escapeHTML(ingredient.category)}
+          </span>
         </div>
       </div>
 
       <p class="ingredient-description">
-        ${description}
+        ${escapeHTML(ingredient.description)}
       </p>
 
-      <details class="ingredient-more">
-        <summary>LEARN MORE +</summary>
-        <p>${details}</p>
-      </details>
-    `;
+      <button
+        type="button"
+        class="ingredient-more"
+        data-ingredient-toggle="${detailsId}"
+        aria-expanded="false"
+        aria-controls="${detailsId}"
+      >
+        LEARN MORE +
+      </button>
 
-    return card;
-  }
+      <div id="${detailsId}" hidden>
+        <p class="ingredient-description">
+          ${escapeHTML(ingredient.details)}
+        </p>
+      </div>
+    </article>
+  `;
+}
 
-  function updateIngredientGrid() {
-    const filteredIngredients =
-      getFilteredIngredients();
+function renderIngredientExplorer() {
+  const grid = getElement("ingredientGrid");
+  if (!grid) return;
 
-    const fragment =
-      document.createDocumentFragment();
+  const ingredients = getFilteredIngredients();
 
-    filteredIngredients.forEach(ingredient => {
-      fragment.appendChild(
-        createIngredientCard(ingredient)
-      );
-    });
+  grid.innerHTML = ingredients.length
+    ? ingredients.map(generateIngredientCard).join("")
+    : `<p class="empty-reviews">No ingredients match your search.</p>`;
 
-    if (filteredIngredients.length === 0) {
-      const emptyMessage =
-        document.createElement("p");
-
-      emptyMessage.className =
-        "ingredient-empty-message";
-
-      emptyMessage.textContent =
-        "No ingredients match your search.";
-
-      fragment.appendChild(emptyMessage);
-    }
-
-    grid.replaceChildren(fragment);
-
-    if (resultCount) {
-      const count = filteredIngredients.length;
-
-      resultCount.textContent =
-        `${count} of ${INGREDIENTS.length} ingredients shown`;
-    }
-  }
-
-  // Search updates results as the visitor types.
-  searchInput.addEventListener(
-    "input",
-    updateIngredientGrid
+  setElementText(
+    "ingredientResultCount",
+    `${ingredients.length} of ${INGREDIENTS.length} ingredients`
   );
 
-  // Category buttons update the active filter.
-  filterButtons.forEach(button => {
+  grid.querySelectorAll("[data-ingredient-toggle]").forEach(button => {
     button.addEventListener("click", () => {
-      activeFilter =
-        button.dataset.ingredientFilter;
+      const details = getElement(button.dataset.ingredientToggle);
+      if (!details) return;
 
-      filterButtons.forEach(filterButton => {
-        const isActive =
-          filterButton === button;
+      details.hidden = !details.hidden;
 
-        filterButton.classList.toggle(
-          "active",
-          isActive
-        );
+      const expanded = !details.hidden;
 
-        filterButton.setAttribute(
-          "aria-pressed",
-          String(isActive)
-        );
-      });
+      button.setAttribute("aria-expanded", String(expanded));
+      button.textContent = expanded ? "SHOW LESS −" : "LEARN MORE +";
+    });
+  });
+}
 
-      updateIngredientGrid();
+function initializeIngredientExplorer() {
+  const grid = getElement("ingredientGrid");
+  if (!grid) return;
+
+  const controls = document.createElement("div");
+  controls.className = "ingredient-controls";
+
+  controls.innerHTML = `
+    <div class="ingredient-search-wrap">
+      <label
+        class="ingredient-search-label"
+        for="ingredientSearch"
+      >
+        SEARCH INGREDIENTS
+      </label>
+
+      <input
+        class="ingredient-search"
+        id="ingredientSearch"
+        type="search"
+        placeholder="Search ingredients..."
+        autocomplete="off"
+      >
+    </div>
+
+    <div
+      class="ingredient-filters"
+      role="group"
+      aria-label="Ingredient categories"
+    >
+      <button
+        type="button"
+        class="ingredient-filter active"
+        data-ingredient-filter="all"
+        aria-pressed="true"
+      >
+        ALL
+      </button>
+
+      <button
+        type="button"
+        class="ingredient-filter"
+        data-ingredient-filter="blend"
+        aria-pressed="false"
+      >
+        PROPRIETARY BLEND
+      </button>
+
+      <button
+        type="button"
+        class="ingredient-filter"
+        data-ingredient-filter="other"
+        aria-pressed="false"
+      >
+        OTHER INGREDIENTS
+      </button>
+    </div>
+
+    <p
+      class="ingredient-result-count"
+      id="ingredientResultCount"
+      aria-live="polite"
+    ></p>
+  `;
+
+  grid.before(controls);
+
+  getElement("ingredientSearch")?.addEventListener("input", event => {
+    ingredientSearchTerm = event.target.value.trim();
+    renderIngredientExplorer();
+  });
+
+  controls.querySelectorAll("[data-ingredient-filter]").forEach(button => {
+    button.addEventListener("click", () => {
+      activeIngredientFilter = button.dataset.ingredientFilter;
+
+      controls.querySelectorAll("[data-ingredient-filter]")
+        .forEach(filterButton => {
+          const isActive =
+            filterButton.dataset.ingredientFilter ===
+            activeIngredientFilter;
+
+          filterButton.classList.toggle("active", isActive);
+          filterButton.setAttribute("aria-pressed", String(isActive));
+        });
+
+      renderIngredientExplorer();
     });
   });
 
-  // Display the proprietary blend initially.
-  updateIngredientGrid();
+  renderIngredientExplorer();
 }
-
-/* === INGREDIENT EXPLORER RENDERING END === */
-
 
 /* === INGREDIENT EXPLORER END === */
 
 
-/* === LABEL VIEWER START === */
+/* === PRODUCT LABEL VIEWER START === */
 
-let labelZoom = 1;
+let labelZoomLevel = 1;
+let previousLabelFocus = null;
 
-function applyLabelZoom() {
-  const image = $("modalLabelImage");
+const LABEL_ZOOM_SETTINGS = {
+  minimum: 0.5,
+  maximum: 3,
+  increment: 0.25,
+  baseWidth: 900
+};
+
+function updateLabelZoom() {
+  const image = getElement("modalLabelImage");
   if (!image) return;
 
-  image.style.width = `${labelZoom * 100}%`;
+  image.style.width =
+    `${Math.round(LABEL_ZOOM_SETTINGS.baseWidth * labelZoomLevel)}px`;
+
+  image.style.height = "auto";
 }
 
-function openLabelViewer() {
-  const modal = $("labelModal");
-  if (!modal) return;
+function synchronizeProductLabelImages() {
+  const preview = getElement("labelPreview");
+  const modalImage = getElement("modalLabelImage");
 
-  closeProductPreview();
-  closeCart();
+  /*
+    Override old HTML filenames, including
+    outdated data-full-src attributes.
+  */
 
-  labelZoom = 1;
-  applyLabelZoom();
+  if (preview instanceof HTMLImageElement) {
+    preview.src = PRODUCT_IMAGES.productLabel;
+    preview.alt = "007-NRG promotional label design preview";
+  } else if (preview) {
+    const nestedImage = preview.querySelector("img");
+
+    if (nestedImage) {
+      nestedImage.src = PRODUCT_IMAGES.productLabel;
+      nestedImage.alt = "007-NRG promotional label design preview";
+    }
+  }
+
+  if (modalImage) {
+    modalImage.src = PRODUCT_IMAGES.productLabel;
+    modalImage.dataset.fullSrc = PRODUCT_IMAGES.productLabel;
+    modalImage.alt = "Enlarged 007-NRG promotional label design preview";
+  }
+}
+
+function openProductLabel() {
+  const modal = getElement("labelModal");
+  const image = getElement("modalLabelImage");
+
+  if (!modal || !image) return;
+
+  previousLabelFocus = document.activeElement;
+
+  image.src = PRODUCT_IMAGES.productLabel;
+
+  labelZoomLevel = 1;
+  updateLabelZoom();
 
   modal.hidden = false;
-  lockPageScroll();
+  lockBodyScroll();
 
-  $("closeLabel")?.focus();
+  getElement("closeLabel")?.focus();
 }
 
-function closeLabelViewer() {
-  const modal = $("labelModal");
+function closeProductLabel() {
+  const modal = getElement("labelModal");
   if (!modal || modal.hidden) return;
 
   modal.hidden = true;
-  unlockPageScroll();
+  unlockBodyScroll();
+
+  if (previousLabelFocus?.focus) {
+    previousLabelFocus.focus();
+  }
 }
 
 function changeLabelZoom(amount) {
-  labelZoom = Math.max(
-    1,
-    Math.min(4, Math.round((labelZoom + amount) * 10) / 10)
+  labelZoomLevel = Math.max(
+    LABEL_ZOOM_SETTINGS.minimum,
+    Math.min(
+      LABEL_ZOOM_SETTINGS.maximum,
+      labelZoomLevel + amount
+    )
   );
 
-  applyLabelZoom();
+  updateLabelZoom();
 }
 
-function initializeLabelViewer() {
-  $("openLabelButton")?.addEventListener(
+function initializeProductLabelViewer() {
+  synchronizeProductLabelImages();
+
+  getElement("openLabelButton")?.addEventListener(
     "click",
-    openLabelViewer
+    openProductLabel
   );
 
-  $("labelPreview")?.addEventListener(
+  getElement("labelPreview")?.addEventListener(
     "click",
-    openLabelViewer
+    openProductLabel
   );
 
-  $("closeLabel")?.addEventListener(
+  getElement("closeLabel")?.addEventListener(
     "click",
-    closeLabelViewer
+    closeProductLabel
   );
 
-  $("zoomIn")?.addEventListener("click", () => {
-    changeLabelZoom(.25);
+  getElement("zoomIn")?.addEventListener("click", () => {
+    changeLabelZoom(LABEL_ZOOM_SETTINGS.increment);
   });
 
-  $("zoomOut")?.addEventListener("click", () => {
-    changeLabelZoom(-.25);
-  });
-
-  $("labelModal")?.addEventListener("click", event => {
-    if (event.target === $("labelModal")) {
-      closeLabelViewer();
-    }
+  getElement("zoomOut")?.addEventListener("click", () => {
+    changeLabelZoom(-LABEL_ZOOM_SETTINGS.increment);
   });
 }
 
-/* === LABEL VIEWER END === */
+/* === PRODUCT LABEL VIEWER END === */
 
 
-/* === DEMO REVIEWS START === */
+/* === BROWSER-LOCAL REVIEWS START === */
 
-function isValidReview(review) {
-  return (
+/*
+  These are local demo reviews only.
+  They are not shared between visitors.
+*/
+
+let selectedReviewRating = 0;
+
+function isValidStoredReview(review) {
+  return Boolean(
     review &&
     typeof review === "object" &&
-    typeof review.id === "string" &&
     typeof review.name === "string" &&
-    review.name.trim().length > 0 &&
+    review.name.trim().length >= 1 &&
     review.name.length <= 60 &&
-    typeof review.flavor === "string" &&
-    FLAVORS.some(flavor => flavor.name === review.flavor) &&
+    typeof review.text === "string" &&
+    review.text.trim().length >= 10 &&
+    review.text.length <= 1000 &&
     Number.isInteger(review.rating) &&
     review.rating >= 1 &&
     review.rating <= 5 &&
-    typeof review.text === "string" &&
-    review.text.length >= 10 &&
-    review.text.length <= 1000 &&
     typeof review.createdAt === "string"
   );
 }
 
-function loadReviews() {
-  const storedReviews = readStoredJSON(STORAGE_KEYS.reviews, []);
+function loadDemoReviews() {
+  const storedReviews = safelyReadStorage(
+    SITE_CONFIG.reviewStorageKey,
+    []
+  );
 
   if (!Array.isArray(storedReviews)) return [];
 
   return storedReviews
-    .filter(isValidReview)
-    .slice(0, MAX_REVIEWS);
+    .filter(isValidStoredReview)
+    .slice(0, SITE_CONFIG.maximumDemoReviews);
 }
 
-let reviews = loadReviews();
-let selectedRating = 0;
+let demoReviews = loadDemoReviews();
 
-function getStarString(rating) {
-  const filled = Math.max(
+function generateStarDisplay(rating) {
+  const normalizedRating = Math.max(
     0,
     Math.min(5, Math.round(rating))
   );
 
-  return "★".repeat(filled) + "☆".repeat(5 - filled);
+  return "★".repeat(normalizedRating) +
+    "☆".repeat(5 - normalizedRating);
 }
 
-function renderStarPicker() {
-  $("starPicker")
-    ?.querySelectorAll("[data-rating]")
-    .forEach(button => {
-      const rating = Number(button.dataset.rating);
-      const isSelected = rating <= selectedRating;
+function updateReviewStarPicker() {
+  const picker = getElement("starPicker");
+  if (!picker) return;
 
-      button.classList.toggle("selected", isSelected);
-      button.setAttribute(
-        "aria-pressed",
-        String(rating === selectedRating)
-      );
-    });
+  picker.querySelectorAll("[data-rating]").forEach(button => {
+    const rating = Number(button.dataset.rating);
+
+    button.classList.toggle(
+      "selected",
+      rating <= selectedReviewRating
+    );
+
+    button.setAttribute(
+      "aria-pressed",
+      String(rating === selectedReviewRating)
+    );
+  });
 }
 
-function renderReviews() {
-  const list = $("reviewList");
-  const count = $("reviewCount");
-  const average = $("averageRating");
-  const stars = $("averageStars");
-
-  const totalReviews = reviews.length;
-
-  const averageRating = totalReviews
-    ? reviews.reduce(
-        (sum, review) => sum + review.rating,
-        0
-      ) / totalReviews
-    : 0;
-
-  if (average) {
-    average.textContent = totalReviews
-      ? averageRating.toFixed(1)
-      : "—";
-  }
-
-  if (stars) {
-    stars.textContent = getStarString(averageRating);
-  }
-
-  if (count) {
-    count.textContent = totalReviews === 0
-      ? "No reviews yet"
-      : `${totalReviews} review${totalReviews === 1 ? "" : "s"}`;
-  }
-
+function renderDemoReviews() {
+  const list = getElement("reviewList");
   if (!list) return;
 
-  if (totalReviews === 0) {
+  if (!demoReviews.length) {
     list.innerHTML = `
-      <div class="review-card">
-        <h3>NO REVIEWS YET</h3>
+      <div class="empty-reviews panel">
+        <h3>NO DEMO REVIEWS YET</h3>
+
         <p>
-          Be the first to share your experience.
-          Reviews submitted here are saved in this browser only.
+          Add a review to preview
+          the customer feedback layout.
         </p>
       </div>
     `;
+
+    setElementText("averageRating", "—");
+    setElementText("averageStars", "☆☆☆☆☆");
+    setElementText("reviewCount", "No reviews yet");
+
     return;
   }
 
-  list.innerHTML = reviews.map(review => {
+  const totalRating = demoReviews.reduce(
+    (total, review) => total + review.rating,
+    0
+  );
+
+  const averageRating = totalRating / demoReviews.length;
+
+  setElementText("averageRating", averageRating.toFixed(1));
+  setElementText("averageStars", generateStarDisplay(averageRating));
+
+  setElementText(
+    "reviewCount",
+    `${demoReviews.length} browser-local demo review${demoReviews.length === 1 ? "" : "s"}`
+  );
+
+  list.innerHTML = demoReviews.map(review => {
     const date = new Date(review.createdAt);
 
-    const displayDate = Number.isNaN(date.getTime())
-      ? ""
+    const formattedDate = Number.isNaN(date.getTime())
+      ? "Date unavailable"
       : date.toLocaleDateString("en-US", {
           year: "numeric",
           month: "short",
@@ -1558,19 +1344,18 @@ function renderReviews() {
 
     return `
       <article class="review-card">
-        <h3>${escapeHTML(review.name)}</h3>
-
-        <span class="review-flavor">
-          ${escapeHTML(review.flavor)}
-          ${displayDate ? ` · ${escapeHTML(displayDate)}` : ""}
-        </span>
-
         <div
           class="rating-stars"
           aria-label="${review.rating} out of 5 stars"
         >
-          ${getStarString(review.rating)}
+          ${generateStarDisplay(review.rating)}
         </div>
+
+        <h3>${escapeHTML(review.name)}</h3>
+
+        <span class="review-flavor">
+          007-NRG · ${escapeHTML(formattedDate)}
+        </span>
 
         <p>${escapeHTML(review.text)}</p>
       </article>
@@ -1578,98 +1363,90 @@ function renderReviews() {
   }).join("");
 }
 
-function setReviewStatus(message) {
-  const status = $("reviewStatus");
+function initializeDemoReviews() {
+  const form = getElement("reviewForm");
+  const picker = getElement("starPicker");
 
-  if (status) {
-    status.textContent = message;
-  }
-}
+  if (!form || !picker) return;
 
-function initializeReviews() {
-  renderReviews();
-  renderStarPicker();
-
-  $("starPicker")?.addEventListener("click", event => {
-    const button = event.target.closest("[data-rating]");
-    if (!button) return;
-
-    selectedRating = Number(button.dataset.rating);
-    renderStarPicker();
+  picker.querySelectorAll("[data-rating]").forEach(button => {
+    button.addEventListener("click", () => {
+      selectedReviewRating = Number(button.dataset.rating);
+      updateReviewStarPicker();
+    });
   });
 
-  $("reviewForm")?.addEventListener("submit", event => {
+  form.addEventListener("submit", event => {
     event.preventDefault();
 
-    const form = event.currentTarget;
+    const reviewName = getElement("reviewName")?.value.trim() || "";
+    const reviewText = getElement("reviewText")?.value.trim() || "";
 
-    const name = $("reviewName")?.value.trim() || "";
-    const flavor = $("reviewFlavor")?.value || "";
-    const text = $("reviewText")?.value.trim() || "";
-
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-
-    if (selectedRating < 1 || selectedRating > 5) {
-      setReviewStatus("Please select a star rating.");
-      return;
-    }
-
-    if (
-      name.length < 1 ||
-      name.length > 60 ||
-      text.length < 10 ||
-      text.length > 1000 ||
-      !FLAVORS.some(item => item.name === flavor)
-    ) {
-      setReviewStatus("Please check your review details.");
-      return;
-    }
-
-    const review = {
-      id: typeof crypto !== "undefined" && crypto.randomUUID
-        ? crypto.randomUUID()
-        : `review-${Date.now()}-${Math.random().toString(36).slice(2)}`,
-      name,
-      flavor,
-      rating: selectedRating,
-      text,
-      createdAt: new Date().toISOString()
-    };
-
-    reviews.unshift(review);
-    reviews = reviews.slice(0, MAX_REVIEWS);
-
-    const saved = saveStoredJSON(
-      STORAGE_KEYS.reviews,
-      reviews
-    );
-
-    if (!saved) {
-      reviews.shift();
-      setReviewStatus(
-        "Unable to save the review in this browser."
+    if (reviewName.length < 1 || reviewName.length > 60) {
+      setElementText(
+        "reviewStatus",
+        "Please enter a valid display name."
       );
       return;
     }
 
-    form.reset();
-    selectedRating = 0;
+    if (selectedReviewRating < 1 || selectedReviewRating > 5) {
+      setElementText(
+        "reviewStatus",
+        "Please select a star rating."
+      );
+      return;
+    }
 
-    renderStarPicker();
-    renderReviews();
+    if (reviewText.length < 10 || reviewText.length > 1000) {
+      setElementText(
+        "reviewStatus",
+        "Your review must contain 10 to 1000 characters."
+      );
+      return;
+    }
 
-    setReviewStatus(
-      "Review saved in this browser. Thank you!"
+    const newReview = {
+      id: `review-${Date.now()}`,
+      name: reviewName,
+      text: reviewText,
+      rating: selectedReviewRating,
+      createdAt: new Date().toISOString()
+    };
+
+    demoReviews.unshift(newReview);
+
+    demoReviews = demoReviews.slice(
+      0,
+      SITE_CONFIG.maximumDemoReviews
     );
 
-    showToast("Your review was saved.");
+    const wasSaved = safelyWriteStorage(
+      SITE_CONFIG.reviewStorageKey,
+      demoReviews
+    );
+
+    renderDemoReviews();
+    form.reset();
+
+    selectedReviewRating = 0;
+    updateReviewStarPicker();
+
+    setElementText(
+      "reviewStatus",
+      wasSaved
+        ? "Demo review saved in this browser only."
+        : "Review displayed, but browser storage is unavailable."
+    );
+
+    showToast("Demo review added.");
   });
+
+  updateReviewStarPicker();
+  renderDemoReviews();
 }
 
-/* === DEMO REVIEWS END === */
+/* === BROWSER-LOCAL REVIEWS END === */
 
 
 /* === SCROLL ANIMATIONS START === */
@@ -1677,9 +1454,13 @@ function initializeReviews() {
 function initializeScrollAnimations() {
   const elements = document.querySelectorAll(".reveal");
 
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
   if (
-    !("IntersectionObserver" in window) ||
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    reducedMotion ||
+    !("IntersectionObserver" in window)
   ) {
     elements.forEach(element => {
       element.classList.add("visible");
@@ -1688,20 +1469,17 @@ function initializeScrollAnimations() {
     return;
   }
 
-  const observer = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
 
-        entry.target.classList.add("visible");
-        observer.unobserve(entry.target);
-      });
-    },
-    {
-      threshold: .12,
-      rootMargin: "0px 0px -35px 0px"
-    }
-  );
+      entry.target.classList.add("visible");
+      observer.unobserve(entry.target);
+    });
+  }, {
+    threshold: 0.08,
+    rootMargin: "0px 0px 40px 0px"
+  });
 
   elements.forEach(element => observer.observe(element));
 }
@@ -1709,54 +1487,118 @@ function initializeScrollAnimations() {
 /* === SCROLL ANIMATIONS END === */
 
 
-/* === GLOBAL KEYBOARD CONTROLS START === */
+/* === KEYBOARD ACCESSIBILITY START === */
 
 function initializeKeyboardControls() {
   document.addEventListener("keydown", event => {
-    if (event.key !== "Escape") return;
+    if (event.key === "Escape") {
+      const labelModal = getElement("labelModal");
+      const productModal = getElement("productModal");
+      const cartDrawer = getElement("cartDrawer");
 
-    if ($("labelModal") && !$("labelModal").hidden) {
-      closeLabelViewer();
-      return;
+      if (labelModal && !labelModal.hidden) {
+        closeProductLabel();
+        return;
+      }
+
+      if (productModal && !productModal.hidden) {
+        closeProductPreview();
+        return;
+      }
+
+      if (cartDrawer && !cartDrawer.hidden) {
+        closeShoppingCart();
+        return;
+      }
+
+      closeMobileNavigation();
     }
 
-    if ($("productModal") && !$("productModal").hidden) {
-      closeProductPreview();
-      return;
-    }
+    if (event.key !== "Tab") return;
 
-    if ($("cartDrawer") && !$("cartDrawer").hidden) {
-      closeCart();
-      return;
-    }
+    const activeDialog = [
+      getElement("labelModal"),
+      getElement("productModal"),
+      getElement("cartDrawer")
+    ].find(dialog => dialog && !dialog.hidden);
 
-    closeMobileMenu();
+    if (!activeDialog) return;
+
+    const focusableElements = Array.from(
+      activeDialog.querySelectorAll(
+        'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )
+    ).filter(element => element.getClientRects().length > 0);
+
+    if (!focusableElements.length) return;
+
+    const first = focusableElements[0];
+    const last = focusableElements[focusableElements.length - 1];
+
+    if (event.shiftKey) {
+      if (
+        document.activeElement === first ||
+        !activeDialog.contains(document.activeElement)
+      ) {
+        event.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (
+        document.activeElement === last ||
+        !activeDialog.contains(document.activeElement)
+      ) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
   });
 }
 
-/* === GLOBAL KEYBOARD CONTROLS END === */
+/* === KEYBOARD ACCESSIBILITY END === */
+
+
+/* === IMAGE ERROR HANDLING START === */
+
+function initializeImageErrorHandling() {
+  document.addEventListener("error", event => {
+    const image = event.target;
+
+    if (!(image instanceof HTMLImageElement)) return;
+
+    console.warn(
+      "[007-NRG] Image could not be loaded:",
+      image.currentSrc || image.src
+    );
+
+    /*
+      Image failures are logged instead of
+      silently replacing them with old artwork.
+    */
+  }, true);
+}
+
+/* === IMAGE ERROR HANDLING END === */
 
 
 /* === APPLICATION INITIALIZATION START === */
 
 function initializeApplication() {
-  const currentYear = $("currentYear");
+  setElementText("currentYear", new Date().getFullYear());
 
-  if (currentYear) {
-    currentYear.textContent = String(
-      new Date().getFullYear()
-    );
-  }
-
-  initializeNavigation();
-  initializeProductCollection();
-  initializeCart();
+  initializeImageErrorHandling();
+  initializeMobileNavigation();
   initializeHeroSlideshow();
-  renderIngredients();
-  initializeLabelViewer();
-  initializeReviews();
+  initializeProductCollection();
+  initializeShoppingCart();
+  initializeIngredientExplorer();
+  initializeProductLabelViewer();
+  initializeDemoReviews();
   initializeScrollAnimations();
   initializeKeyboardControls();
+
+  console.info("[007-NRG] Website initialized.");
+  console.info("[007-NRG] Checkout remains disabled.");
 }
 
 if (document.readyState === "loading") {

@@ -1,10 +1,10 @@
 # boc_TJ
-Website for TJ & CO
+Website for TJ & CO 007-NRG
 
 Your info on how to navigate around the files & folders will be here 
 so check back to github every so often if you can.
 
-Website for BOC TJ & CO. A place for you to share website info
+Website for 007-NRG TJ & CO. A place for you to share website info
 
 👀 Watch Site Being Built As Changes Happen: https://geoffstengel.github.io/boc_TJ/ 👀 
 

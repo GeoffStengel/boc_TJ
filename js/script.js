@@ -3,15 +3,24 @@
 
 /* ============================================================
    007-NRG WEBSITE
-   Complete JavaScript — Products, Ingredients, Tools & UI
+   Products, Ingredients, Keto Tools & User Interface
    ============================================================ */
 
-/* === CONFIGURATION START === */
+
+/* ============================================================
+   SITE CONFIGURATION START
+   ============================================================ */
 
 const SITE_CONFIG = {
   heroRotationInterval: 4000,
   heroFadeDuration: 180,
-  checkoutEnabled: false
+  checkoutEnabled: false,
+
+  storageKeys: {
+    foodTracker: "007nrg_food_tracker_v1",
+    foodTrackerGoal: "007nrg_food_tracker_goal_v1",
+    mealPlanner: "007nrg_meal_planner_v1"
+  }
 };
 
 const PRODUCT_IMAGES = {
@@ -25,14 +34,12 @@ const PRODUCT_IMAGES = {
   productLabel: "images/007-NRG-Label-no-bkgd-1536x1024.png"
 };
 
-/* === CONFIGURATION END === */
+/* === SITE CONFIGURATION END === */
 
 
 /* ============================================================
-   PRODUCT DATA
+   PRODUCT COLLECTION DATA START
    ============================================================ */
-
-/* === PRODUCTS START === */
 
 const PRODUCTS = [
   {
@@ -67,64 +74,65 @@ const PRODUCTS = [
   }
 ];
 
-/* === PRODUCTS END === */
+/* === PRODUCT COLLECTION DATA END === */
 
 
 /* ============================================================
-   HERO CAROUSEL DATA
+   HERO SLIDES DATA START
    ============================================================ */
-
-/* === HERO SLIDES START === */
 
 const HERO_SLIDES = [
   {
     edition: "01 / ORIGINAL",
     title: "HYPER FOCUSED <em>ENERGY.</em>",
-    description: "Meet the signature 007-NRG bottle. Bold design, unmistakable identity.",
+    description:
+      "Meet the signature 007-NRG bottle. Bold design, unmistakable identity.",
     image: PRODUCT_IMAGES.singleBottle,
     alt: "Original 007-NRG single bottle"
   },
   {
     edition: "02 / GRAPE",
     title: "A BOLDER <em>PURPLE.</em>",
-    description: "A rich grape-inspired look with deep purple color and signature 007-NRG styling.",
+    description:
+      "A rich grape-inspired look with deep purple color and signature 007-NRG styling.",
     image: PRODUCT_IMAGES.grapeBottle,
     alt: "007-NRG grape bottle design"
   },
   {
     edition: "03 / SIGNATURE SPLASH",
     title: "MAKE A <em>SPLASH.</em>",
-    description: "The signature 007-NRG bottle in a striking, high-impact presentation.",
+    description:
+      "The signature 007-NRG bottle in a striking, high-impact presentation.",
     image: PRODUCT_IMAGES.waterSplashBottle,
     alt: "007-NRG bottle with water splash"
   },
   {
     edition: "04 / BLUE RASPBERRY",
     title: "BRING THE <em>BLUE.</em>",
-    description: "A vibrant blue raspberry-inspired look with the unmistakable 007-NRG identity.",
+    description:
+      "A vibrant blue raspberry-inspired look with the unmistakable 007-NRG identity.",
     image: PRODUCT_IMAGES.blueRaspberryBottle,
     alt: "007-NRG blue raspberry bottle design"
   }
 ];
 
-/* === HERO SLIDES END === */
+/* === HERO SLIDES DATA END === */
 
 
 /* ============================================================
-   PRODUCT LABEL INFORMATION
+   PRODUCT LABEL INFORMATION START
    ============================================================ */
 
-/* === LABEL DATA START === */
-
 /*
-  Ingredient names are based on the supplied original
-  007-NRG ingredient artwork.
+   Based on the original supplied 007-NRG label artwork.
 
-  The 9,048 mg amount is the TOTAL proprietary blend,
-  not an amount for any individual ingredient.
+   IMPORTANT:
+   The proprietary blend totals 9,048 mg.
 
-  Confirm final artwork, exact ingredient wording,
-  and warnings with the client before publication.
+   This is NOT the amount of each individual ingredient.
+
+   Confirm final ingredient wording, serving information,
+   and warnings with the client before publication.
 */
 
 const PRODUCT_LABEL_INFORMATION = {
@@ -159,18 +167,25 @@ const PRODUCT_LABEL_INFORMATION = {
   ]
 };
 
-/* === LABEL DATA END === */
+/* === PRODUCT LABEL INFORMATION END === */
 
 
 /* ============================================================
-   INGREDIENT KNOWLEDGE BASE
+   INGREDIENT KNOWLEDGE BASE START
    ============================================================ */
 
-/* === INGREDIENT DATA START === */
-
 /*
-  These are general educational ingredient facts.
-  They are not claims about the finished 007-NRG product.
+   The ingredient database powers:
+
+   1. Original ingredient cards
+   2. Ingredient Explorer 2.0
+   3. Ingredient search and category filters
+   4. Side-by-side ingredient comparisons
+
+   Educational information only.
+
+   Descriptions are not claims about the effects
+   or safety of the finished 007-NRG product.
 */
 
 const INGREDIENTS = [
@@ -178,152 +193,210 @@ const INGREDIENTS = [
     name: "Beta-Alanine",
     category: "Amino Acid",
     group: "blend",
-    description: "An amino acid involved in the production of carnosine.",
-    details: "Carnosine is found in skeletal muscle and helps buffer acidity. Beta-alanine supplementation can cause temporary skin tingling, called paresthesia."
+    toolCategory: "amino-acids",
+    description:
+      "An amino acid involved in the production of carnosine.",
+    details:
+      "Carnosine is found in skeletal muscle and helps buffer acidity. Beta-alanine supplementation can cause temporary skin tingling, called paresthesia."
   },
   {
     name: "L-Citrulline Malate 2:1",
     category: "Amino Acid Compound",
     group: "blend",
-    description: "A combination of L-citrulline and malate.",
-    details: "L-citrulline participates in the body's urea cycle and can be converted into arginine, which is involved in nitric oxide production. Malate participates in cellular energy metabolism."
+    toolCategory: "amino-acids",
+    description:
+      "A combination of L-citrulline and malate.",
+    details:
+      "L-citrulline participates in the body's urea cycle and can be converted into arginine, which is involved in nitric oxide production. Malate participates in cellular energy metabolism."
   },
   {
     name: "Gamma Aminobutyric Acid (GABA)",
     category: "Neurotransmitter",
     group: "blend",
-    description: "A naturally occurring inhibitory neurotransmitter.",
-    details: "GABA helps regulate nerve signaling in the central nervous system. Research is ongoing into whether orally consumed GABA produces meaningful effects in the brain."
+    toolCategory: "other",
+    description:
+      "A naturally occurring inhibitory neurotransmitter.",
+    details:
+      "GABA helps regulate nerve signaling in the central nervous system. Research is ongoing into whether orally consumed GABA produces meaningful effects in the brain."
   },
   {
     name: "Caffeine Anhydrous",
     category: "Stimulant",
     group: "blend",
-    description: "A concentrated, dehydrated form of caffeine.",
-    details: "Caffeine stimulates the central nervous system primarily by blocking adenosine receptors. Excess intake can cause insomnia, anxiety, rapid heartbeat, and other adverse effects."
+    toolCategory: "stimulants",
+    description:
+      "A concentrated, dehydrated form of caffeine.",
+    details:
+      "Caffeine stimulates the central nervous system primarily by blocking adenosine receptors. Excess intake can cause insomnia, anxiety, rapid heartbeat, and other adverse effects."
   },
   {
     name: "Dicaffeine Malate",
     category: "Caffeine Compound",
     group: "blend",
-    description: "A compound combining caffeine with malic acid.",
-    details: "Dicaffeine malate is another source of caffeine. When assessing total caffeine exposure, caffeine from all ingredients and beverages should be considered."
+    toolCategory: "stimulants",
+    description:
+      "A compound combining caffeine with malic acid.",
+    details:
+      "Dicaffeine malate is another source of caffeine. When assessing total caffeine exposure, caffeine from all ingredients and beverages should be considered."
   },
   {
     name: "AMPiberry®",
     category: "Botanical Ingredient",
     group: "blend",
-    description: "A branded ingredient associated with juniper berry.",
-    details: "Juniperus communis is an evergreen plant whose berry-like cones have a history of culinary use. The properties of a specific branded extract depend on its composition and manufacturing specifications."
+    toolCategory: "botanicals",
+    description:
+      "A branded ingredient associated with juniper berry.",
+    details:
+      "Juniperus communis is an evergreen plant whose berry-like cones have a history of culinary use. The properties of a specific branded extract depend on its composition and manufacturing specifications."
   },
   {
     name: "Theobromine",
     category: "Methylxanthine",
     group: "blend",
-    description: "A naturally occurring compound found in cacao.",
-    details: "Theobromine is chemically related to caffeine. It has different effects on the nervous and cardiovascular systems and may contribute to overall methylxanthine exposure."
+    toolCategory: "stimulants",
+    description:
+      "A naturally occurring compound found in cacao.",
+    details:
+      "Theobromine is chemically related to caffeine. It has different effects on the nervous and cardiovascular systems and may contribute to overall methylxanthine exposure."
   },
   {
     name: "Yohimbine HCl (98%)",
     category: "Adrenergic Compound",
     group: "blend",
-    description: "A pharmacologically active alpha-2 adrenergic receptor antagonist.",
-    details: "Yohimbine can affect blood pressure, heart rate, and anxiety. It can interact with medications and other stimulants. Its presence warrants particular attention to product safety information."
+    toolCategory: "stimulants",
+    description:
+      "A pharmacologically active alpha-2 adrenergic receptor antagonist.",
+    details:
+      "Yohimbine can affect blood pressure, heart rate, and anxiety. It can interact with medications and other stimulants. Its presence warrants particular attention to product safety information."
   },
   {
     name: "Rauwolfia Vomitoria Extract",
     category: "Botanical Extract",
     group: "blend",
-    description: "A botanical extract identified on the supplied label as standardized for alpha-yohimbine.",
-    details: "Alpha-yohimbine, also known as rauwolscine, is an adrenergically active alkaloid. Its safety profile and potential interactions require caution, especially alongside other stimulants."
+    toolCategory: "botanicals",
+    description:
+      "A botanical extract identified on the supplied label as standardized for alpha-yohimbine.",
+    details:
+      "Alpha-yohimbine, also known as rauwolscine, is an adrenergically active alkaloid. Its safety profile and potential interactions require caution, especially alongside other stimulants."
   },
   {
     name: "Ketones",
     category: "Formula Component",
     group: "blend",
-    description: "A broad term for a class of chemical compounds.",
-    details: "Ketone bodies such as beta-hydroxybutyrate are produced during fat metabolism and nutritional ketosis. The label does not specify which ketone ingredient is included, so its properties cannot be established from the name alone."
+    toolCategory: "other",
+    description:
+      "A broad term for a class of chemical compounds.",
+    details:
+      "Ketone bodies such as beta-hydroxybutyrate are produced during fat metabolism and nutritional ketosis. The label does not specify which ketone ingredient is included, so its properties cannot be established from the name alone."
   },
   {
     name: "Purified Water",
     category: "Other Ingredient",
     group: "other",
-    description: "Water that has undergone purification.",
-    details: "Purified water is commonly used as a liquid base in beverage and other formulations."
+    toolCategory: "other",
+    description:
+      "Water that has undergone purification.",
+    details:
+      "Purified water is commonly used as a liquid base in beverage and other formulations."
   },
   {
     name: "Citric Acid",
     category: "Acidulant",
     group: "other",
-    description: "An organic acid naturally found in citrus fruits.",
-    details: "Citric acid is widely used in foods and beverages to contribute tartness and help adjust acidity."
+    toolCategory: "other",
+    description:
+      "An organic acid naturally found in citrus fruits.",
+    details:
+      "Citric acid is widely used in foods and beverages to contribute tartness and help adjust acidity."
   },
   {
     name: "Natural & Artificial Flavors",
     category: "Flavoring",
     group: "other",
-    description: "Ingredients used to create or adjust flavor.",
-    details: "Natural and artificial flavoring substances can come from different sources. The exact flavor components are not individually identified in this ingredient declaration."
+    toolCategory: "other",
+    description:
+      "Ingredients used to create or adjust flavor.",
+    details:
+      "Natural and artificial flavoring substances can come from different sources. The exact flavor components are not individually identified in this ingredient declaration."
   },
   {
     name: "Silicon Dioxide",
     category: "Processing Ingredient",
     group: "other",
-    description: "A compound of silicon and oxygen.",
-    details: "Silicon dioxide is used in some food and supplement manufacturing applications, including as an anti-caking agent in dry mixtures."
+    toolCategory: "other",
+    description:
+      "A compound of silicon and oxygen.",
+    details:
+      "Silicon dioxide is used in some food and supplement manufacturing applications, including as an anti-caking agent in dry mixtures."
   },
   {
     name: "Calcium Silicate",
     category: "Processing Ingredient",
     group: "other",
-    description: "A calcium-containing silicate compound.",
-    details: "Calcium silicate is used in certain food manufacturing applications, including as an anti-caking or processing aid."
+    toolCategory: "other",
+    description:
+      "A calcium-containing silicate compound.",
+    details:
+      "Calcium silicate is used in certain food manufacturing applications, including as an anti-caking or processing aid."
   },
   {
     name: "Sucralose",
     category: "Sweetener",
     group: "other",
-    description: "A high-intensity sweetener.",
-    details: "Sucralose provides sweetness in much smaller amounts than table sugar. It is used in a variety of reduced-sugar food and beverage products."
+    toolCategory: "sweeteners",
+    description:
+      "A high-intensity sweetener.",
+    details:
+      "Sucralose provides sweetness in much smaller amounts than table sugar. It is used in a variety of reduced-sugar food and beverage products."
   },
   {
     name: "Acesulfame Potassium (Ace K)",
     category: "Sweetener",
     group: "other",
-    description: "A high-intensity sweetener also called Ace K.",
-    details: "Acesulfame potassium is often combined with other sweeteners to achieve a desired sweetness profile."
+    toolCategory: "sweeteners",
+    description:
+      "A high-intensity sweetener also called Ace K.",
+    details:
+      "Acesulfame potassium is often combined with other sweeteners to achieve a desired sweetness profile."
   },
   {
     name: "FD&C Red #40",
     category: "Color Additive",
     group: "other",
-    description: "A certified synthetic red color additive.",
-    details: "FD&C Red No. 40 is used to provide color in certain foods and beverages. Its use is subject to applicable color additive regulations."
+    toolCategory: "other",
+    description:
+      "A certified synthetic red color additive.",
+    details:
+      "FD&C Red No. 40 is used to provide color in certain foods and beverages. Its use is subject to applicable color additive regulations."
   },
   {
     name: "Potassium Sorbate",
     category: "Preservative",
     group: "other",
-    description: "A preservative used in certain foods and beverages.",
-    details: "Potassium sorbate is commonly used to inhibit the growth of some yeasts and molds in suitable formulations."
+    toolCategory: "other",
+    description:
+      "A preservative used in certain foods and beverages.",
+    details:
+      "Potassium sorbate is commonly used to inhibit the growth of some yeasts and molds in suitable formulations."
   },
   {
     name: "Sodium Benzoate",
     category: "Preservative",
     group: "other",
-    description: "A preservative often used in acidic products.",
-    details: "Sodium benzoate is used to inhibit certain microorganisms. Its effectiveness depends in part on the acidity of the formulation."
+    toolCategory: "other",
+    description:
+      "A preservative often used in acidic products.",
+    details:
+      "Sodium benzoate is used to inhibit certain microorganisms. Its effectiveness depends in part on the acidity of the formulation."
   }
 ];
 
-/* === INGREDIENT DATA END === */
+/* === INGREDIENT KNOWLEDGE BASE END === */
 
 
 /* ============================================================
-   SHARED HELPERS
+   SHARED HELPERS START
    ============================================================ */
-
-/* === HELPERS START === */
 
 function getElement(id) {
   return document.getElementById(id);
@@ -331,7 +404,10 @@ function getElement(id) {
 
 function setElementText(id, value) {
   const element = getElement(id);
-  if (element) element.textContent = String(value);
+
+  if (element) {
+    element.textContent = String(value);
+  }
 }
 
 function escapeHTML(value) {
@@ -349,7 +425,9 @@ function getProductById(id) {
 }
 
 function formatProductPrice(product) {
-  if (product.priceCents == null) return "DETAILS AVAILABLE";
+  if (product.priceCents == null) {
+    return "DETAILS AVAILABLE";
+  }
 
   return new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -357,11 +435,65 @@ function formatProductPrice(product) {
   }).format(product.priceCents / 100);
 }
 
+function formatNumber(value, decimals = 1) {
+  const number = Number(value);
+
+  if (!Number.isFinite(number)) {
+    return "0";
+  }
+
+  return Number(number.toFixed(decimals)).toLocaleString(
+    "en-US",
+    { maximumFractionDigits: decimals }
+  );
+}
+
+function clampNumber(value, minimum, maximum) {
+  return Math.min(maximum, Math.max(minimum, value));
+}
+
+function calculateFoodNetCarbs(totalCarbs, fiber) {
+  return Math.max(0, Number(totalCarbs) - Number(fiber));
+}
+
+/* === LOCAL STORAGE HELPERS START === */
+
+function readLocalData(storageKey, fallback = null) {
+  try {
+    const storedValue = localStorage.getItem(storageKey);
+
+    return storedValue === null
+      ? fallback
+      : JSON.parse(storedValue);
+  } catch (error) {
+    console.warn("[007-NRG] Could not read saved data.", error);
+    return fallback;
+  }
+}
+
+function saveLocalData(storageKey, value) {
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(value));
+    return true;
+  } catch (error) {
+    console.warn("[007-NRG] Could not save data.", error);
+    return false;
+  }
+}
+
+/* === LOCAL STORAGE HELPERS END === */
+
+
+/* === TOAST NOTIFICATIONS START === */
+
 let toastTimeoutId = null;
 
 function showToast(message) {
   const toast = getElement("toast");
-  if (!toast) return;
+
+  if (!toast) {
+    return;
+  }
 
   clearTimeout(toastTimeoutId);
 
@@ -375,14 +507,15 @@ function showToast(message) {
   }, 3000);
 }
 
-/* === HELPERS END === */
+/* === TOAST NOTIFICATIONS END === */
+
+/* === SHARED HELPERS END === */
+
 
 
 /* ============================================================
-   MOBILE NAVIGATION
+   MOBILE NAVIGATION START
    ============================================================ */
-
-/* === MOBILE NAVIGATION START === */
 
 function initializeMobileNavigation() {
   const toggle = getElement("menuToggle");
@@ -403,7 +536,10 @@ function initializeMobileNavigation() {
     links.classList.toggle("active", !open);
 
     toggle.setAttribute("aria-expanded", String(!open));
-    toggle.setAttribute("aria-label", open ? "Open menu" : "Close menu");
+    toggle.setAttribute(
+      "aria-label",
+      open ? "Open menu" : "Close menu"
+    );
   });
 
   links.querySelectorAll("a").forEach(link => {
@@ -411,7 +547,10 @@ function initializeMobileNavigation() {
   });
 
   document.addEventListener("click", event => {
-    if (!links.contains(event.target) && !toggle.contains(event.target)) {
+    if (
+      !links.contains(event.target) &&
+      !toggle.contains(event.target)
+    ) {
       closeMenu();
     }
   });
@@ -425,10 +564,8 @@ function initializeMobileNavigation() {
 
 
 /* ============================================================
-   HERO CAROUSEL
+   HERO CAROUSEL START
    ============================================================ */
-
-/* === HERO CAROUSEL START === */
 
 let currentHeroSlideIndex = 0;
 let heroRotationTimer = null;
@@ -445,7 +582,9 @@ function preloadHeroImage(source) {
     const image = new Image();
 
     image.onload = () => resolve();
-    image.onerror = () => reject(new Error(`Image not found: ${source}`));
+    image.onerror = () =>
+      reject(new Error(`Image not found: ${source}`));
+
     image.src = source;
   });
 
@@ -466,7 +605,7 @@ function updateHeroIndicators() {
 
 async function displayHeroSlide(index, immediate = false) {
   const image = getElement("heroProductImage");
-  if (!image) return;
+  if (!image || !HERO_SLIDES.length) return;
 
   const normalizedIndex =
     ((index % HERO_SLIDES.length) + HERO_SLIDES.length) %
@@ -479,12 +618,13 @@ async function displayHeroSlide(index, immediate = false) {
     await preloadHeroImage(slide.image);
   } catch (error) {
     console.warn("[007-NRG]", error.message);
+    heroImageCache.delete(slide.image);
     return;
   }
 
   if (requestId !== heroTransitionRequestId) return;
 
-  const reducedMotion = matchMedia(
+  const reducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
@@ -528,7 +668,7 @@ function startHeroRotation() {
 
   if (
     document.hidden ||
-    matchMedia("(prefers-reduced-motion: reduce)").matches
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
   ) {
     return;
   }
@@ -553,7 +693,10 @@ function initializeHeroSlideshow() {
     const button = document.createElement("button");
 
     button.type = "button";
-    button.setAttribute("aria-label", `Show slide ${index + 1}`);
+    button.setAttribute(
+      "aria-label",
+      `Show slide ${index + 1}`
+    );
     button.setAttribute("aria-pressed", "false");
 
     button.addEventListener("click", () => {
@@ -565,13 +708,15 @@ function initializeHeroSlideshow() {
     preloadHeroImage(slide.image).catch(() => {});
   });
 
-  getElement("previousSlide")?.addEventListener("click", () => {
-    selectHeroSlide(currentHeroSlideIndex - 1);
-  });
+  getElement("previousSlide")?.addEventListener(
+    "click",
+    () => selectHeroSlide(currentHeroSlideIndex - 1)
+  );
 
-  getElement("nextSlide")?.addEventListener("click", () => {
-    selectHeroSlide(currentHeroSlideIndex + 1);
-  });
+  getElement("nextSlide")?.addEventListener(
+    "click",
+    () => selectHeroSlide(currentHeroSlideIndex + 1)
+  );
 
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) stopHeroRotation();
@@ -586,10 +731,8 @@ function initializeHeroSlideshow() {
 
 
 /* ============================================================
-   PRODUCT COLLECTION
+   PRODUCT COLLECTION START
    ============================================================ */
-
-/* === PRODUCT COLLECTION START === */
 
 let activeProductFilter = "all";
 
@@ -621,7 +764,6 @@ function generateProductCard(product) {
         </span>
 
         <h3>${escapeHTML(product.name)}</h3>
-
         <p>${escapeHTML(product.description)}</p>
 
         <strong class="product-price">
@@ -651,11 +793,12 @@ function renderProductCollection() {
 
   grid.innerHTML = filtered.map(generateProductCard).join("");
 
-  grid.querySelectorAll("[data-preview-product]").forEach(button => {
-    button.addEventListener("click", () => {
-      openProductPreview(button.dataset.previewProduct);
+  grid.querySelectorAll("[data-preview-product]")
+    .forEach(button => {
+      button.addEventListener("click", () => {
+        openProductPreview(button.dataset.previewProduct);
+      });
     });
-  });
 }
 
 function initializeProductCollection() {
@@ -665,6 +808,7 @@ function initializeProductCollection() {
 
       document.querySelectorAll(".shop-tab").forEach(tab => {
         const active = tab === button;
+
         tab.classList.toggle("active", active);
         tab.setAttribute("aria-pressed", String(active));
       });
@@ -680,10 +824,8 @@ function initializeProductCollection() {
 
 
 /* ============================================================
-   DIALOG HELPERS
+   DIALOG HELPERS START
    ============================================================ */
-
-/* === DIALOG HELPERS START === */
 
 let lastFocusedElement = null;
 
@@ -730,10 +872,8 @@ function closeDialog(element) {
 
 
 /* ============================================================
-   PRODUCT INGREDIENT DISCLOSURE
+   PRODUCT INGREDIENT DISCLOSURE START
    ============================================================ */
-
-/* === PRODUCT INGREDIENT DISCLOSURE START === */
 
 function createProductIngredientDisclosure() {
   const label = PRODUCT_LABEL_INFORMATION;
@@ -743,16 +883,13 @@ function createProductIngredientDisclosure() {
 
   return `
     <section class="product-ingredient-information">
-
       <details class="product-ingredient-disclosure" open>
-
         <summary>
           <span>INGREDIENTS & PRODUCT INFORMATION</span>
           <span class="disclosure-chevron" aria-hidden="true"></span>
         </summary>
 
         <div class="product-ingredient-content">
-
           <div class="product-serving-information">
             <span>
               <strong>Serving Size</strong>
@@ -766,7 +903,6 @@ function createProductIngredientDisclosure() {
           </div>
 
           <div class="product-ingredient-group">
-
             <h3>PROPRIETARY BLEND</h3>
 
             <p class="blend-amount">
@@ -778,36 +914,31 @@ function createProductIngredientDisclosure() {
             </ul>
 
             <p class="ingredient-footnote">
-              The listed amount is for the entire blend.
-              Individual ingredient amounts are not specified.
+              The stated amount is for the entire blend.
+              Individual ingredient quantities are not disclosed.
             </p>
-
           </div>
 
           <div class="product-ingredient-group">
-
             <h3>OTHER INGREDIENTS</h3>
 
             <ul class="product-ingredient-list">
               ${createList(label.otherIngredients)}
             </ul>
-
           </div>
 
           <div class="product-warning-information">
-
             <h3>IMPORTANT PRODUCT INFORMATION</h3>
 
             <p>
-              Contains caffeine and other stimulant ingredients,
-              including yohimbine compounds.
+              Contains caffeine and other stimulant
+              ingredients, including yohimbine compounds.
             </p>
 
             <p>
-              Review the full product label for the
-              manufacturer's directions and warnings.
+              Review the manufacturer's complete
+              directions and warnings before use.
             </p>
-
           </div>
 
           <a
@@ -817,7 +948,6 @@ function createProductIngredientDisclosure() {
           >
             VIEW FULL PRODUCT LABEL
           </a>
-
         </div>
       </details>
     </section>
@@ -828,10 +958,8 @@ function createProductIngredientDisclosure() {
 
 
 /* ============================================================
-   PRODUCT QUICK VIEW
+   PRODUCT QUICK VIEW START
    ============================================================ */
-
-/* === PRODUCT QUICK VIEW START === */
 
 function initializeProductIngredientPopups() {
   const modal = getElement("productModal");
@@ -862,7 +990,10 @@ function openProductPreview(productId) {
 
   setElementText("productModalTitle", product.name);
   setElementText("productModalSize", product.size);
-  setElementText("productModalPrice", formatProductPrice(product));
+  setElementText(
+    "productModalPrice",
+    formatProductPrice(product)
+  );
 
   const image = getElement("productModalImage");
 
@@ -902,21 +1033,22 @@ function initializeProductPreview() {
     closeProductPreview
   );
 
-  getElement("productModal")?.addEventListener("click", event => {
-    if (event.target.id === "productModal") {
-      closeProductPreview();
+  getElement("productModal")?.addEventListener(
+    "click",
+    event => {
+      if (event.target.id === "productModal") {
+        closeProductPreview();
+      }
     }
-  });
+  );
 }
 
 /* === PRODUCT QUICK VIEW END === */
 
 
 /* ============================================================
-   SHOPPING CART
+   SHOPPING CART START
    ============================================================ */
-
-/* === SHOPPING CART START === */
 
 function updateCartDisplay() {
   setElementText("cartCount", "0");
@@ -940,7 +1072,10 @@ function openShoppingCart() {
   const overlay = getElement("cartOverlay");
   if (overlay) overlay.hidden = false;
 
-  openDialog(getElement("cartDrawer"), getElement("closeCart"));
+  openDialog(
+    getElement("cartDrawer"),
+    getElement("closeCart")
+  );
 }
 
 function closeShoppingCart() {
@@ -978,10 +1113,8 @@ function initializeShoppingCart() {
 
 
 /* ============================================================
-   INGREDIENT EXPLORER
+   INGREDIENT EXPLORER — MAIN PAGE START
    ============================================================ */
-
-/* === INGREDIENT EXPLORER START === */
 
 let ingredientSearchQuery = "";
 let activeIngredientFilter = "all";
@@ -989,21 +1122,17 @@ let activeIngredientFilter = "all";
 function generateIngredientCard(ingredient) {
   return `
     <article class="ingredient-card reveal visible">
-
       <span class="eyebrow">
         ${escapeHTML(ingredient.category)}
       </span>
 
       <h3>${escapeHTML(ingredient.name)}</h3>
-
       <p>${escapeHTML(ingredient.description)}</p>
 
       <details class="ingredient-details">
         <summary>LEARN MORE</summary>
-
         <p>${escapeHTML(ingredient.details)}</p>
       </details>
-
     </article>
   `;
 }
@@ -1032,16 +1161,19 @@ function renderIngredientExplorer() {
 
   grid.innerHTML = filtered.length
     ? filtered.map(generateIngredientCard).join("")
-    : `
-      <p class="empty-reviews">
-        No ingredients match your search.
-      </p>
-    `;
+    : `<p class="tool-empty-state">
+         No ingredients match your search.
+       </p>`;
 }
 
 function initializeIngredientExplorer() {
   const grid = getElement("ingredientGrid");
   if (!grid) return;
+
+  if (getElement("ingredientSearch")) {
+    renderIngredientExplorer();
+    return;
+  }
 
   const controls = document.createElement("div");
   controls.className = "ingredient-controls";
@@ -1113,7 +1245,6 @@ function initializeIngredientExplorer() {
         controls.querySelectorAll("[data-ingredient-filter]")
           .forEach(tab => {
             const active = tab === button;
-
             tab.classList.toggle("active", active);
             tab.setAttribute("aria-pressed", String(active));
           });
@@ -1125,21 +1256,19 @@ function initializeIngredientExplorer() {
   renderIngredientExplorer();
 }
 
-/* === INGREDIENT EXPLORER END === */
+/* === INGREDIENT EXPLORER — MAIN PAGE END === */
 
 
 /* ============================================================
-   COMPACT INGREDIENT LABEL SUMMARY
+   INGREDIENT LABEL SUMMARY START
    ============================================================ */
-
-/* === LABEL SUMMARY START === */
 
 function initializeIngredientLabelSummary() {
   const grid = getElement("ingredientGrid");
+
   if (!grid || getElement("ingredientLabelSummary")) return;
 
   const label = PRODUCT_LABEL_INFORMATION;
-
   const summary = document.createElement("div");
 
   summary.id = "ingredientLabelSummary";
@@ -1148,7 +1277,6 @@ function initializeIngredientLabelSummary() {
   summary.innerHTML = `
     <div class="ingredient-label-summary-heading">
       <span class="eyebrow">INSIDE THE FORMULA</span>
-
       <h3>WHAT'S ON THE LABEL</h3>
 
       <p>
@@ -1158,7 +1286,6 @@ function initializeIngredientLabelSummary() {
     </div>
 
     <div class="ingredient-label-groups">
-
       <details class="ingredient-label-group" open>
         <summary>
           <span>
@@ -1168,7 +1295,6 @@ function initializeIngredientLabelSummary() {
               · ${label.proprietaryBlend.length} ingredients
             </small>
           </span>
-
           <span class="disclosure-chevron" aria-hidden="true"></span>
         </summary>
 
@@ -1191,7 +1317,6 @@ function initializeIngredientLabelSummary() {
               ${label.otherIngredients.length} ingredients
             </small>
           </span>
-
           <span class="disclosure-chevron" aria-hidden="true"></span>
         </summary>
 
@@ -1201,7 +1326,6 @@ function initializeIngredientLabelSummary() {
           </p>
         </div>
       </details>
-
     </div>
 
     <p class="ingredient-label-summary-note">
@@ -1219,14 +1343,12 @@ function initializeIngredientLabelSummary() {
   }
 }
 
-/* === LABEL SUMMARY END === */
+/* === INGREDIENT LABEL SUMMARY END === */
 
 
 /* ============================================================
-   PRODUCT LABEL LIGHTBOX
+   PRODUCT LABEL VIEWER START
    ============================================================ */
-
-/* === LABEL VIEWER START === */
 
 let labelZoomLevel = 1;
 
@@ -1252,7 +1374,6 @@ function openProductLabel() {
   }
 
   updateLabelZoom();
-
   openDialog(modal, getElement("closeLabel"));
 }
 
@@ -1286,21 +1407,23 @@ function initializeProductLabelViewer() {
     updateLabelZoom();
   });
 
-  getElement("labelModal")?.addEventListener("click", event => {
-    if (event.target.id === "labelModal") {
-      closeProductLabel();
+  getElement("labelModal")?.addEventListener(
+    "click",
+    event => {
+      if (event.target.id === "labelModal") {
+        closeProductLabel();
+      }
     }
-  });
+  );
 }
 
-/* === LABEL VIEWER END === */
+/* === PRODUCT LABEL VIEWER END === */
+
 
 
 /* ============================================================
-   FITNESS & NUTRITION TOOL NAVIGATION
+   TOOL NAVIGATION START
    ============================================================ */
-
-/* === TOOL NAVIGATION START === */
 
 function initializeToolNavigation() {
   const tabs = document.querySelectorAll("[data-tool]");
@@ -1311,14 +1434,12 @@ function initializeToolNavigation() {
   function selectTool(toolId) {
     tabs.forEach(tab => {
       const active = tab.dataset.tool === toolId;
-
       tab.classList.toggle("active", active);
       tab.setAttribute("aria-pressed", String(active));
     });
 
     panels.forEach(panel => {
       const active = panel.dataset.toolPanel === toolId;
-
       panel.hidden = !active;
       panel.classList.toggle("active", active);
     });
@@ -1337,56 +1458,40 @@ function initializeToolNavigation() {
 
 
 /* ============================================================
-   NET CARB CALCULATOR
+   NET CARB CALCULATOR START
    ============================================================ */
-
-/* === NET CARB CALCULATOR START === */
 
 function calculateNetCarbs() {
   const totalCarbs = Number(getElement("totalCarbs")?.value);
   const fiber = Number(getElement("dietaryFiber")?.value);
   const servings = Number(getElement("carbServings")?.value);
 
-  const valid = [
-    totalCarbs,
-    fiber,
-    servings
-  ].every(Number.isFinite);
-
   if (
-    !valid ||
+    ![totalCarbs, fiber, servings].every(Number.isFinite) ||
     totalCarbs < 0 ||
+    totalCarbs > 10000 ||
     fiber < 0 ||
     fiber > totalCarbs ||
     servings <= 0 ||
-    totalCarbs > 10000 ||
-    fiber > 10000 ||
     servings > 1000
   ) {
     setElementText("netCarbValue", "—");
-
     setElementText(
       "netCarbExplanation",
-      "Enter valid amounts. Dietary fiber cannot exceed total carbohydrates."
+      "Enter valid amounts. Fiber cannot exceed total carbs."
     );
-
     return;
   }
 
-  const netPerServing = Math.max(0, totalCarbs - fiber);
-  const totalNetCarbs = netPerServing * servings;
+  const perServing = calculateFoodNetCarbs(totalCarbs, fiber);
+  const total = perServing * servings;
 
-  const format = number =>
-    Number(number.toFixed(2)).toLocaleString("en-US", {
-      maximumFractionDigits: 2
-    });
-
-  setElementText("netCarbValue", format(totalNetCarbs));
+  setElementText("netCarbValue", formatNumber(total, 2));
 
   setElementText(
     "netCarbExplanation",
-    `${format(netPerServing)} g net carbs per serving × ` +
-    `${format(servings)} serving${servings === 1 ? "" : "s"}.`
+    `${formatNumber(perServing, 2)} g per serving × ` +
+    `${formatNumber(servings, 2)} servings.`
   );
 }
 
@@ -1414,22 +1519,17 @@ function initializeNetCarbCalculator() {
 
 
 /* ============================================================
-   WORKOUT INTERVAL TIMER
+   WORKOUT INTERVAL TIMER START
    ============================================================ */
-
-/* === WORKOUT TIMER START === */
 
 const WORKOUT_TIMER = {
   workSeconds: 30,
   restSeconds: 15,
   totalRounds: 8,
-
   currentRound: 1,
   phase: "ready",
-
   remainingMilliseconds: 30000,
   phaseDurationMilliseconds: 30000,
-
   deadline: null,
   intervalId: null,
   running: false
@@ -1437,14 +1537,11 @@ const WORKOUT_TIMER = {
 
 function formatTimerTime(milliseconds) {
   const seconds = Math.max(0, Math.ceil(milliseconds / 1000));
-
   const minutes = Math.floor(seconds / 60);
-  const remainder = seconds % 60;
 
   return (
-    String(minutes).padStart(2, "0") +
-    ":" +
-    String(remainder).padStart(2, "0")
+    String(minutes).padStart(2, "0") + ":" +
+    String(seconds % 60).padStart(2, "0")
   );
 }
 
@@ -1457,14 +1554,11 @@ function readTimerSettings() {
     !Number.isInteger(work) ||
     !Number.isInteger(rest) ||
     !Number.isInteger(rounds) ||
-    work < 5 ||
-    work > 3600 ||
-    rest < 0 ||
-    rest > 3600 ||
-    rounds < 1 ||
-    rounds > 100
+    work < 5 || work > 3600 ||
+    rest < 0 || rest > 3600 ||
+    rounds < 1 || rounds > 100
   ) {
-    showToast("Please enter valid workout timer settings.");
+    showToast("Enter valid workout timer settings.");
     return null;
   }
 
@@ -1497,16 +1591,12 @@ function renderWorkoutTimer() {
   const progress = getElement("timerProgressBar");
 
   if (progress) {
-    const duration = Math.max(
-      1,
-      timer.phaseDurationMilliseconds
-    );
-
+    const duration = Math.max(1, timer.phaseDurationMilliseconds);
     const elapsed = duration - timer.remainingMilliseconds;
 
     const percentage = timer.phase === "complete"
       ? 100
-      : Math.min(100, Math.max(0, elapsed / duration * 100));
+      : clampNumber(elapsed / duration * 100, 0, 100);
 
     progress.style.width = `${percentage}%`;
   }
@@ -1516,16 +1606,13 @@ function renderWorkoutTimer() {
 
   if (startButton) {
     startButton.disabled = timer.running;
-
     startButton.textContent =
       timer.phase === "ready" || timer.phase === "complete"
         ? "START"
         : "RESUME";
   }
 
-  if (pauseButton) {
-    pauseButton.disabled = !timer.running;
-  }
+  if (pauseButton) pauseButton.disabled = !timer.running;
 
   ["workSeconds", "restSeconds", "timerRounds"].forEach(id => {
     const input = getElement(id);
@@ -1542,7 +1629,7 @@ function advanceWorkoutTimerPhase() {
   const timer = WORKOUT_TIMER;
 
   if (timer.phase === "work") {
-    if (timer.currentRound === timer.totalRounds) {
+    if (timer.currentRound >= timer.totalRounds) {
       timer.phase = "complete";
       timer.remainingMilliseconds = 0;
       timer.running = false;
@@ -1555,35 +1642,24 @@ function advanceWorkoutTimerPhase() {
 
     if (timer.restSeconds > 0) {
       timer.phase = "rest";
-      timer.phaseDurationMilliseconds =
-        timer.restSeconds * 1000;
+      timer.phaseDurationMilliseconds = timer.restSeconds * 1000;
     } else {
       timer.currentRound++;
       timer.phase = "work";
-      timer.phaseDurationMilliseconds =
-        timer.workSeconds * 1000;
+      timer.phaseDurationMilliseconds = timer.workSeconds * 1000;
     }
   } else if (timer.phase === "rest") {
     timer.currentRound++;
     timer.phase = "work";
-    timer.phaseDurationMilliseconds =
-      timer.workSeconds * 1000;
+    timer.phaseDurationMilliseconds = timer.workSeconds * 1000;
   }
 
-  timer.remainingMilliseconds =
-    timer.phaseDurationMilliseconds;
+  timer.remainingMilliseconds = timer.phaseDurationMilliseconds;
 }
 
 function updateWorkoutTimer() {
   const timer = WORKOUT_TIMER;
-
   if (!timer.running || timer.deadline === null) return;
-
-  /*
-    Date.now() keeps the countdown aligned with
-    elapsed real time even when browser intervals
-    are throttled in a background tab.
-  */
 
   let remaining = timer.deadline - Date.now();
   let transitions = 0;
@@ -1597,7 +1673,6 @@ function updateWorkoutTimer() {
     if (!timer.running) break;
 
     remaining = timer.phaseDurationMilliseconds - overshoot;
-
     timer.deadline = Date.now() + remaining;
   }
 
@@ -1610,7 +1685,6 @@ function updateWorkoutTimer() {
 
 function startWorkoutTimer() {
   const timer = WORKOUT_TIMER;
-
   if (timer.running) return;
 
   if (timer.phase === "ready" || timer.phase === "complete") {
@@ -1620,22 +1694,16 @@ function startWorkoutTimer() {
     timer.workSeconds = settings.work;
     timer.restSeconds = settings.rest;
     timer.totalRounds = settings.rounds;
-
     timer.currentRound = 1;
     timer.phase = "work";
-
-    timer.phaseDurationMilliseconds =
-      timer.workSeconds * 1000;
-
-    timer.remainingMilliseconds =
-      timer.phaseDurationMilliseconds;
+    timer.phaseDurationMilliseconds = settings.work * 1000;
+    timer.remainingMilliseconds = timer.phaseDurationMilliseconds;
   }
 
   timer.running = true;
   timer.deadline = Date.now() + timer.remainingMilliseconds;
 
   stopWorkoutTimerInterval();
-
   timer.intervalId = setInterval(updateWorkoutTimer, 100);
 
   renderWorkoutTimer();
@@ -1643,7 +1711,6 @@ function startWorkoutTimer() {
 
 function pauseWorkoutTimer() {
   const timer = WORKOUT_TIMER;
-
   if (!timer.running) return;
 
   timer.remainingMilliseconds = Math.max(
@@ -1676,11 +1743,8 @@ function resetWorkoutTimer() {
     timer.totalRounds = settings.rounds;
   }
 
-  timer.phaseDurationMilliseconds =
-    timer.workSeconds * 1000;
-
-  timer.remainingMilliseconds =
-    timer.phaseDurationMilliseconds;
+  timer.phaseDurationMilliseconds = timer.workSeconds * 1000;
+  timer.remainingMilliseconds = timer.phaseDurationMilliseconds;
 
   renderWorkoutTimer();
 }
@@ -1689,18 +1753,15 @@ function initializeWorkoutTimer() {
   if (!getElement("timerClock")) return;
 
   getElement("startTimer")?.addEventListener(
-    "click",
-    startWorkoutTimer
+    "click", startWorkoutTimer
   );
 
   getElement("pauseTimer")?.addEventListener(
-    "click",
-    pauseWorkoutTimer
+    "click", pauseWorkoutTimer
   );
 
   getElement("resetTimer")?.addEventListener(
-    "click",
-    resetWorkoutTimer
+    "click", resetWorkoutTimer
   );
 
   document.querySelectorAll(".timer-preset").forEach(button => {
@@ -1720,16 +1781,9 @@ function initializeWorkoutTimer() {
 
   ["workSeconds", "restSeconds", "timerRounds"].forEach(id => {
     getElement(id)?.addEventListener("change", () => {
-      if (!WORKOUT_TIMER.running) {
-        resetWorkoutTimer();
-      }
+      if (!WORKOUT_TIMER.running) resetWorkoutTimer();
     });
   });
-
-  /*
-    Update immediately when the tab becomes visible.
-    The timer also accounts for elapsed time while hidden.
-  */
 
   document.addEventListener("visibilitychange", () => {
     if (!document.hidden) updateWorkoutTimer();
@@ -1738,19 +1792,1318 @@ function initializeWorkoutTimer() {
   resetWorkoutTimer();
 }
 
-/* === WORKOUT TIMER END === */
+/* === WORKOUT INTERVAL TIMER END === */
 
 
 /* ============================================================
-   SCROLL ANIMATIONS
+   KETO MACRO CALCULATOR START
    ============================================================ */
 
-/* === SCROLL ANIMATIONS START === */
+/*
+   Uses the Mifflin-St Jeor resting energy equation.
+
+   Activity multipliers and goal adjustments provide
+   approximate daily calorie planning values.
+
+   Protein is estimated at 1.6 g/kg of body weight.
+   Carbohydrates are user-selected net grams.
+   Remaining calories are assigned to fat.
+
+   This is a simplified planning model, not a
+   personalized medical or nutrition prescription.
+*/
+
+function calculateKetoMacros(event) {
+  event?.preventDefault();
+
+  const form = getElement("ketoMacroForm");
+  if (!form || !form.reportValidity()) return;
+
+  const age = Number(getElement("macroAge").value);
+  const sex = getElement("macroSex").value;
+  const weightLb = Number(getElement("macroWeight").value);
+  const heightInches = Number(getElement("macroHeight").value);
+  const activity = Number(getElement("macroActivity").value);
+  const goalAdjustment = Number(getElement("macroGoal").value);
+  const netCarbs = Number(getElement("macroCarbTarget").value);
+
+  if (
+    ![age, weightLb, heightInches, activity,
+      goalAdjustment, netCarbs].every(Number.isFinite) ||
+    age < 18 || age > 100 ||
+    weightLb < 65 || weightLb > 700 ||
+    heightInches < 48 || heightInches > 90 ||
+    netCarbs < 0 || netCarbs > 150 ||
+    !["female", "male"].includes(sex)
+  ) {
+    showToast("Please enter valid macro calculator information.");
+    return;
+  }
+
+  const weightKg = weightLb * 0.45359237;
+  const heightCm = heightInches * 2.54;
+
+  const restingCalories =
+    10 * weightKg +
+    6.25 * heightCm -
+    5 * age +
+    (sex === "male" ? 5 : -161);
+
+  const maintenanceCalories = restingCalories * activity;
+  const targetCalories = Math.max(
+    0,
+    Math.round(maintenanceCalories + goalAdjustment)
+  );
+
+  const proteinGrams = Math.round(weightKg * 1.6);
+  const proteinCalories = proteinGrams * 4;
+  const carbCalories = netCarbs * 4;
+  const remainingCalories =
+    targetCalories - proteinCalories - carbCalories;
+
+  if (remainingCalories < 0) {
+    showToast(
+      "This calorie target is too low for the selected protein and carb targets."
+    );
+    setElementText("macroCalories", "—");
+    setElementText("macroProtein", "—");
+    setElementText("macroFat", "—");
+    setElementText("macroCarbs", "—");
+    setElementText(
+      "macroExplanation",
+      "Adjust your calorie goal or net carb target."
+    );
+    return;
+  }
+
+  const fatGrams = Math.round(remainingCalories / 9);
+
+  setElementText("macroCalories", formatNumber(targetCalories, 0));
+  setElementText("macroProtein", proteinGrams);
+  setElementText("macroFat", fatGrams);
+  setElementText("macroCarbs", netCarbs);
+
+  setElementText(
+    "macroExplanation",
+    `Estimated maintenance: ${formatNumber(maintenanceCalories, 0)} ` +
+    `kcal/day. Targets use approximately 1.6 g protein/kg, ` +
+    `${netCarbs} g net carbs, and remaining calories from fat.`
+  );
+}
+
+function initializeKetoMacroCalculator() {
+  const form = getElement("ketoMacroForm");
+  if (!form) return;
+
+  form.addEventListener("submit", calculateKetoMacros);
+}
+
+/* === KETO MACRO CALCULATOR END === */
+
+
+/* ============================================================
+   INGREDIENT EXPLORER 2.0 START
+   ============================================================ */
+
+let activeIngredientToolCategory = "all";
+let ingredientToolSearchQuery = "";
+
+function ingredientIdentifier(name) {
+  const identifiers = {
+    "L-Citrulline Malate 2:1": "l-citrulline-malate",
+    "Yohimbine HCl (98%)": "yohimbine-hcl",
+    "Acesulfame Potassium (Ace K)": "acesulfame-potassium",
+    "AMPiberry®": "ampiberry",
+    "Gamma Aminobutyric Acid (GABA)": "gaba",
+    "FD&C Red #40": "red-40"
+  };
+
+  return identifiers[name] ||
+    name.toLowerCase()
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
+}
+
+function getIngredientByIdentifier(identifier) {
+  return INGREDIENTS.find(ingredient =>
+    ingredientIdentifier(ingredient.name) === identifier
+  );
+}
+
+function renderIngredientToolCards() {
+  const grid = getElement("ingredientToolGrid");
+  if (!grid) return;
+
+  const matching = INGREDIENTS.filter(ingredient => {
+    const categoryMatches =
+      activeIngredientToolCategory === "all" ||
+      ingredient.toolCategory === activeIngredientToolCategory;
+
+    const searchable = [
+      ingredient.name,
+      ingredient.category,
+      ingredient.description,
+      ingredient.details
+    ].join(" ").toLowerCase();
+
+    return categoryMatches &&
+      searchable.includes(ingredientToolSearchQuery);
+  });
+
+  grid.innerHTML = matching.length
+    ? matching.map(ingredient => `
+        <article class="ingredient-card ingredient-tool-card">
+          <span class="eyebrow">
+            ${escapeHTML(ingredient.category)}
+          </span>
+
+          <h4>${escapeHTML(ingredient.name)}</h4>
+          <p>${escapeHTML(ingredient.description)}</p>
+
+          <details class="ingredient-details">
+            <summary>EXPLORE THIS INGREDIENT</summary>
+            <p>${escapeHTML(ingredient.details)}</p>
+            <p class="ingredient-footnote">
+              Individual ingredient quantity is not disclosed
+              in the supplied proprietary blend label,
+              where applicable.
+            </p>
+          </details>
+
+          <button
+            class="button button-secondary"
+            type="button"
+            data-select-ingredient="${escapeHTML(
+              ingredientIdentifier(ingredient.name)
+            )}"
+          >
+            COMPARE INGREDIENT
+          </button>
+        </article>
+      `).join("")
+    : `<p class="tool-empty-state">
+         No ingredients match those filters.
+       </p>`;
+
+  grid.querySelectorAll("[data-select-ingredient]")
+    .forEach(button => {
+      button.addEventListener("click", () => {
+        const first = getElement("compareIngredientA");
+        const second = getElement("compareIngredientB");
+        const identifier = button.dataset.selectIngredient;
+
+        if (!first || !second) return;
+
+        if (!first.value || first.value === identifier) {
+          first.value = identifier;
+        } else {
+          second.value = identifier;
+        }
+
+        showToast("Ingredient added to comparison.");
+      });
+    });
+}
+
+function populateIngredientComparisonOptions() {
+  const first = getElement("compareIngredientA");
+  const second = getElement("compareIngredientB");
+
+  if (!first || !second) return;
+
+  const options = INGREDIENTS.map(ingredient => `
+    <option value="${escapeHTML(
+      ingredientIdentifier(ingredient.name)
+    )}">
+      ${escapeHTML(ingredient.name)}
+    </option>
+  `).join("");
+
+  first.insertAdjacentHTML("beforeend", options);
+  second.insertAdjacentHTML("beforeend", options);
+}
+
+function compareSelectedIngredients() {
+  const firstId = getElement("compareIngredientA")?.value;
+  const secondId = getElement("compareIngredientB")?.value;
+  const results = getElement("ingredientComparisonResults");
+
+  if (!results) return;
+
+  const first = getIngredientByIdentifier(firstId);
+  const second = getIngredientByIdentifier(secondId);
+
+  if (!first || !second || firstId === secondId) {
+    results.innerHTML = `
+      <p class="tool-empty-state">
+        Select two different ingredients to compare.
+      </p>
+    `;
+    return;
+  }
+
+  results.innerHTML = `
+    <div class="ingredient-comparison-grid">
+      ${[first, second].map(ingredient => `
+        <article class="ingredient-card">
+          <span class="eyebrow">
+            ${escapeHTML(ingredient.category)}
+          </span>
+
+          <h4>${escapeHTML(ingredient.name)}</h4>
+          <p>${escapeHTML(ingredient.description)}</p>
+          <p>${escapeHTML(ingredient.details)}</p>
+
+          <small>
+            Label group:
+            ${ingredient.group === "blend"
+              ? "Proprietary blend"
+              : "Other ingredients"}
+          </small>
+        </article>
+      `).join("")}
+    </div>
+
+    <p class="ingredient-footnote">
+      This comparison explains general ingredient properties.
+      It does not establish comparative doses or product effects.
+    </p>
+  `;
+}
+
+function initializeIngredientExplorerTool() {
+  if (!getElement("ingredientToolGrid")) return;
+
+  populateIngredientComparisonOptions();
+
+  document.querySelectorAll("[data-ingredient-category]")
+    .forEach(button => {
+      button.addEventListener("click", () => {
+        activeIngredientToolCategory =
+          button.dataset.ingredientCategory;
+
+        document.querySelectorAll("[data-ingredient-category]")
+          .forEach(tab => {
+            const active = tab === button;
+            tab.classList.toggle("active", active);
+            tab.setAttribute("aria-pressed", String(active));
+          });
+
+        renderIngredientToolCards();
+      });
+    });
+
+  getElement("ingredientToolSearch")?.addEventListener(
+    "input",
+    event => {
+      ingredientToolSearchQuery =
+        event.target.value.trim().toLowerCase();
+
+      renderIngredientToolCards();
+    }
+  );
+
+  getElement("compareIngredientsButton")?.addEventListener(
+    "click",
+    compareSelectedIngredients
+  );
+
+  document.querySelectorAll(".ingredient-quick-compare")
+    .forEach(button => {
+      button.addEventListener("click", () => {
+        getElement("compareIngredientA").value =
+          button.dataset.compareA;
+
+        getElement("compareIngredientB").value =
+          button.dataset.compareB;
+
+        compareSelectedIngredients();
+      });
+    });
+
+  renderIngredientToolCards();
+}
+
+/* === INGREDIENT EXPLORER 2.0 END === */
+
+
+
+/* ============================================================
+   KETO MEAL DATABASE START
+   ============================================================ */
+
+/*
+   Each meal contains approximate nutrition PER serving.
+
+   Grocery quantities are illustrative per serving.
+   Values must be checked against actual food labels.
+*/
+
+const KETO_MEALS = [
+  {
+    id: "eggs-avocado",
+    name: "Eggs & Avocado",
+    type: "breakfast",
+    styles: ["balanced", "budget", "quick", "vegetarian"],
+    calories: 340, protein: 17, fat: 28, netCarbs: 4,
+    ingredients: ["2 eggs", "1/2 avocado", "1 tsp butter"]
+  },
+  {
+    id: "greek-yogurt",
+    name: "Greek Yogurt & Walnuts",
+    type: "breakfast",
+    styles: ["balanced", "quick", "vegetarian"],
+    calories: 290, protein: 20, fat: 19, netCarbs: 7,
+    ingredients: [
+      "3/4 cup plain unsweetened Greek yogurt",
+      "1 oz walnuts"
+    ]
+  },
+  {
+    id: "spinach-omelet",
+    name: "Spinach & Cheese Omelet",
+    type: "breakfast",
+    styles: ["balanced", "budget", "vegetarian"],
+    calories: 360, protein: 24, fat: 28, netCarbs: 4,
+    ingredients: [
+      "2 eggs", "1 cup spinach", "1 oz cheddar cheese",
+      "1 tsp olive oil"
+    ]
+  },
+  {
+    id: "chia-pudding",
+    name: "Chia Seed Pudding",
+    type: "breakfast",
+    styles: ["balanced", "quick", "vegetarian"],
+    calories: 260, protein: 8, fat: 20, netCarbs: 5,
+    ingredients: [
+      "2 tbsp chia seeds",
+      "3/4 cup unsweetened almond milk",
+      "1 oz almonds"
+    ]
+  },
+  {
+    id: "egg-bowl",
+    name: "Breakfast Egg Bowl",
+    type: "breakfast",
+    styles: ["budget", "quick", "balanced", "vegetarian"],
+    calories: 310, protein: 19, fat: 24, netCarbs: 4,
+    ingredients: [
+      "2 eggs", "1 cup spinach",
+      "1/2 oz cheddar cheese"
+    ]
+  },
+  {
+    id: "chicken-salad",
+    name: "Chicken Avocado Salad",
+    type: "lunch",
+    styles: ["balanced", "quick"],
+    calories: 470, protein: 38, fat: 32, netCarbs: 6,
+    ingredients: [
+      "5 oz cooked chicken", "2 cups lettuce",
+      "1/2 avocado", "1 tbsp olive oil"
+    ]
+  },
+  {
+    id: "tuna-lettuce",
+    name: "Tuna Lettuce Wraps",
+    type: "lunch",
+    styles: ["budget", "quick", "balanced"],
+    calories: 330, protein: 30, fat: 21, netCarbs: 3,
+    ingredients: [
+      "1 can tuna", "3 lettuce leaves",
+      "1 tbsp mayonnaise", "1/2 cucumber"
+    ]
+  },
+  {
+    id: "egg-salad",
+    name: "Egg Salad Lettuce Cups",
+    type: "lunch",
+    styles: ["budget", "quick", "vegetarian", "balanced"],
+    calories: 360, protein: 19, fat: 29, netCarbs: 4,
+    ingredients: [
+      "2 eggs", "1 tbsp mayonnaise",
+      "3 lettuce leaves", "1/2 cucumber"
+    ]
+  },
+  {
+    id: "tofu-salad",
+    name: "Tofu & Avocado Salad",
+    type: "lunch",
+    styles: ["vegetarian", "balanced"],
+    calories: 390, protein: 23, fat: 29, netCarbs: 7,
+    ingredients: [
+      "5 oz firm tofu", "2 cups lettuce",
+      "1/2 avocado", "1 tbsp olive oil"
+    ]
+  },
+  {
+    id: "turkey-rollups",
+    name: "Turkey & Cheese Roll-Ups",
+    type: "lunch",
+    styles: ["quick", "budget", "balanced"],
+    calories: 380, protein: 35, fat: 25, netCarbs: 4,
+    ingredients: [
+      "4 oz sliced turkey", "2 oz cheese",
+      "1/2 cucumber"
+    ]
+  },
+  {
+    id: "salmon-broccoli",
+    name: "Salmon & Broccoli",
+    type: "dinner",
+    styles: ["balanced"],
+    calories: 520, protein: 39, fat: 37, netCarbs: 6,
+    ingredients: [
+      "6 oz salmon", "1.5 cups broccoli",
+      "1 tbsp olive oil"
+    ]
+  },
+  {
+    id: "chicken-cauliflower",
+    name: "Chicken & Cauliflower Rice",
+    type: "dinner",
+    styles: ["balanced", "budget", "quick"],
+    calories: 460, protein: 43, fat: 28, netCarbs: 7,
+    ingredients: [
+      "6 oz chicken", "1.5 cups cauliflower rice",
+      "1 tbsp olive oil", "1/2 cup spinach"
+    ]
+  },
+  {
+    id: "beef-zucchini",
+    name: "Beef & Zucchini Skillet",
+    type: "dinner",
+    styles: ["balanced", "budget"],
+    calories: 540, protein: 36, fat: 39, netCarbs: 8,
+    ingredients: [
+      "6 oz ground beef", "1 zucchini",
+      "1 tbsp olive oil", "1 oz cheese"
+    ]
+  },
+  {
+    id: "tofu-stirfry",
+    name: "Tofu Vegetable Stir-Fry",
+    type: "dinner",
+    styles: ["vegetarian", "balanced", "quick"],
+    calories: 430, protein: 27, fat: 31, netCarbs: 9,
+    ingredients: [
+      "7 oz firm tofu", "1 cup broccoli",
+      "1 cup zucchini", "1 tbsp sesame oil"
+    ]
+  },
+  {
+    id: "mushroom-omelet",
+    name: "Mushroom & Cheese Omelet",
+    type: "dinner",
+    styles: ["vegetarian", "budget", "quick"],
+    calories: 420, protein: 27, fat: 32, netCarbs: 6,
+    ingredients: [
+      "3 eggs", "1 cup mushrooms",
+      "1 oz cheese", "1 tsp butter"
+    ]
+  },
+  {
+    id: "almonds",
+    name: "Almonds",
+    type: "snack",
+    styles: ["balanced", "budget", "quick", "vegetarian"],
+    calories: 165, protein: 6, fat: 14, netCarbs: 3,
+    ingredients: ["1 oz almonds"]
+  },
+  {
+    id: "cheese-snack",
+    name: "Cheese & Cucumber",
+    type: "snack",
+    styles: ["balanced", "budget", "quick", "vegetarian"],
+    calories: 150, protein: 9, fat: 12, netCarbs: 2,
+    ingredients: ["1 oz cheese", "1/2 cucumber"]
+  },
+  {
+    id: "walnuts",
+    name: "Walnuts",
+    type: "snack",
+    styles: ["balanced", "quick", "vegetarian"],
+    calories: 185, protein: 4, fat: 18, netCarbs: 2,
+    ingredients: ["1 oz walnuts"]
+  }
+];
+
+/* === KETO MEAL DATABASE END === */
+
+
+/* ============================================================
+   KETO MEAL PLANNER START
+   ============================================================ */
+
+let currentMealPlan = null;
+
+function getMealsByType(type, style) {
+  return KETO_MEALS.filter(meal =>
+    meal.type === type &&
+    (style === "balanced" || meal.styles.includes(style))
+  );
+}
+
+function shuffleItems(items) {
+  const shuffled = [...items];
+
+  for (let index = shuffled.length - 1; index > 0; index--) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+
+    [shuffled[index], shuffled[randomIndex]] =
+      [shuffled[randomIndex], shuffled[index]];
+  }
+
+  return shuffled;
+}
+
+function generateKetoMealPlan(event) {
+  event?.preventDefault();
+
+  const form = getElement("mealPlannerForm");
+  if (!form || !form.reportValidity()) return;
+
+  const servings = Number(getElement("mealPlannerServings").value);
+  const carbGoal = Number(getElement("mealPlannerCarbs").value);
+  const style = getElement("mealPlannerStyle").value;
+  const includeSnacks =
+    getElement("mealPlannerSnacks").value === "yes";
+
+  if (
+    !Number.isInteger(servings) ||
+    servings < 1 || servings > 12 ||
+    !Number.isFinite(carbGoal) ||
+    carbGoal < 10 || carbGoal > 150
+  ) {
+    showToast("Enter valid meal planner settings.");
+    return;
+  }
+
+  const types = includeSnacks
+    ? ["breakfast", "lunch", "dinner", "snack"]
+    : ["breakfast", "lunch", "dinner"];
+
+  const pools = {};
+
+  for (const type of types) {
+    const available = getMealsByType(type, style);
+
+    if (!available.length) {
+      showToast(`No ${type} meals match this preference.`);
+      return;
+    }
+
+    pools[type] = shuffleItems(available);
+  }
+
+  const days = [];
+
+  for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
+    const selectedMeals = [];
+
+    for (const type of types) {
+      const available = pools[type];
+
+      selectedMeals.push(
+        available[dayIndex % available.length]
+      );
+    }
+
+    const totals = selectedMeals.reduce((total, meal) => ({
+      calories: total.calories + meal.calories,
+      protein: total.protein + meal.protein,
+      fat: total.fat + meal.fat,
+      netCarbs: total.netCarbs + meal.netCarbs
+    }), {
+      calories: 0,
+      protein: 0,
+      fat: 0,
+      netCarbs: 0
+    });
+
+    days.push({
+      day: dayIndex + 1,
+      meals: selectedMeals.map(meal => meal.id),
+      totals
+    });
+  }
+
+  currentMealPlan = {
+    servings,
+    carbGoal,
+    style,
+    includeSnacks,
+    days
+  };
+
+  saveLocalData(
+    SITE_CONFIG.storageKeys.mealPlanner,
+    currentMealPlan
+  );
+
+  renderKetoMealPlan();
+  showToast("Your seven-day meal plan is ready!");
+}
+
+function getMealById(mealId) {
+  return KETO_MEALS.find(meal => meal.id === mealId);
+}
+
+function renderKetoMealPlan() {
+  const daysContainer = getElement("mealPlannerDays");
+  if (!daysContainer || !currentMealPlan) return;
+
+  const { days, carbGoal, servings } = currentMealPlan;
+
+  daysContainer.innerHTML = days.map(day => {
+    const meals = day.meals
+      .map(getMealById)
+      .filter(Boolean);
+
+    const exceedsGoal = day.totals.netCarbs > carbGoal;
+
+    return `
+      <article class="meal-day-card">
+        <div class="meal-day-header">
+          <h4>DAY ${day.day}</h4>
+
+          <span>
+            ${formatNumber(day.totals.netCarbs)} g net carbs
+          </span>
+        </div>
+
+        <div class="meal-day-entries">
+          ${meals.map(meal => `
+            <div class="meal-day-entry">
+              <span class="eyebrow">
+                ${escapeHTML(meal.type)}
+              </span>
+
+              <strong>${escapeHTML(meal.name)}</strong>
+
+              <small>
+                ${meal.calories} kcal ·
+                ${meal.protein} g protein ·
+                ${meal.fat} g fat ·
+                ${meal.netCarbs} g net carbs
+              </small>
+            </div>
+          `).join("")}
+        </div>
+
+        <div class="meal-day-total">
+          <strong>
+            ${formatNumber(day.totals.calories, 0)} kcal
+          </strong>
+
+          <span>
+            Protein: ${day.totals.protein} g ·
+            Fat: ${day.totals.fat} g
+          </span>
+        </div>
+
+        ${exceedsGoal ? `
+          <p class="tool-disclaimer">
+            This sample day exceeds your selected
+            ${carbGoal} g net-carb target.
+          </p>
+        ` : ""}
+      </article>
+    `;
+  }).join("");
+
+  setElementText(
+    "mealPlannerSummary",
+    `7 days · ${servings} serving${servings === 1 ? "" : "s"} ` +
+    `per meal · ${carbGoal} g daily net-carb target`
+  );
+
+  getElement("printMealPlan").disabled = false;
+  getElement("copyGroceryList").disabled = false;
+
+  renderGroceryList();
+}
+
+function buildGroceryList() {
+  if (!currentMealPlan) return [];
+
+  const groceries = new Map();
+
+  currentMealPlan.days.forEach(day => {
+    day.meals.forEach(mealId => {
+      const meal = getMealById(mealId);
+      if (!meal) return;
+
+      meal.ingredients.forEach(ingredient => {
+        const existing = groceries.get(ingredient) || 0;
+
+        groceries.set(
+          ingredient,
+          existing + currentMealPlan.servings
+        );
+      });
+    });
+  });
+
+  return [...groceries.entries()]
+    .sort(([first], [second]) => first.localeCompare(second))
+    .map(([ingredient, quantity]) => ({
+      ingredient,
+      quantity
+    }));
+}
+
+function renderGroceryList() {
+  const panel = getElement("groceryListPanel");
+  const content = getElement("groceryListContent");
+
+  if (!panel || !content || !currentMealPlan) return;
+
+  const groceries = buildGroceryList();
+
+  content.innerHTML = `
+    <p class="ingredient-footnote">
+      Quantities below represent repeated recipe ingredient
+      portions, not consolidated package sizes.
+      Multiply each listed recipe amount by the number shown.
+    </p>
+
+    <ul class="grocery-list-items">
+      ${groceries.map(item => `
+        <li>
+          <label>
+            <input type="checkbox">
+            <span>
+              ${escapeHTML(item.ingredient)}
+              × ${item.quantity}
+            </span>
+          </label>
+        </li>
+      `).join("")}
+    </ul>
+  `;
+
+  panel.hidden = false;
+}
+
+function copyMealPlannerGroceryList() {
+  if (!currentMealPlan) return;
+
+  const groceries = buildGroceryList();
+
+  const text = [
+    "007-NRG — WEEKLY GROCERY LIST",
+    "",
+    ...groceries.map(item =>
+      `${item.ingredient} × ${item.quantity}`
+    ),
+    "",
+    "Quantities are recipe portions, not package totals."
+  ].join("\n");
+
+  if (!navigator.clipboard?.writeText) {
+    showToast("Clipboard access is unavailable in this browser.");
+    return;
+  }
+
+  navigator.clipboard.writeText(text)
+    .then(() => showToast("Grocery list copied!"))
+    .catch(() => showToast("Could not copy grocery list."));
+}
+
+function printKetoMealPlan() {
+  if (!currentMealPlan) return;
+
+  const printWindow = window.open("", "_blank");
+
+  if (!printWindow) {
+    showToast("Allow popups to print your meal plan.");
+    return;
+  }
+
+  const groceryList = buildGroceryList();
+
+  const html = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>007-NRG Weekly Meal Plan</title>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          max-width: 900px;
+          margin: 30px auto;
+          padding: 20px;
+          color: #222;
+        }
+        h1, h2 { color: #742c45; }
+        section {
+          border-bottom: 1px solid #ddd;
+          padding: 14px 0;
+          break-inside: avoid;
+        }
+        li { margin: 7px 0; }
+        small { color: #555; }
+      </style>
+    </head>
+    <body>
+      <h1>007-NRG — 7-Day Meal Plan</h1>
+      <p>Servings per meal: ${currentMealPlan.servings}</p>
+      <p>Daily net-carb target: ${currentMealPlan.carbGoal} g</p>
+
+      ${currentMealPlan.days.map(day => `
+        <section>
+          <h2>Day ${day.day}</h2>
+          <ul>
+            ${day.meals.map(mealId => {
+              const meal = getMealById(mealId);
+              return meal
+                ? `<li>${escapeHTML(meal.name)} —
+                     ${meal.netCarbs} g net carbs</li>`
+                : "";
+            }).join("")}
+          </ul>
+          <strong>
+            Estimated daily total:
+            ${day.totals.netCarbs} g net carbs
+          </strong>
+        </section>
+      `).join("")}
+
+      <h2>Grocery List</h2>
+      <ul>
+        ${groceryList.map(item => `
+          <li>
+            ${escapeHTML(item.ingredient)}
+            × ${item.quantity}
+          </li>
+        `).join("")}
+      </ul>
+
+      <small>
+        Nutrition values are estimates. Grocery quantities
+        represent recipe portions. Check labels and allergens.
+      </small>
+    </body>
+    </html>
+  `;
+
+  printWindow.document.open();
+  printWindow.document.write(html);
+  printWindow.document.close();
+
+  printWindow.addEventListener("load", () => {
+    printWindow.focus();
+    printWindow.print();
+  }, { once: true });
+}
+
+function initializeKetoMealPlanner() {
+  const form = getElement("mealPlannerForm");
+  if (!form) return;
+
+  form.addEventListener("submit", generateKetoMealPlan);
+
+  getElement("shuffleMealPlan")?.addEventListener(
+    "click",
+    () => generateKetoMealPlan()
+  );
+
+  getElement("copyGroceryList")?.addEventListener(
+    "click",
+    copyMealPlannerGroceryList
+  );
+
+  getElement("printMealPlan")?.addEventListener(
+    "click",
+    printKetoMealPlan
+  );
+
+  const saved = readLocalData(
+    SITE_CONFIG.storageKeys.mealPlanner
+  );
+
+  if (
+    saved &&
+    Array.isArray(saved.days) &&
+    saved.days.length === 7 &&
+    saved.days.every(day =>
+      Array.isArray(day.meals) &&
+      day.meals.every(id => Boolean(getMealById(id)))
+    ) &&
+    Number.isInteger(saved.servings) &&
+    saved.servings >= 1 &&
+    saved.servings <= 12 &&
+    Number.isFinite(saved.carbGoal)
+  ) {
+    currentMealPlan = saved;
+    renderKetoMealPlan();
+  }
+}
+
+/* === KETO MEAL PLANNER END === */
+
+
+/* ============================================================
+   DAILY FOOD TRACKER START
+   ============================================================ */
+
+let foodTrackerEntries = [];
+
+function getLocalDateString(date = new Date()) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
+function getSelectedFoodTrackerDate() {
+  return getElement("foodTrackerDate")?.value ||
+    getLocalDateString();
+}
+
+function getFoodTrackerGoal() {
+  const value = Number(
+    getElement("foodTrackerCarbGoal")?.value
+  );
+
+  return Number.isFinite(value)
+    ? clampNumber(value, 0, 150)
+    : 25;
+}
+
+function saveFoodTrackerEntries() {
+  const saved = saveLocalData(
+    SITE_CONFIG.storageKeys.foodTracker,
+    foodTrackerEntries
+  );
+
+  if (!saved) {
+    showToast("Unable to save entries in this browser.");
+  }
+}
+
+function getEntriesForSelectedDate() {
+  const selectedDate = getSelectedFoodTrackerDate();
+
+  return foodTrackerEntries.filter(entry =>
+    entry.date === selectedDate
+  );
+}
+
+function renderFoodTracker() {
+  const entries = getEntriesForSelectedDate();
+
+  const totals = entries.reduce((total, entry) => {
+    total.calories += entry.calories;
+    total.protein += entry.protein;
+    total.fat += entry.fat;
+    total.netCarbs += calculateFoodNetCarbs(
+      entry.totalCarbs,
+      entry.fiber
+    );
+    return total;
+  }, {
+    calories: 0,
+    protein: 0,
+    fat: 0,
+    netCarbs: 0
+  });
+
+  const goal = getFoodTrackerGoal();
+  const remaining = goal - totals.netCarbs;
+
+  setElementText(
+    "trackerNetCarbs",
+    `${formatNumber(totals.netCarbs)} g`
+  );
+  setElementText(
+    "trackerCalories",
+    formatNumber(totals.calories, 0)
+  );
+  setElementText(
+    "trackerProtein",
+    `${formatNumber(totals.protein)} g`
+  );
+  setElementText(
+    "trackerFat",
+    `${formatNumber(totals.fat)} g`
+  );
+
+  setElementText(
+    "trackerCarbRemaining",
+    remaining >= 0
+      ? `${formatNumber(remaining)} g remaining`
+      : `${formatNumber(Math.abs(remaining))} g over target`
+  );
+
+  const progress = getElement("trackerCarbProgress");
+
+  if (progress) {
+    const percentage = goal > 0
+      ? clampNumber(totals.netCarbs / goal * 100, 0, 100)
+      : (totals.netCarbs > 0 ? 100 : 0);
+
+    progress.style.width = `${percentage}%`;
+    progress.setAttribute(
+      "aria-valuenow",
+      String(Math.round(percentage))
+    );
+  }
+
+  const container = getElement("foodLogEntries");
+  if (!container) return;
+
+  if (!entries.length) {
+    container.innerHTML = `
+      <p class="tool-empty-state">
+        No foods logged for this date yet.
+      </p>
+    `;
+    return;
+  }
+
+  const categories = [
+    "breakfast", "lunch", "dinner", "snack"
+  ];
+
+  container.innerHTML = categories.map(category => {
+    const meals = entries.filter(entry =>
+      entry.meal === category
+    );
+
+    if (!meals.length) return "";
+
+    return `
+      <section class="food-log-category">
+        <h5>${category.toUpperCase()}</h5>
+
+        ${meals.map(entry => `
+          <article class="food-log-entry">
+            <div>
+              <strong>${escapeHTML(entry.name)}</strong>
+
+              <p>
+                ${formatNumber(entry.calories, 0)} kcal ·
+                ${formatNumber(
+                  calculateFoodNetCarbs(
+                    entry.totalCarbs,
+                    entry.fiber
+                  )
+                )} g net carbs
+              </p>
+
+              <small>
+                Protein ${formatNumber(entry.protein)} g ·
+                Fat ${formatNumber(entry.fat)} g
+              </small>
+            </div>
+
+            <button
+              class="button button-secondary"
+              type="button"
+              data-remove-food="${escapeHTML(entry.id)}"
+              aria-label="Remove ${escapeHTML(entry.name)}"
+            >
+              REMOVE
+            </button>
+          </article>
+        `).join("")}
+      </section>
+    `;
+  }).join("");
+
+  container.querySelectorAll("[data-remove-food]")
+    .forEach(button => {
+      button.addEventListener("click", () => {
+        const id = button.dataset.removeFood;
+
+        foodTrackerEntries = foodTrackerEntries.filter(
+          entry => entry.id !== id
+        );
+
+        saveFoodTrackerEntries();
+        renderFoodTracker();
+        showToast("Food entry removed.");
+      });
+    });
+}
+
+function addFoodTrackerEntry(event) {
+  event.preventDefault();
+
+  const form = getElement("foodTrackerForm");
+  if (!form || !form.reportValidity()) return;
+
+  const name = getElement("foodEntryName").value.trim();
+  const meal = getElement("foodEntryMeal").value;
+
+  const calories = Number(getElement("foodEntryCalories").value);
+  const totalCarbs = Number(getElement("foodEntryCarbs").value);
+  const fiber = Number(getElement("foodEntryFiber").value);
+  const protein = Number(getElement("foodEntryProtein").value);
+  const fat = Number(getElement("foodEntryFat").value);
+
+  if (
+    !name ||
+    !["breakfast", "lunch", "dinner", "snack"].includes(meal) ||
+    ![calories, totalCarbs, fiber, protein, fat]
+      .every(Number.isFinite) ||
+    [calories, totalCarbs, fiber, protein, fat]
+      .some(value => value < 0) ||
+    fiber > totalCarbs
+  ) {
+    showToast("Please check the food entry values.");
+    return;
+  }
+
+  const entry = {
+    id: window.crypto?.randomUUID?.() ||
+      `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+    date: getSelectedFoodTrackerDate(),
+    name: name.slice(0, 100),
+    meal,
+    calories,
+    totalCarbs,
+    fiber,
+    protein,
+    fat
+  };
+
+  foodTrackerEntries.push(entry);
+
+  saveFoodTrackerEntries();
+  renderFoodTracker();
+
+  form.reset();
+  showToast("Food added to your daily log!");
+}
+
+function clearSelectedFoodTrackerDay() {
+  const selectedDate = getSelectedFoodTrackerDate();
+
+  const hasEntries = foodTrackerEntries.some(entry =>
+    entry.date === selectedDate
+  );
+
+  if (!hasEntries) {
+    showToast("No entries to clear for this date.");
+    return;
+  }
+
+  if (!window.confirm(
+    `Delete all food entries for ${selectedDate}?`
+  )) {
+    return;
+  }
+
+  foodTrackerEntries = foodTrackerEntries.filter(entry =>
+    entry.date !== selectedDate
+  );
+
+  saveFoodTrackerEntries();
+  renderFoodTracker();
+
+  showToast("Selected day's entries cleared.");
+}
+
+function initializeKetoFoodTracker() {
+  const form = getElement("foodTrackerForm");
+  if (!form) return;
+
+  const dateInput = getElement("foodTrackerDate");
+  const goalInput = getElement("foodTrackerCarbGoal");
+
+  if (dateInput) {
+    dateInput.value = getLocalDateString();
+
+    dateInput.addEventListener(
+      "change",
+      renderFoodTracker
+    );
+  }
+
+  const savedGoal = readLocalData(
+    SITE_CONFIG.storageKeys.foodTrackerGoal,
+    25
+  );
+
+  if (
+    goalInput &&
+    Number.isFinite(savedGoal) &&
+    savedGoal >= 0 &&
+    savedGoal <= 150
+  ) {
+    goalInput.value = savedGoal;
+  }
+
+  goalInput?.addEventListener("change", () => {
+    const goal = getFoodTrackerGoal();
+
+    goalInput.value = goal;
+
+    saveLocalData(
+      SITE_CONFIG.storageKeys.foodTrackerGoal,
+      goal
+    );
+
+    renderFoodTracker();
+  });
+
+  const savedEntries = readLocalData(
+    SITE_CONFIG.storageKeys.foodTracker,
+    []
+  );
+
+  foodTrackerEntries = Array.isArray(savedEntries)
+    ? savedEntries.filter(entry =>
+        entry &&
+        typeof entry.id === "string" &&
+        typeof entry.date === "string" &&
+        typeof entry.name === "string" &&
+        ["breakfast", "lunch", "dinner", "snack"]
+          .includes(entry.meal) &&
+        [
+          entry.calories,
+          entry.totalCarbs,
+          entry.fiber,
+          entry.protein,
+          entry.fat
+        ].every(value =>
+          typeof value === "number" &&
+          Number.isFinite(value) &&
+          value >= 0
+        ) &&
+        entry.fiber <= entry.totalCarbs
+      )
+    : [];
+
+  form.addEventListener("submit", addFoodTrackerEntry);
+
+  getElement("clearFoodTrackerDay")?.addEventListener(
+    "click",
+    clearSelectedFoodTrackerDay
+  );
+
+  renderFoodTracker();
+}
+
+/* === DAILY FOOD TRACKER END === */
+
+
+/* ============================================================
+   SCROLL ANIMATIONS START
+   ============================================================ */
 
 function initializeScrollAnimations() {
   const elements = document.querySelectorAll(".reveal");
 
-  const reducedMotion = matchMedia(
+  const reducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
@@ -1761,6 +3114,7 @@ function initializeScrollAnimations() {
     elements.forEach(element => {
       element.classList.add("visible");
     });
+
     return;
   }
 
@@ -1776,17 +3130,17 @@ function initializeScrollAnimations() {
     rootMargin: "0px 0px 35px 0px"
   });
 
-  elements.forEach(element => observer.observe(element));
+  elements.forEach(element => {
+    observer.observe(element);
+  });
 }
 
 /* === SCROLL ANIMATIONS END === */
 
 
 /* ============================================================
-   KEYBOARD ACCESSIBILITY
+   KEYBOARD ACCESSIBILITY START
    ============================================================ */
-
-/* === KEYBOARD ACCESSIBILITY START === */
 
 function initializeKeyboardControls() {
   document.addEventListener("keydown", event => {
@@ -1800,6 +3154,8 @@ function initializeKeyboardControls() {
       dialog => dialog && !dialog.hidden
     );
 
+    /* === ESCAPE KEY START === */
+
     if (event.key === "Escape") {
       if (activeDialog?.id === "labelModal") {
         closeProductLabel();
@@ -1812,38 +3168,57 @@ function initializeKeyboardControls() {
       return;
     }
 
+    /* === ESCAPE KEY END === */
+
+
+    /* === FOCUS TRAP START === */
+
     if (event.key !== "Tab" || !activeDialog) return;
 
     const focusable = Array.from(
       activeDialog.querySelectorAll(
-        'button:not([disabled]), a[href], ' +
-        'input:not([disabled]), textarea:not([disabled]), ' +
+        'button:not([disabled]), ' +
+        'a[href], ' +
+        'input:not([disabled]), ' +
+        'select:not([disabled]), ' +
+        'textarea:not([disabled]), ' +
         '[tabindex]:not([tabindex="-1"])'
       )
     ).filter(element =>
-      element.getClientRects().length > 0
+      element.getClientRects().length > 0 &&
+      !element.closest("[hidden]")
     );
 
-    if (!focusable.length) return;
+    if (!focusable.length) {
+      event.preventDefault();
+      activeDialog.focus();
+      return;
+    }
 
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
 
     if (
       event.shiftKey &&
-      (document.activeElement === first ||
-       !activeDialog.contains(document.activeElement))
+      (
+        document.activeElement === first ||
+        !activeDialog.contains(document.activeElement)
+      )
     ) {
       event.preventDefault();
       last.focus();
     } else if (
       !event.shiftKey &&
-      (document.activeElement === last ||
-       !activeDialog.contains(document.activeElement))
+      (
+        document.activeElement === last ||
+        !activeDialog.contains(document.activeElement)
+      )
     ) {
       event.preventDefault();
       first.focus();
     }
+
+    /* === FOCUS TRAP END === */
   });
 }
 
@@ -1851,14 +3226,14 @@ function initializeKeyboardControls() {
 
 
 /* ============================================================
-   IMAGE ERROR REPORTING
+   IMAGE ERROR HANDLING START
    ============================================================ */
-
-/* === IMAGE ERROR REPORTING START === */
 
 function initializeImageErrorHandling() {
   document.addEventListener("error", event => {
-    if (!(event.target instanceof HTMLImageElement)) return;
+    if (!(event.target instanceof HTMLImageElement)) {
+      return;
+    }
 
     console.warn(
       "[007-NRG] Image could not be loaded:",
@@ -1867,50 +3242,235 @@ function initializeImageErrorHandling() {
   }, true);
 }
 
-/* === IMAGE ERROR REPORTING END === */
+/* === IMAGE ERROR HANDLING END === */
 
 
 /* ============================================================
-   APPLICATION INITIALIZATION
+   GOOGLE REVIEWS INTEGRATION START
    ============================================================ */
 
-/* === APPLICATION INITIALIZATION START === */
+/*
+   The Google Reviews section currently displays
+   an informational placeholder.
+
+   Once the client supplies the official Google
+   Business Profile review URL, configure it here.
+
+   Do not generate fictional customer reviews,
+   ratings, or review counts.
+
+   A full live review feed would require an
+   approved third-party widget or appropriate
+   Google API integration.
+*/
+
+const GOOGLE_REVIEWS_CONFIG = {
+  businessProfileUrl: "",
+  reviewSubmissionUrl: ""
+};
+
+function initializeGoogleReviews() {
+  const reviewsSection = getElement("reviews");
+
+  if (!reviewsSection) return;
+
+  const reviewsPanel = reviewsSection.querySelector(
+    ".google-reviews-panel"
+  );
+
+  if (!reviewsPanel) return;
+
+  const existingActions = reviewsPanel.querySelector(
+    ".google-review-actions"
+  );
+
+  if (existingActions) {
+    existingActions.remove();
+  }
+
+  const links = [];
+
+  if (GOOGLE_REVIEWS_CONFIG.businessProfileUrl) {
+    links.push(`
+      <a
+        class="button button-primary"
+        href="${escapeHTML(
+          GOOGLE_REVIEWS_CONFIG.businessProfileUrl
+        )}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        READ GOOGLE REVIEWS
+      </a>
+    `);
+  }
+
+  if (GOOGLE_REVIEWS_CONFIG.reviewSubmissionUrl) {
+    links.push(`
+      <a
+        class="button button-secondary"
+        href="${escapeHTML(
+          GOOGLE_REVIEWS_CONFIG.reviewSubmissionUrl
+        )}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        WRITE A GOOGLE REVIEW
+      </a>
+    `);
+  }
+
+  if (!links.length) return;
+
+  const actions = document.createElement("div");
+  actions.className = "google-review-actions";
+  actions.innerHTML = links.join("");
+
+  reviewsPanel.appendChild(actions);
+}
+
+/* === GOOGLE REVIEWS INTEGRATION END === */
+
+
+/* ============================================================
+   APPLICATION INITIALIZATION START
+   ============================================================ */
+
+/*
+   All site features are initialized here.
+
+   This function is called only after the
+   HTML document is ready.
+
+   Each feature checks for its required HTML
+   elements before attaching event listeners.
+*/
 
 function initializeApplication() {
-  setElementText("currentYear", new Date().getFullYear());
+
+  /* === WEBSITE INFORMATION START === */
+
+  setElementText(
+    "currentYear",
+    new Date().getFullYear()
+  );
+
+  /* === WEBSITE INFORMATION END === */
+
+
+  /* === GLOBAL USER INTERFACE START === */
 
   initializeImageErrorHandling();
+
   initializeMobileNavigation();
 
   initializeHeroSlideshow();
 
+  /* === GLOBAL USER INTERFACE END === */
+
+
+  /* === PRODUCT COLLECTION START === */
+
   initializeProductCollection();
+
   initializeProductPreview();
+
   initializeShoppingCart();
 
+  /* === PRODUCT COLLECTION END === */
+
+
+  /* === INGREDIENT INFORMATION START === */
+
   initializeIngredientExplorer();
+
   initializeIngredientLabelSummary();
+
   initializeProductLabelViewer();
 
+  initializeIngredientExplorerTool();
+
+  /* === INGREDIENT INFORMATION END === */
+
+
+  /* === FITNESS & NUTRITION TOOLS START === */
+
   initializeToolNavigation();
+
   initializeNetCarbCalculator();
+
   initializeWorkoutTimer();
 
+  initializeKetoMacroCalculator();
+
+  initializeKetoMealPlanner();
+
+  initializeKetoFoodTracker();
+
+  /* === FITNESS & NUTRITION TOOLS END === */
+
+
+  /* === REVIEWS START === */
+
+  initializeGoogleReviews();
+
+  /* === REVIEWS END === */
+
+
+  /* === ACCESSIBILITY & VISUAL EFFECTS START === */
+
   initializeScrollAnimations();
+
   initializeKeyboardControls();
 
-  console.info("[007-NRG] Website initialized.");
-  console.info("[007-NRG] Checkout remains disabled.");
+  /* === ACCESSIBILITY & VISUAL EFFECTS END === */
+
+
+  /* === INITIALIZATION COMPLETE === */
+
+  console.info(
+    "[007-NRG] Website initialized successfully."
+  );
+
+  console.info(
+    "[007-NRG] Product collection and ingredient tools ready."
+  );
+
+  console.info(
+    "[007-NRG] Fitness and nutrition tools initialized."
+  );
+
+  console.info(
+    "[007-NRG] Checkout remains disabled."
+  );
+
 }
 
+/* === APPLICATION INITIALIZATION END === */
+
+
+/* ============================================================
+   DOM READY START
+   ============================================================ */
+
 if (document.readyState === "loading") {
+
   document.addEventListener(
     "DOMContentLoaded",
     initializeApplication,
     { once: true }
   );
+
 } else {
+
   initializeApplication();
+
 }
 
-/* === APPLICATION INITIALIZATION END === */
+/* === DOM READY END === */
+
+
+/* ============================================================
+   007-NRG WEBSITE
+   END OF JAVASCRIPT FILE
+   ============================================================ */

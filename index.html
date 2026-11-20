@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
   <!-- ======================================================
        007-NRG | SEO & DOCUMENT HEAD START
@@ -29,7 +28,7 @@
   <!-- === PRIMARY SEO END === -->
 
 
-    <!-- === FAVICON START === -->
+  <!-- === FAVICON START === -->
   <link
     rel="icon"
     href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23e30613'/%3E%3Ctext x='32' y='41' text-anchor='middle' font-size='24' font-family='Arial' font-weight='900' fill='white'%3E007%3C/text%3E%3C/svg%3E"
@@ -99,6 +98,7 @@
 
   <!-- === PERFORMANCE & FONTS START === -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
+
   <link
     rel="preconnect"
     href="https://fonts.gstatic.com"
@@ -284,6 +284,7 @@
     <!-- === HERO SECTION END === -->
 
 
+
     <!-- ====================================================
          BRAND INTRODUCTION START
          ==================================================== -->
@@ -410,8 +411,8 @@
           </h2>
 
           <p>
-            Practical tools for nutrition planning,
-            workouts, and understanding ingredients.
+            Explore keto meal planning, macro targets, food logging,
+            workouts, and ingredient education.
             No account required.
           </p>
 
@@ -454,6 +455,36 @@
             INGREDIENT GUIDE
           </button>
 
+          <button
+            class="tool-tab"
+            type="button"
+            data-tool="keto-macros"
+            aria-pressed="false"
+          >
+            <span aria-hidden="true">⚖</span>
+            KETO MACROS
+          </button>
+
+          <button
+            class="tool-tab"
+            type="button"
+            data-tool="meal-planner"
+            aria-pressed="false"
+          >
+            <span aria-hidden="true">▦</span>
+            MEAL PLANNER
+          </button>
+
+          <button
+            class="tool-tab"
+            type="button"
+            data-tool="food-tracker"
+            aria-pressed="false"
+          >
+            <span aria-hidden="true">◉</span>
+            FOOD TRACKER
+          </button>
+
         </div>
         <!-- === TOOL NAVIGATION END === -->
 
@@ -483,6 +514,8 @@
               </p>
             </div>
 
+
+            <!-- === NET CARB CALCULATOR FORM START === -->
             <div class="tool-content-grid">
 
               <form id="netCarbForm" class="tool-form">
@@ -674,7 +707,12 @@
                   >
                 </div>
 
-                <div class="timer-presets" role="group" aria-label="Timer presets">
+                <div
+                  class="timer-presets"
+                  role="group"
+                  aria-label="Timer presets"
+                >
+
                   <button
                     type="button"
                     class="timer-preset"
@@ -704,6 +742,7 @@
                   >
                     45 / 15
                   </button>
+
                 </div>
 
               </div>
@@ -781,7 +820,805 @@
 
 
           <!-- =================================================
-               INGREDIENT GUIDE START
+               KETO MACRO CALCULATOR START
+               ================================================= -->
+          <section
+            class="tool-panel"
+            id="ketoMacroTool"
+            data-tool-panel="keto-macros"
+            aria-labelledby="ketoMacroHeading"
+            hidden
+          >
+
+            <div class="tool-panel-header">
+
+              <span class="eyebrow">KETO NUTRITION</span>
+
+              <h3 id="ketoMacroHeading">
+                KETO MACRO CALCULATOR
+              </h3>
+
+              <p>
+                Estimate daily calorie and macronutrient targets.
+                These are planning estimates, not individualized
+                medical advice.
+              </p>
+
+            </div>
+
+            <div class="tool-content-grid">
+
+              <form class="tool-form" id="ketoMacroForm">
+
+                <div class="form-field">
+                  <label for="macroAge">
+                    AGE (YEARS)
+                  </label>
+
+                  <input
+                    id="macroAge"
+                    type="number"
+                    min="18"
+                    max="100"
+                    value="35"
+                    required
+                  >
+                </div>
+
+                <div class="form-field">
+                  <label for="macroSex">
+                    EQUATION INPUT
+                  </label>
+
+                  <select id="macroSex" required>
+                    <option value="female">
+                      Female equation
+                    </option>
+                    <option value="male">
+                      Male equation
+                    </option>
+                  </select>
+
+                  <small>
+                    Used only to select a published
+                    resting-metabolism estimation equation.
+                  </small>
+                </div>
+
+                <div class="form-field">
+                  <label for="macroWeight">
+                    BODY WEIGHT (LB)
+                  </label>
+
+                  <input
+                    id="macroWeight"
+                    type="number"
+                    min="65"
+                    max="700"
+                    step="0.1"
+                    value="170"
+                    required
+                  >
+                </div>
+
+                <div class="form-field">
+                  <label for="macroHeight">
+                    HEIGHT (INCHES)
+                  </label>
+
+                  <input
+                    id="macroHeight"
+                    type="number"
+                    min="48"
+                    max="90"
+                    step="0.1"
+                    value="68"
+                    required
+                  >
+                </div>
+
+                <div class="form-field">
+                  <label for="macroActivity">
+                    ACTIVITY LEVEL
+                  </label>
+
+                  <select id="macroActivity">
+                    <option value="1.2">
+                      Mostly sedentary
+                    </option>
+
+                    <option value="1.375">
+                      Light activity
+                    </option>
+
+                    <option value="1.55" selected>
+                      Moderate activity
+                    </option>
+
+                    <option value="1.725">
+                      Very active
+                    </option>
+                  </select>
+                </div>
+
+                <div class="form-field">
+                  <label for="macroGoal">
+                    CALORIE GOAL
+                  </label>
+
+                  <select id="macroGoal">
+                    <option value="-300">
+                      Gradual weight loss
+                    </option>
+
+                    <option value="0" selected>
+                      Maintain weight
+                    </option>
+
+                    <option value="200">
+                      Gradual weight gain
+                    </option>
+                  </select>
+                </div>
+
+                <div class="form-field">
+                  <label for="macroCarbTarget">
+                    DAILY NET CARB TARGET (G)
+                  </label>
+
+                  <input
+                    id="macroCarbTarget"
+                    type="number"
+                    min="0"
+                    max="150"
+                    value="25"
+                    required
+                  >
+                </div>
+
+                <button
+                  class="button button-primary"
+                  type="submit"
+                >
+                  CALCULATE DAILY TARGETS
+                </button>
+
+              </form>
+
+              <!-- === MACRO RESULTS START === -->
+              <div
+                class="tool-result"
+                id="macroResults"
+                aria-live="polite"
+              >
+
+                <span class="eyebrow">
+                  ESTIMATED DAILY TARGETS
+                </span>
+
+                <div class="tool-result-number">
+                  <strong id="macroCalories">—</strong>
+                  <span>kcal/day</span>
+                </div>
+
+                <div class="macro-result-grid">
+
+                  <div>
+                    <strong id="macroProtein">—</strong>
+                    <span>Protein (g)</span>
+                  </div>
+
+                  <div>
+                    <strong id="macroFat">—</strong>
+                    <span>Fat (g)</span>
+                  </div>
+
+                  <div>
+                    <strong id="macroCarbs">—</strong>
+                    <span>Net carbs (g)</span>
+                  </div>
+
+                </div>
+
+                <p id="macroExplanation">
+                  Enter your information and calculate.
+                </p>
+
+              </div>
+              <!-- === MACRO RESULTS END === -->
+
+            </div>
+
+            <p class="tool-disclaimer">
+              Estimates use a resting-energy equation and
+              activity multipliers; actual energy needs vary.
+              Net-carb targets are user-adjustable and are not
+              proof of ketosis. Consult a clinician or dietitian
+              before significant dietary changes, especially
+              if pregnant, under 18, or managing a medical condition.
+            </p>
+
+          </section>
+          <!-- === KETO MACRO CALCULATOR END === -->
+
+
+
+          <!-- =================================================
+               KETO MEAL PLANNER START
+               ================================================= -->
+          <section
+            class="tool-panel"
+            id="ketoMealPlannerTool"
+            data-tool-panel="meal-planner"
+            aria-labelledby="mealPlannerHeading"
+            hidden
+          >
+
+            <div class="tool-panel-header">
+
+              <span class="eyebrow">KETO MEAL PLANNING</span>
+
+              <h3 id="mealPlannerHeading">
+                7-DAY KETO MEAL PLANNER
+              </h3>
+
+              <p>
+                Build a seven-day meal plan with breakfast,
+                lunch, dinner, and optional snacks.
+                Generate a grocery list based on your choices.
+              </p>
+
+            </div>
+
+            <!-- === MEAL PLANNER SETTINGS START === -->
+            <form class="tool-form" id="mealPlannerForm">
+
+              <div class="meal-planner-settings">
+
+                <div class="form-field">
+                  <label for="mealPlannerServings">
+                    PEOPLE / SERVINGS
+                  </label>
+
+                  <input
+                    id="mealPlannerServings"
+                    type="number"
+                    min="1"
+                    max="12"
+                    step="1"
+                    value="1"
+                    required
+                  >
+                </div>
+
+                <div class="form-field">
+                  <label for="mealPlannerCarbs">
+                    DAILY NET CARB GOAL (G)
+                  </label>
+
+                  <input
+                    id="mealPlannerCarbs"
+                    type="number"
+                    min="10"
+                    max="150"
+                    step="1"
+                    value="25"
+                    required
+                  >
+                </div>
+
+                <div class="form-field">
+                  <label for="mealPlannerStyle">
+                    MEAL PREFERENCE
+                  </label>
+
+                  <select id="mealPlannerStyle">
+                    <option value="balanced">
+                      Variety / Balanced
+                    </option>
+
+                    <option value="budget">
+                      Budget Friendly
+                    </option>
+
+                    <option value="quick">
+                      Quick & Easy
+                    </option>
+
+                    <option value="vegetarian">
+                      Vegetarian
+                    </option>
+                  </select>
+                </div>
+
+                <div class="form-field">
+                  <label for="mealPlannerSnacks">
+                    INCLUDE SNACKS
+                  </label>
+
+                  <select id="mealPlannerSnacks">
+                    <option value="yes" selected>
+                      Yes
+                    </option>
+
+                    <option value="no">
+                      No
+                    </option>
+                  </select>
+                </div>
+
+              </div>
+
+              <div class="timer-actions">
+
+                <button
+                  class="button button-primary"
+                  id="generateMealPlan"
+                  type="submit"
+                >
+                  GENERATE MY 7-DAY PLAN
+                </button>
+
+                <button
+                  class="button button-secondary"
+                  id="shuffleMealPlan"
+                  type="button"
+                >
+                  SHUFFLE MEALS
+                </button>
+
+              </div>
+
+            </form>
+            <!-- === MEAL PLANNER SETTINGS END === -->
+
+
+            <!-- === MEAL PLANNER RESULTS START === -->
+            <div
+              class="meal-planner-results"
+              id="mealPlannerResults"
+              aria-live="polite"
+            >
+
+              <div class="meal-planner-results-header">
+
+                <div>
+                  <span class="eyebrow">YOUR WEEKLY MENU</span>
+
+                  <h4>
+                    YOUR PERSONALIZED MEAL PLAN
+                  </h4>
+                </div>
+
+                <div class="meal-planner-summary">
+                  <span id="mealPlannerSummary">
+                    Generate a plan to get started.
+                  </span>
+                </div>
+
+              </div>
+
+              <div
+                class="meal-planner-days"
+                id="mealPlannerDays"
+              >
+                <p class="tool-empty-state">
+                  Your seven-day meal plan will appear here.
+                </p>
+              </div>
+
+              <div class="meal-planner-actions">
+
+                <button
+                  class="button button-secondary"
+                  id="printMealPlan"
+                  type="button"
+                  disabled
+                >
+                  PRINT MEAL PLAN
+                </button>
+
+                <button
+                  class="button button-secondary"
+                  id="copyGroceryList"
+                  type="button"
+                  disabled
+                >
+                  COPY GROCERY LIST
+                </button>
+
+              </div>
+
+            </div>
+            <!-- === MEAL PLANNER RESULTS END === -->
+
+
+            <!-- === GROCERY LIST START === -->
+            <div
+              class="grocery-list-panel"
+              id="groceryListPanel"
+              hidden
+            >
+
+              <div class="tool-panel-header">
+
+                <span class="eyebrow">
+                  SHOPPING MADE SIMPLE
+                </span>
+
+                <h4>
+                  YOUR WEEKLY GROCERY LIST
+                </h4>
+
+                <p>
+                  Ingredients are combined across the
+                  selected meals and adjusted for servings.
+                </p>
+
+              </div>
+
+              <div
+                class="grocery-list-content"
+                id="groceryListContent"
+              ></div>
+
+            </div>
+            <!-- === GROCERY LIST END === -->
+
+            <p class="tool-disclaimer">
+              Meal plans and nutrition estimates are
+              educational planning aids. Actual values
+              depend on ingredients, brands, portions,
+              and preparation. Check allergens and
+              nutrition labels before preparing meals.
+              The planner does not guarantee ketosis.
+            </p>
+
+          </section>
+          <!-- === KETO MEAL PLANNER END === -->
+
+
+          <!-- =================================================
+               KETO FOOD TRACKER START
+               ================================================= -->
+          <section
+            class="tool-panel"
+            id="ketoFoodTrackerTool"
+            data-tool-panel="food-tracker"
+            aria-labelledby="foodTrackerHeading"
+            hidden
+          >
+
+            <div class="tool-panel-header">
+
+              <span class="eyebrow">DAILY NUTRITION JOURNAL</span>
+
+              <h3 id="foodTrackerHeading">
+                KETO FOOD TRACKER
+              </h3>
+
+              <p>
+                Log foods, track daily macros, and monitor
+                your net-carb goal. Your entries stay in
+                this browser using local storage.
+              </p>
+
+            </div>
+
+            <!-- === TRACKER DATE & TARGET START === -->
+            <div class="food-tracker-toolbar">
+
+              <div class="form-field">
+                <label for="foodTrackerDate">
+                  TRACKING DATE
+                </label>
+
+                <input
+                  id="foodTrackerDate"
+                  type="date"
+                >
+              </div>
+
+              <div class="form-field">
+                <label for="foodTrackerCarbGoal">
+                  DAILY NET CARB GOAL (G)
+                </label>
+
+                <input
+                  id="foodTrackerCarbGoal"
+                  type="number"
+                  min="0"
+                  max="150"
+                  step="1"
+                  value="25"
+                >
+              </div>
+
+            </div>
+            <!-- === TRACKER DATE & TARGET END === -->
+
+
+            <!-- === TRACKER DASHBOARD START === -->
+            <div
+              class="food-tracker-dashboard"
+              id="foodTrackerDashboard"
+              aria-live="polite"
+            >
+
+              <div class="tracker-stat-card">
+                <span>NET CARBS</span>
+
+                <strong id="trackerNetCarbs">
+                  0 g
+                </strong>
+
+                <small id="trackerCarbRemaining">
+                  25 g remaining
+                </small>
+              </div>
+
+              <div class="tracker-stat-card">
+                <span>CALORIES</span>
+
+                <strong id="trackerCalories">
+                  0
+                </strong>
+
+                <small>kcal logged</small>
+              </div>
+
+              <div class="tracker-stat-card">
+                <span>PROTEIN</span>
+
+                <strong id="trackerProtein">
+                  0 g
+                </strong>
+
+                <small>grams logged</small>
+              </div>
+
+              <div class="tracker-stat-card">
+                <span>FAT</span>
+
+                <strong id="trackerFat">
+                  0 g
+                </strong>
+
+                <small>grams logged</small>
+              </div>
+
+            </div>
+
+            <div class="tracker-progress-track">
+              <div
+                class="tracker-progress-bar"
+                id="trackerCarbProgress"
+                role="progressbar"
+                aria-label="Daily net carbohydrate progress"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0"
+              ></div>
+            </div>
+            <!-- === TRACKER DASHBOARD END === -->
+
+
+            <!-- === FOOD ENTRY FORM START === -->
+            <div class="food-tracker-layout">
+
+              <form
+                class="tool-form"
+                id="foodTrackerForm"
+              >
+
+                <h4>ADD A FOOD ENTRY</h4>
+
+                <div class="form-field">
+                  <label for="foodEntryName">
+                    FOOD NAME
+                  </label>
+
+                  <input
+                    id="foodEntryName"
+                    type="text"
+                    maxlength="100"
+                    placeholder="Example: Scrambled eggs"
+                    required
+                  >
+                </div>
+
+                <div class="form-field">
+                  <label for="foodEntryMeal">
+                    MEAL CATEGORY
+                  </label>
+
+                  <select id="foodEntryMeal">
+                    <option value="breakfast">
+                      Breakfast
+                    </option>
+
+                    <option value="lunch">
+                      Lunch
+                    </option>
+
+                    <option value="dinner">
+                      Dinner
+                    </option>
+
+                    <option value="snack">
+                      Snack
+                    </option>
+                  </select>
+                </div>
+
+                <div class="food-entry-fields">
+
+                  <div class="form-field">
+                    <label for="foodEntryCalories">
+                      CALORIES
+                    </label>
+
+                    <input
+                      id="foodEntryCalories"
+                      type="number"
+                      min="0"
+                      max="10000"
+                      step="0.1"
+                      placeholder="0"
+                      required
+                    >
+                  </div>
+
+                  <div class="form-field">
+                    <label for="foodEntryCarbs">
+                      TOTAL CARBS (G)
+                    </label>
+
+                    <input
+                      id="foodEntryCarbs"
+                      type="number"
+                      min="0"
+                      max="1000"
+                      step="0.1"
+                      placeholder="0"
+                      required
+                    >
+                  </div>
+
+                  <div class="form-field">
+                    <label for="foodEntryFiber">
+                      FIBER (G)
+                    </label>
+
+                    <input
+                      id="foodEntryFiber"
+                      type="number"
+                      min="0"
+                      max="1000"
+                      step="0.1"
+                      value="0"
+                      required
+                    >
+                  </div>
+
+                  <div class="form-field">
+                    <label for="foodEntryProtein">
+                      PROTEIN (G)
+                    </label>
+
+                    <input
+                      id="foodEntryProtein"
+                      type="number"
+                      min="0"
+                      max="1000"
+                      step="0.1"
+                      placeholder="0"
+                      required
+                    >
+                  </div>
+
+                  <div class="form-field">
+                    <label for="foodEntryFat">
+                      FAT (G)
+                    </label>
+
+                    <input
+                      id="foodEntryFat"
+                      type="number"
+                      min="0"
+                      max="1000"
+                      step="0.1"
+                      placeholder="0"
+                      required
+                    >
+                  </div>
+
+                </div>
+
+                <button
+                  class="button button-primary"
+                  type="submit"
+                >
+                  ADD FOOD TO MY DAY
+                </button>
+
+              </form>
+
+
+              <!-- === FOOD LOG START === -->
+              <div class="food-log-panel">
+
+                <div class="food-log-header">
+
+                  <div>
+                    <span class="eyebrow">
+                      YOUR DAILY LOG
+                    </span>
+
+                    <h4>FOODS YOU'VE LOGGED</h4>
+                  </div>
+
+                  <button
+                    class="button button-secondary"
+                    id="clearFoodTrackerDay"
+                    type="button"
+                  >
+                    CLEAR DAY
+                  </button>
+
+                </div>
+
+                <div
+                  class="food-log-entries"
+                  id="foodLogEntries"
+                  aria-live="polite"
+                >
+                  <p class="tool-empty-state">
+                    No foods logged for this date yet.
+                  </p>
+                </div>
+
+              </div>
+              <!-- === FOOD LOG END === -->
+
+            </div>
+            <!-- === FOOD ENTRY FORM END === -->
+
+
+            <!-- === FOOD TRACKER PRIVACY NOTE START === -->
+            <div class="information-panel">
+
+              <h4>YOUR DATA STAYS IN YOUR BROWSER</h4>
+
+              <p>
+                Food entries are saved locally on this
+                device and browser. No account or online
+                database is required.
+              </p>
+
+              <p>
+                Clearing browser storage, using private
+                browsing, or changing devices may remove
+                your saved entries.
+              </p>
+
+            </div>
+            <!-- === FOOD TRACKER PRIVACY NOTE END === -->
+
+            <p class="tool-disclaimer">
+              Nutrition values must be entered from
+              food packaging or another reliable source.
+              Net carbs are estimated as total carbohydrates
+              minus fiber. The tracker does not verify
+              nutrition values or determine ketosis.
+            </p>
+
+          </section>
+          <!-- === KETO FOOD TRACKER END === -->
+
+
+          <!-- =================================================
+               INTERACTIVE INGREDIENT EXPLORER 2.0 START
                ================================================= -->
           <section
             class="tool-panel"
@@ -793,59 +1630,267 @@
 
             <div class="tool-panel-header">
 
-              <span class="eyebrow">KNOW WHAT'S INSIDE</span>
+              <span class="eyebrow">
+                INTERACTIVE INGREDIENT EDUCATION
+              </span>
 
               <h3 id="ingredientGuideHeading">
-                INGREDIENT KNOWLEDGE CENTER
+                INGREDIENT EXPLORER 2.0
               </h3>
 
               <p>
-                Learn about the ingredients listed on
-                007-NRG packaging, including their general
-                properties and common uses.
+                Go beyond the ingredient list. Explore
+                categories, learn common ingredient roles,
+                and compare ingredients side by side.
               </p>
 
             </div>
 
-            <div class="tool-guide-feature">
 
-              <div>
-                <h4>EXPLORE THE FORMULA</h4>
+            <!-- === INGREDIENT CATEGORY FILTERS START === -->
+            <div
+              class="ingredient-tool-filters"
+              role="group"
+              aria-label="Filter ingredient education topics"
+            >
 
-                <p>
-                  Discover the difference between caffeine
-                  compounds, amino acids, botanical extracts,
-                  sweeteners, and other ingredients.
-                </p>
+              <button
+                class="ingredient-tool-filter active"
+                type="button"
+                data-ingredient-category="all"
+                aria-pressed="true"
+              >
+                ALL
+              </button>
 
-                <p>
-                  Ingredient information is educational and
-                  does not establish the effects or safety
-                  of the finished product.
-                </p>
+              <button
+                class="ingredient-tool-filter"
+                type="button"
+                data-ingredient-category="stimulants"
+                aria-pressed="false"
+              >
+                STIMULANTS
+              </button>
 
-                <a
-                  class="button button-primary"
-                  href="#ingredients"
-                >
-                  EXPLORE ALL INGREDIENTS
-                </a>
-              </div>
+              <button
+                class="ingredient-tool-filter"
+                type="button"
+                data-ingredient-category="amino-acids"
+                aria-pressed="false"
+              >
+                AMINO ACIDS
+              </button>
 
-              <div class="tool-guide-stat">
-                <strong>20</strong>
-                <span>
-                  INGREDIENTS LISTED ON THE
-                  ORIGINAL ARTWORK
+              <button
+                class="ingredient-tool-filter"
+                type="button"
+                data-ingredient-category="botanicals"
+                aria-pressed="false"
+              >
+                BOTANICALS
+              </button>
+
+              <button
+                class="ingredient-tool-filter"
+                type="button"
+                data-ingredient-category="sweeteners"
+                aria-pressed="false"
+              >
+                SWEETENERS
+              </button>
+
+              <button
+                class="ingredient-tool-filter"
+                type="button"
+                data-ingredient-category="other"
+                aria-pressed="false"
+              >
+                OTHER
+              </button>
+
+            </div>
+            <!-- === INGREDIENT CATEGORY FILTERS END === -->
+
+
+            <!-- === INGREDIENT SEARCH START === -->
+            <div class="form-field ingredient-tool-search">
+
+              <label for="ingredientToolSearch">
+                SEARCH INGREDIENTS
+              </label>
+
+              <input
+                id="ingredientToolSearch"
+                type="search"
+                placeholder="Search caffeine, beta-alanine, sucralose..."
+                autocomplete="off"
+              >
+
+            </div>
+            <!-- === INGREDIENT SEARCH END === -->
+
+
+            <!-- === INGREDIENT EDUCATION CARDS START === -->
+            <div
+              class="ingredient-tool-grid"
+              id="ingredientToolGrid"
+              aria-live="polite"
+            >
+
+              <p class="tool-empty-state">
+                Ingredient education cards will appear here.
+              </p>
+
+            </div>
+            <!-- === INGREDIENT EDUCATION CARDS END === -->
+
+
+            <!-- === INGREDIENT COMPARISON START === -->
+            <div class="ingredient-comparison-panel">
+
+              <div class="tool-panel-header">
+
+                <span class="eyebrow">
+                  SIDE-BY-SIDE COMPARISON
                 </span>
+
+                <h4>
+                  COMPARE TWO INGREDIENTS
+                </h4>
+
+                <p>
+                  Select two ingredients to compare
+                  their categories, common uses,
+                  and important considerations.
+                </p>
+
               </div>
+
+              <div class="ingredient-comparison-controls">
+
+                <div class="form-field">
+                  <label for="compareIngredientA">
+                    FIRST INGREDIENT
+                  </label>
+
+                  <select id="compareIngredientA">
+                    <option value="">
+                      Select an ingredient
+                    </option>
+                  </select>
+                </div>
+
+                <div class="form-field">
+                  <label for="compareIngredientB">
+                    SECOND INGREDIENT
+                  </label>
+
+                  <select id="compareIngredientB">
+                    <option value="">
+                      Select an ingredient
+                    </option>
+                  </select>
+                </div>
+
+                <button
+                  class="button button-primary"
+                  id="compareIngredientsButton"
+                  type="button"
+                >
+                  COMPARE INGREDIENTS
+                </button>
+
+              </div>
+
+              <div
+                class="ingredient-comparison-results"
+                id="ingredientComparisonResults"
+                aria-live="polite"
+              >
+                <p class="tool-empty-state">
+                  Choose two ingredients to see
+                  their differences.
+                </p>
+              </div>
+
+            </div>
+            <!-- === INGREDIENT COMPARISON END === -->
+
+
+            <!-- === INGREDIENT QUICK COMPARISONS START === -->
+            <div class="ingredient-quick-comparisons">
+
+              <h4>POPULAR COMPARISONS</h4>
+
+              <div class="timer-presets">
+
+                <button
+                  class="ingredient-quick-compare"
+                  type="button"
+                  data-compare-a="caffeine-anhydrous"
+                  data-compare-b="dicaffeine-malate"
+                >
+                  CAFFEINE TYPES
+                </button>
+
+                <button
+                  class="ingredient-quick-compare"
+                  type="button"
+                  data-compare-a="sucralose"
+                  data-compare-b="acesulfame-potassium"
+                >
+                  SWEETENERS
+                </button>
+
+                <button
+                  class="ingredient-quick-compare"
+                  type="button"
+                  data-compare-a="beta-alanine"
+                  data-compare-b="l-citrulline-malate"
+                >
+                  AMINO ACID INGREDIENTS
+                </button>
+
+              </div>
+
+            </div>
+            <!-- === INGREDIENT QUICK COMPARISONS END === -->
+
+
+            <div class="information-panel">
+
+              <h4>UNDERSTANDING THE 007-NRG FORMULA</h4>
+
+              <p>
+                The supplied 007-NRG product artwork
+                lists a proprietary blend totaling
+                9,048 mg. It does not disclose the
+                individual quantities of ingredients
+                within that blend.
+              </p>
+
+              <p>
+                Ingredient comparisons describe general
+                properties and common uses. They do not
+                establish ingredient doses, effectiveness,
+                or the safety of the finished product.
+              </p>
+
+              <a
+                class="text-link"
+                href="#ingredients"
+              >
+                VIEW THE COMPLETE INGREDIENT LIST →
+              </a>
 
             </div>
 
           </section>
-          <!-- === INGREDIENT GUIDE END === -->
+          <!-- === INTERACTIVE INGREDIENT EXPLORER 2.0 END === -->
+
 
         </div>
+        <!-- === TOOLS WORKSPACE END === -->
 
       </div>
     </section>

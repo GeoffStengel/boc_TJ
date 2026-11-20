@@ -7,6 +7,13 @@ Brief history of meaningful project updates.
 
 ## [Unreleased] — 2026-11-20
 
+### Final UI and policy review
+
+- Moved the hero product image above the copy on phones and tuned the image and spacing for narrow screens.
+- Recovered the original SVG favicon from Git and restored it alongside the touch icon.
+- Tightened ingredient cards and kept full explanations available through accessible disclosures.
+- Updated the README and aligned policy drafts with 007-NRG branding and the site's current data practices.
+
 ### Site audit and mobile refinements
 
 - Fixed product previews, cart dismissal, keyboard focus, label zoom, and slideshow controls.

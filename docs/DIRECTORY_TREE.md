@@ -28,7 +28,8 @@ boc_TJ/
 │   ├── 007-NRG-20pck-Bottles-In-Box.png
 │   ├── 007-NRG-ingredients.png # Reference for the 40 mL proprietary blend
 │   ├── 007-nrg-*.webp         # Optimized hero, product, and label artwork
-│   └── 007-nrg-*-icon.png     # Branded home-screen and browser icons
+│   ├── 007-nrg-favicon.svg    # Original browser icon recovered from index.html
+│   └── 007-nrg-touch-icon.png # Home-screen icon
 │
 └── docs/
     ├── ROADMAP.md            # Plans and priorities

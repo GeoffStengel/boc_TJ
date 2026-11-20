@@ -101,7 +101,7 @@ const HERO_SLIDES = [
     edition: "Signature Splash",
     title: "MAKE A <em>SPLASH.</em>",
     description:
-      "See the signature 007-NRG bottle in motion.",
+      "See the signature 007-NRG bottle with splash artwork.",
     image: PRODUCT_IMAGES.waterSplashBottle,
     alt: "007-NRG bottle with water splash"
   },
@@ -1167,7 +1167,7 @@ function generateIngredientCard(ingredient) {
       <p>${escapeHTML(ingredient.description)}</p>
 
       <details class="ingredient-details">
-        <summary>LEARN MORE</summary>
+        <summary aria-label="Details about ${escapeHTML(ingredient.name)}">Details</summary>
         <p>${escapeHTML(ingredient.details)}</p>
       </details>
     </article>
@@ -2008,7 +2008,7 @@ function renderIngredientToolCards() {
           <p>${escapeHTML(ingredient.description)}</p>
 
           <details class="ingredient-details">
-            <summary>EXPLORE THIS INGREDIENT</summary>
+            <summary aria-label="Details about ${escapeHTML(ingredient.name)}">Details</summary>
             <p>${escapeHTML(ingredient.details)}</p>
             ${ingredient.group === "blend" ? `
               <p class="ingredient-footnote">
@@ -2020,11 +2020,12 @@ function renderIngredientToolCards() {
           <button
             class="button button-secondary"
             type="button"
+            aria-label="Compare ${escapeHTML(ingredient.name)}"
             data-select-ingredient="${escapeHTML(
               ingredientIdentifier(ingredient.name)
             )}"
           >
-            COMPARE INGREDIENT
+            Compare
           </button>
         </article>
       `).join("")

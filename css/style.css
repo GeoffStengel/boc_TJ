@@ -1721,3 +1721,16 @@ details[open] > summary .disclosure-chevron::after { content:"−"; }
 /* ============================================================
    007-NRG | END OF STYLESHEET
    ============================================================ */
+
+
+  /* ============================================================
+   MOBILE HERO — PRODUCT IMAGE SPACING START
+   ============================================================ */
+
+@media (max-width: 450px) {
+  .hero-product {
+    padding-top: 30px;
+  }
+}
+
+/* === MOBILE HERO — PRODUCT IMAGE SPACING END === */ 

@@ -1154,7 +1154,7 @@ function initializeShoppingCart() {
    ============================================================ */
 
 let ingredientSearchQuery = "";
-let activeIngredientFilter = "all";
+let activeIngredientFilter = "blend";
 
 function generateIngredientCard(ingredient, canCompare = false) {
   const name = escapeHTML(ingredient.name);

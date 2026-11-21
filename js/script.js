@@ -1156,20 +1156,41 @@ function initializeShoppingCart() {
 let ingredientSearchQuery = "";
 let activeIngredientFilter = "all";
 
-function generateIngredientCard(ingredient) {
+function generateIngredientCard(ingredient, canCompare = false) {
+  const name = escapeHTML(ingredient.name);
+
   return `
-    <article class="ingredient-card reveal visible">
-      <span class="eyebrow">
-        ${escapeHTML(ingredient.category)}
-      </span>
-
-      <h3>${escapeHTML(ingredient.name)}</h3>
-      <p>${escapeHTML(ingredient.description)}</p>
-
+    <article class="ingredient-card ingredient-card--browse${canCompare ? " ingredient-tool-card" : ""}">
       <details class="ingredient-details">
-        <summary aria-label="Details about ${escapeHTML(ingredient.name)}">Details</summary>
-        <p>${escapeHTML(ingredient.details)}</p>
+        <summary>
+          <span class="ingredient-card-heading">
+            <span>
+              <span class="eyebrow">${escapeHTML(ingredient.category)}</span>
+              <strong class="ingredient-card-name">${name}</strong>
+            </span>
+            <span class="disclosure-chevron" aria-hidden="true"></span>
+          </span>
+        </summary>
+        <div class="ingredient-card-body">
+          <p>${escapeHTML(ingredient.description)}</p>
+          <p>${escapeHTML(ingredient.details)}</p>
+          ${canCompare && ingredient.group === "blend" ? `
+            <p class="ingredient-footnote">
+              The label lists the total blend amount. Individual amounts are undisclosed.
+            </p>
+          ` : ""}
+        </div>
       </details>
+      ${canCompare ? `
+        <button
+          class="button button-secondary ingredient-compare-button"
+          type="button"
+          aria-label="Compare ${name}"
+          data-select-ingredient="${escapeHTML(ingredientIdentifier(ingredient.name))}"
+        >
+          Compare
+        </button>
+      ` : ""}
     </article>
   `;
 }
@@ -1197,7 +1218,7 @@ function renderIngredientExplorer() {
   });
 
   grid.innerHTML = filtered.length
-    ? filtered.map(generateIngredientCard).join("")
+    ? filtered.map(ingredient => generateIngredientCard(ingredient)).join("")
     : `<p class="tool-empty-state">
          Try another search or select a different category.
        </p>`;
@@ -1998,37 +2019,7 @@ function renderIngredientToolCards() {
   });
 
   grid.innerHTML = matching.length
-    ? matching.map(ingredient => `
-        <article class="ingredient-card ingredient-tool-card">
-          <span class="eyebrow">
-            ${escapeHTML(ingredient.category)}
-          </span>
-
-          <h4>${escapeHTML(ingredient.name)}</h4>
-          <p>${escapeHTML(ingredient.description)}</p>
-
-          <details class="ingredient-details">
-            <summary aria-label="Details about ${escapeHTML(ingredient.name)}">Details</summary>
-            <p>${escapeHTML(ingredient.details)}</p>
-            ${ingredient.group === "blend" ? `
-              <p class="ingredient-footnote">
-                The label lists the total blend amount. Individual amounts are undisclosed.
-              </p>
-            ` : ""}
-          </details>
-
-          <button
-            class="button button-secondary"
-            type="button"
-            aria-label="Compare ${escapeHTML(ingredient.name)}"
-            data-select-ingredient="${escapeHTML(
-              ingredientIdentifier(ingredient.name)
-            )}"
-          >
-            Compare
-          </button>
-        </article>
-      `).join("")
+    ? matching.map(ingredient => generateIngredientCard(ingredient, true)).join("")
     : `<p class="tool-empty-state">
          Try a different search or category.
        </p>`;

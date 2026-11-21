@@ -7,6 +7,12 @@ Brief history of meaningful project updates.
 
 ## [Unreleased] — 2026-11-20
 
+### Wide product artwork and compact ingredient cards
+
+- Fitted the wide bottle artwork to the homepage introduction and added responsive WebP sources with the original PNG as a fallback.
+- Turned collapsed ingredient cards into compact rows with native disclosures for the full ingredient text.
+- Kept comparison actions beside collapsed tool cards and expanded explanations at full card width.
+
 ### Final UI and policy review
 
 - Moved the hero product image above the copy on phones and tuned the image and spacing for narrow screens.

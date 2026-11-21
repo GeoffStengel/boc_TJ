@@ -293,15 +293,21 @@
 
       <div class="container intro-layout">
 
-        <div class="intro-feature-image reveal">
-          <img
-            src="images/007-nrg-splash-artwork.webp"
-            alt="007-NRG bottle with splash artwork"
-            width="800"
-            height="1200"
-            loading="lazy"
+        <picture class="intro-feature-image reveal">
+          <source
+            type="image/webp"
+            srcset="images/007-nrg-splash-wide-720.webp 720w, images/007-nrg-splash-wide-1320.webp 1320w"
+            sizes="(max-width: 360px) calc(100vw - 24px), (max-width: 640px) calc(100vw - 30px), (max-width: 1220px) 55vw, 640px"
           >
-        </div>
+          <img
+            src="images/007-NRG-Single-Bottle-Back-Splash-Wide-1672x941.png"
+            alt="007-NRG bottle framed by a water splash and a red halo"
+            width="1672"
+            height="941"
+            loading="lazy"
+            decoding="async"
+          >
+        </picture>
 
         <div class="intro-feature-copy reveal">
 

@@ -9,6 +9,8 @@
 boc_TJ/
 │
 ├── index.html                 # Main website
+├── *_policy.html              # Privacy, shipping, and return policy drafts
+├── test/index.html            # Archived preview and link to the main site
 │
 ├── css/
 │   └── style.css             # Styling and responsive layouts
@@ -21,10 +23,13 @@ boc_TJ/
 │   ├── 007-NRG-Grape-single-bottle-600x900.png
 │   ├── 007-NRG-600x900-Water-Splash-Bottle.png
 │   ├── 007-NRG-Blue-Raspberry-Single-600x900.png
-│   ├── 007-NRG-Single_Bottle_Back_Splash.png
+│   ├── 007-NRG-Single-Bottle-Back-Splash.png
 │   ├── 007-NRG-20pck-Display.png
 │   ├── 007-NRG-20pck-Bottles-In-Box.png
-│   └── 007-NRG-Label-no-bkgd-1536x1024.png
+│   ├── 007-NRG-ingredients.png # Reference for the 40 mL proprietary blend
+│   ├── 007-nrg-*.webp         # Optimized hero, product, and label artwork
+│   ├── 007-nrg-favicon.svg    # Original browser icon recovered from index.html
+│   └── 007-nrg-touch-icon.png # Home-screen icon
 │
 └── docs/
     ├── ROADMAP.md            # Plans and priorities
@@ -51,5 +56,4 @@ boc_TJ/
 5. Verify paths against the actual repository before editing.
 
 **Note:** This is a working project map, not a verified
-exhaustive listing. Image filenames reflect the paths
-referenced in the supplied JavaScript.
+exhaustive listing. Original artwork is retained alongside the WebP previews.

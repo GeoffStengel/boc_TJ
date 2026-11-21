@@ -202,6 +202,8 @@ These are ideas, not approved implementation requirements.
 - Ensure HTML, CSS, and JavaScript work together.
 - Fix broken layouts and functionality.
 - Preserve product information and safety warnings.
+- Confirm the final product label and claims. The repository contains conflicting formula and serving-size artwork.
+- Approve the policy text, business details, and customer contact information before launch.
 - Resolve console errors.
 
 ### Priority 2 — High

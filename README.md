@@ -1,29 +1,36 @@
-# boc_TJ
-Website for TJ & CO 007-NRG
+# 007-NRG
 
-Your info on how to navigate around the files & folders will be here 
-so check back to github every so often if you can.
+007-NRG is a mobile-first product information site with a bottle and packaging gallery, an interactive label viewer, and fitness and nutrition tools.
 
-Website for 007-NRG TJ & CO. A place for you to share website info
+## Features
 
-👀 Watch Site Being Built As Changes Happen: https://geoffstengel.github.io/boc_TJ/ 👀 
+- Product slideshow, collection filters, and product details.
+- Searchable ingredient cards, side-by-side comparisons, and a zoomable reference label.
+- Net Carb Calculator, Workout Interval Timer, Keto Macro Calculator, Keto Meal Planner, Food Tracker, and Ingredient Explorer.
+- Grocery list copying and meal plan printing. The meal planner and food tracker save data in the current browser.
 
-🗺️ Site Map: ✅ index.html Is Main Landing Page
+## Local development
 
-✅ styles.css Is Your Styling Page It Gives Your Site Decorations (in css folder)
+The site uses HTML, CSS, and vanilla JavaScript. It requires no build step, package installation, or backend.
 
-✅ app.js Is Script For Functions to Make The Scheduler, Count Down etc.. (in js folder)
+From the repository root, start a local server with Python 3.
 
-✅ images_logo Folder has variations of your logo
+```sh
+python -m http.server 8000 --bind 127.0.0.1
+```
 
-✅ images_flyers Folder has flyers for events or sponsorships etc..
-💡 To Make The Site Yours Fully U Need The Code, 1. Download ZIP Folder From Green Code Button @ https://github.com/GeoffStengel/boc_TJ, 2. Make A Repository On Github In Your Account (Create Account If U Dont Have) 3. Unzip & Extract Those Files & Folders From Step 1 & Upload to Github
+Open [http://127.0.0.1:8000/](http://127.0.0.1:8000/). The entry point is `index.html`, styles are in `css/style.css`, interactions are in `js/script.js`, and artwork is in `images/`.
 
-🗲 Make Site Live: 1. Create Github Pages To Make Site Live & Link Your Domain After 2. In Repo U Just Created Go To Settings & On Sidebar Click "Pages" 3. Select Deploy From Branch Choose "Master" Or "Main" & SAVE 🎉 4. Congratulations! (URL is Above give a sec or refresh browser)
+## Static hosting
 
-🔥 How To Link Godaddy Domain To A Github Pages Site: 1. DNS Point Godaddy Domain to Github Pages Tutorial: https://youtu.be/dbgEWWBvIxY 🛎️ 2. Domain Important - at Section 5 You'll Need These Numbers in Godaddy Manage DNS: https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain 🛎️
+The repository root contains the complete site for GitHub Pages or another static host. Relative asset paths support GitHub Pages project URLs. For GitHub Pages, select the approved release branch and its root as the publishing source after review. [GitHub Pages publishing settings](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
 
-// ======== EXTRA HELPFUL INFO TO HELP LEARN: 📸 Have Project Images Ready & Images You Have Please Upload em In "images" Folder. 👉🏽 1️: To Add images go to "Add File" tab, in the Folder you want to ADD them to. 👉🏽 2️: PLEASE label files especially if its just random numbers lol 👉🏽 3️: For Logo If You Have SVG's Scalable Vector Graphic They're Always Good
+Online ordering is unavailable. Google Reviews links require configuration. The product label and policy drafts require client approval before production release.
 
-🛎️ Helpful Links For Setting Up Domain & Adding Images & Files👇 🎥 1. Github Basics: https://youtu.be/iv8rSLsi1xo & https://youtu.be/v_1iqtOnUMg 📷 2. Github How To Upload Images .58 Seconds Long: https://www.youtube.com/watch?v=ATVm6ACERu8
+## Project documentation
 
+- [Roadmap](docs/ROADMAP.md)
+- [Project structure](docs/PROJECT_STRUCTURE.md)
+- [Directory tree](docs/DIRECTORY_TREE.md)
+- [Change log](docs/CHANGE_LOG.md)
+- [Coding standards](docs/CODING_STANDARDS.md)

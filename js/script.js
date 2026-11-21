@@ -14,8 +14,6 @@
 const SITE_CONFIG = {
   heroRotationInterval: 4000,
   heroFadeDuration: 180,
-  checkoutEnabled: false,
-
   storageKeys: {
     foodTracker: "007nrg_food_tracker_v1",
     foodTrackerGoal: "007nrg_food_tracker_goal_v1",
@@ -24,14 +22,12 @@ const SITE_CONFIG = {
 };
 
 const PRODUCT_IMAGES = {
-  singleBottle: "images/007-NRG-single-bottle-600x900.png",
-  grapeBottle: "images/007-NRG-Grape-single-bottle-600x900.png",
-  waterSplashBottle: "images/007-NRG-600x900-Water-Splash-Bottle.png",
-  blueRaspberryBottle: "images/007-NRG-Blue-Raspberry-Single-600x900.png",
-  backSplashBottle: "images/007-NRG-Single_Bottle_Back_Splash.png",
-  displayCase: "images/007-NRG-20pck-Display.png",
-  displayBox: "images/007-NRG-20pck-Bottles-In-Box.png",
-  productLabel: "images/007-NRG-Label-no-bkgd-1536x1024.png"
+  singleBottle: "images/007-nrg-original.webp",
+  grapeBottle: "images/007-nrg-grape.webp",
+  waterSplashBottle: "images/007-nrg-water-splash.webp",
+  blueRaspberryBottle: "images/007-nrg-blue-raspberry.webp",
+  displayCase: "images/007-nrg-display.webp",
+  displayBox: "images/007-nrg-packaging.webp"
 };
 
 /* === SITE CONFIGURATION END === */
@@ -44,32 +40,35 @@ const PRODUCT_IMAGES = {
 const PRODUCTS = [
   {
     id: "007-nrg-single",
-    name: "007-NRG Single Bottle",
+    name: "Single Bottle",
     type: "single",
     size: "40 mL",
     image: PRODUCT_IMAGES.singleBottle,
-    badge: "SINGLE BOTTLE",
+    width: 600,
+    height: 900,
     description: "The signature 007-NRG bottle.",
     priceCents: null
   },
   {
     id: "007-nrg-display",
-    name: "007-NRG 20-Bottle Display",
+    name: "20-Bottle Display",
     type: "case",
     size: "20 × 40 mL",
     image: PRODUCT_IMAGES.displayCase,
-    badge: "20-BOTTLE DISPLAY",
+    width: 740,
+    height: 810,
     description: "Twenty individual bottles in a branded retail display.",
     priceCents: null
   },
   {
     id: "007-nrg-box",
-    name: "007-NRG Display Packaging",
+    name: "Display Packaging",
     type: "case",
-    size: "20-Bottle Packaging",
+    size: "20-bottle box",
     image: PRODUCT_IMAGES.displayBox,
-    badge: "DISPLAY PACKAGING",
-    description: "Explore the 007-NRG display packaging.",
+    width: 810,
+    height: 540,
+    description: "A closer look at the branded 20-bottle box.",
     priceCents: null
   }
 ];
@@ -83,34 +82,34 @@ const PRODUCTS = [
 
 const HERO_SLIDES = [
   {
-    edition: "01 / ORIGINAL",
+    edition: "Original",
     title: "HYPER FOCUSED <em>ENERGY.</em>",
     description:
-      "Meet the signature 007-NRG bottle. Bold design, unmistakable identity.",
+      "Meet the signature 40 mL 007-NRG bottle.",
     image: PRODUCT_IMAGES.singleBottle,
     alt: "Original 007-NRG single bottle"
   },
   {
-    edition: "02 / GRAPE",
+    edition: "Grape",
     title: "A BOLDER <em>PURPLE.</em>",
     description:
-      "A rich grape-inspired look with deep purple color and signature 007-NRG styling.",
+      "Explore the grape-inspired 007-NRG bottle design.",
     image: PRODUCT_IMAGES.grapeBottle,
     alt: "007-NRG grape bottle design"
   },
   {
-    edition: "03 / SIGNATURE SPLASH",
+    edition: "Signature Splash",
     title: "MAKE A <em>SPLASH.</em>",
     description:
-      "The signature 007-NRG bottle in a striking, high-impact presentation.",
+      "See the signature 007-NRG bottle with splash artwork.",
     image: PRODUCT_IMAGES.waterSplashBottle,
     alt: "007-NRG bottle with water splash"
   },
   {
-    edition: "04 / BLUE RASPBERRY",
+    edition: "Blue Raspberry",
     title: "BRING THE <em>BLUE.</em>",
     description:
-      "A vibrant blue raspberry-inspired look with the unmistakable 007-NRG identity.",
+      "Explore the blue raspberry-inspired 007-NRG bottle design.",
     image: PRODUCT_IMAGES.blueRaspberryBottle,
     alt: "007-NRG blue raspberry bottle design"
   }
@@ -404,9 +403,10 @@ function getElement(id) {
 
 function setElementText(id, value) {
   const element = getElement(id);
+  const text = String(value);
 
-  if (element) {
-    element.textContent = String(value);
+  if (element && element.textContent !== text) {
+    element.textContent = text;
   }
 }
 
@@ -425,9 +425,7 @@ function getProductById(id) {
 }
 
 function formatProductPrice(product) {
-  if (product.priceCents == null) {
-    return "DETAILS AVAILABLE";
-  }
+  if (product.priceCents == null) return "";
 
   return new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -498,12 +496,14 @@ function showToast(message) {
   clearTimeout(toastTimeoutId);
 
   toast.textContent = message;
+  setElementText("toastStatus", message);
   toast.hidden = false;
   toast.classList.add("visible");
 
   toastTimeoutId = setTimeout(() => {
     toast.classList.remove("visible");
     toast.hidden = true;
+    setElementText("toastStatus", "");
   }, 3000);
 }
 
@@ -524,7 +524,7 @@ function initializeMobileNavigation() {
   if (!toggle || !links) return;
 
   function closeMenu() {
-    links.classList.remove("open", "active");
+    links.classList.remove("open");
     toggle.setAttribute("aria-expanded", "false");
     toggle.setAttribute("aria-label", "Open menu");
   }
@@ -533,17 +533,26 @@ function initializeMobileNavigation() {
     const open = toggle.getAttribute("aria-expanded") === "true";
 
     links.classList.toggle("open", !open);
-    links.classList.toggle("active", !open);
 
     toggle.setAttribute("aria-expanded", String(!open));
     toggle.setAttribute(
       "aria-label",
       open ? "Open menu" : "Close menu"
     );
+    if (!open) links.querySelector("a")?.focus();
   });
 
   links.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", closeMenu);
+    link.addEventListener("click", () => {
+      if (toggle.getAttribute("aria-expanded") !== "true") return;
+
+      closeMenu();
+      const target = getElement(link.hash.slice(1));
+      if (target) {
+        target.setAttribute("tabindex", "-1");
+        target.focus({ preventScroll: true });
+      }
+    });
   });
 
   document.addEventListener("click", event => {
@@ -555,8 +564,26 @@ function initializeMobileNavigation() {
     }
   });
 
+  const navigation = toggle.closest("nav");
+  navigation.addEventListener("focusout", event => {
+    if (event.relatedTarget && !navigation.contains(event.relatedTarget)) {
+      closeMenu();
+    }
+  });
+
   document.addEventListener("keydown", event => {
-    if (event.key === "Escape") closeMenu();
+    if (
+      event.key === "Escape" &&
+      toggle.getAttribute("aria-expanded") === "true"
+    ) {
+      closeMenu();
+      toggle.focus();
+    }
+  });
+
+  const mobileLayout = window.matchMedia("(max-width: 850px)");
+  mobileLayout.addEventListener("change", () => {
+    if (!mobileLayout.matches) closeMenu();
   });
 }
 
@@ -568,10 +595,14 @@ function initializeMobileNavigation() {
    ============================================================ */
 
 let currentHeroSlideIndex = 0;
+let requestedHeroSlideIndex = 0;
 let heroRotationTimer = null;
 let heroTransitionRequestId = 0;
+let heroRotationPaused = false;
+let heroHovered = false;
 
 const heroImageCache = new Map();
+const heroReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 function preloadHeroImage(source) {
   if (heroImageCache.has(source)) {
@@ -603,7 +634,7 @@ function updateHeroIndicators() {
     });
 }
 
-async function displayHeroSlide(index, immediate = false) {
+async function displayHeroSlide(index, manual = false) {
   const image = getElement("heroProductImage");
   if (!image || !HERO_SLIDES.length) return;
 
@@ -613,22 +644,24 @@ async function displayHeroSlide(index, immediate = false) {
 
   const slide = HERO_SLIDES[normalizedIndex];
   const requestId = ++heroTransitionRequestId;
+  requestedHeroSlideIndex = normalizedIndex;
 
   try {
     await preloadHeroImage(slide.image);
   } catch (error) {
     console.warn("[007-NRG]", error.message);
     heroImageCache.delete(slide.image);
+    if (requestId === heroTransitionRequestId) {
+      requestedHeroSlideIndex = currentHeroSlideIndex;
+      image.classList.remove("changing");
+      if (manual) showToast("Could not load that product image. Try again.");
+    }
     return;
   }
 
   if (requestId !== heroTransitionRequestId) return;
 
-  const reducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
-
-  if (!immediate && !reducedMotion) {
+  if (!heroReducedMotion.matches) {
     image.classList.add("changing");
 
     await new Promise(resolve =>
@@ -648,10 +681,9 @@ async function displayHeroSlide(index, immediate = false) {
 
   image.src = slide.image;
   image.alt = slide.alt;
-  image.width = 600;
-  image.height = 900;
 
   updateHeroIndicators();
+  if (manual) setElementText("heroStatus", slide.alt);
 
   requestAnimationFrame(() => {
     image.classList.remove("changing");
@@ -667,8 +699,8 @@ function startHeroRotation() {
   stopHeroRotation();
 
   if (
-    document.hidden ||
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    document.hidden || heroReducedMotion.matches ||
+    heroRotationPaused || heroHovered
   ) {
     return;
   }
@@ -678,14 +710,24 @@ function startHeroRotation() {
   }, SITE_CONFIG.heroRotationInterval);
 }
 
-function selectHeroSlide(index) {
-  displayHeroSlide(index);
+function setHeroRotationPaused(paused) {
+  heroRotationPaused = paused;
+  const toggle = getElement("toggleHeroRotation");
+  toggle.setAttribute("aria-label", paused ? "Play slideshow" : "Pause slideshow");
+  toggle.firstElementChild.textContent = paused ? "▶" : "Ⅱ";
   startHeroRotation();
+}
+
+function selectHeroSlide(index) {
+  setHeroRotationPaused(true);
+  displayHeroSlide(index, true);
 }
 
 function initializeHeroSlideshow() {
   const indicators = getElement("slideIndicators");
-  if (!indicators) return;
+  const hero = getElement("home");
+  const toggle = getElement("toggleHeroRotation");
+  if (!indicators || !hero || !toggle) return;
 
   indicators.innerHTML = "";
 
@@ -695,7 +737,7 @@ function initializeHeroSlideshow() {
     button.type = "button";
     button.setAttribute(
       "aria-label",
-      `Show slide ${index + 1}`
+      `Show ${slide.edition}`
     );
     button.setAttribute("aria-pressed", "false");
 
@@ -705,17 +747,38 @@ function initializeHeroSlideshow() {
 
     indicators.appendChild(button);
 
-    preloadHeroImage(slide.image).catch(() => {});
+  });
+
+  toggle.hidden = heroReducedMotion.matches;
+  toggle.addEventListener("click", () => {
+    setHeroRotationPaused(!heroRotationPaused);
+  });
+  hero.addEventListener("pointerenter", event => {
+    if (event.pointerType === "mouse") {
+      heroHovered = true;
+      stopHeroRotation();
+    }
+  });
+  hero.addEventListener("pointerleave", () => {
+    heroHovered = false;
+    startHeroRotation();
+  });
+  hero.addEventListener("focusin", event => {
+    if (event.target.matches(":focus-visible")) setHeroRotationPaused(true);
+  });
+  heroReducedMotion.addEventListener("change", () => {
+    toggle.hidden = heroReducedMotion.matches;
+    startHeroRotation();
   });
 
   getElement("previousSlide")?.addEventListener(
     "click",
-    () => selectHeroSlide(currentHeroSlideIndex - 1)
+    () => selectHeroSlide(requestedHeroSlideIndex - 1)
   );
 
   getElement("nextSlide")?.addEventListener(
     "click",
-    () => selectHeroSlide(currentHeroSlideIndex + 1)
+    () => selectHeroSlide(requestedHeroSlideIndex + 1)
   );
 
   document.addEventListener("visibilitychange", () => {
@@ -723,7 +786,7 @@ function initializeHeroSlideshow() {
     else startHeroRotation();
   });
 
-  displayHeroSlide(0, true);
+  updateHeroIndicators();
   startHeroRotation();
 }
 
@@ -737,23 +800,25 @@ function initializeHeroSlideshow() {
 let activeProductFilter = "all";
 
 function generateProductCard(product) {
-  return `
-    <article class="product-card reveal visible">
-      <div class="product-image-wrap">
-        <span class="product-badge">
-          ${escapeHTML(product.badge)}
-        </span>
+  const price = formatProductPrice(product);
 
+  return `
+    <article class="product-card">
+      <div class="product-image-wrap">
         <button
           class="product-image-button"
           type="button"
           data-preview-product="${escapeHTML(product.id)}"
           aria-label="View ${escapeHTML(product.name)}"
+          aria-haspopup="dialog"
         >
           <img
             src="${escapeHTML(product.image)}"
-            alt="${escapeHTML(product.name)}"
+            alt=""
+            width="${product.width}"
+            height="${product.height}"
             loading="lazy"
+            decoding="async"
           >
         </button>
       </div>
@@ -766,14 +831,14 @@ function generateProductCard(product) {
         <h3>${escapeHTML(product.name)}</h3>
         <p>${escapeHTML(product.description)}</p>
 
-        <strong class="product-price">
-          ${formatProductPrice(product)}
-        </strong>
+        ${price ? `<strong class="product-price">${escapeHTML(price)}</strong>` : ""}
 
         <button
           class="button button-secondary"
           type="button"
           data-preview-product="${escapeHTML(product.id)}"
+          aria-label="View details for ${escapeHTML(product.name)}"
+          aria-haspopup="dialog"
         >
           VIEW DETAILS
         </button>
@@ -796,7 +861,7 @@ function renderProductCollection() {
   grid.querySelectorAll("[data-preview-product]")
     .forEach(button => {
       button.addEventListener("click", () => {
-        openProductPreview(button.dataset.previewProduct);
+        openProductPreview(button.dataset.previewProduct, button);
       });
     });
 }
@@ -829,42 +894,34 @@ function initializeProductCollection() {
 
 let lastFocusedElement = null;
 
-function openDialog(element, focusTarget) {
+function openDialog(element, focusTarget, returnFocus = document.activeElement) {
   if (!element) return;
 
-  lastFocusedElement = document.activeElement;
+  lastFocusedElement = returnFocus;
 
   element.hidden = false;
-  element.classList.add("open", "active", "visible");
 
   document.body.style.overflow = "hidden";
-
-  requestAnimationFrame(() => {
-    (focusTarget || element.querySelector("button"))?.focus();
-  });
+  document.querySelectorAll("body > header, body > main, body > footer, .skip-link")
+    .forEach(region => { region.inert = true; });
+  element.scrollTop = 0;
+  const panel = element.querySelector(".product-modal-panel");
+  if (panel) panel.scrollTop = 0;
+  focusTarget.focus({ preventScroll: true });
 }
 
-function closeDialog(element) {
-  if (!element) return;
+function closeDialog(element, restoreFocus = true) {
+  if (!element || element.hidden) return;
 
   element.hidden = true;
-  element.classList.remove("open", "active", "visible");
+  document.body.style.overflow = "";
+  document.querySelectorAll("body > header, body > main, body > footer, .skip-link")
+    .forEach(region => { region.inert = false; });
 
-  const anotherOpen = [
-    "productModal",
-    "labelModal",
-    "cartDrawer"
-  ].some(id => {
-    const dialog = getElement(id);
-    return dialog && !dialog.hidden;
-  });
-
-  if (!anotherOpen) {
-    document.body.style.overflow = "";
-  }
-
-  if (lastFocusedElement?.isConnected) {
-    lastFocusedElement.focus();
+  const returnFocus = lastFocusedElement;
+  lastFocusedElement = null;
+  if (restoreFocus && returnFocus?.isConnected) {
+    returnFocus.focus({ preventScroll: true });
   }
 }
 
@@ -963,13 +1020,13 @@ function createProductIngredientDisclosure() {
 
 function initializeProductIngredientPopups() {
   const modal = getElement("productModal");
-  const button = getElement("productModalAdd");
+  const details = modal?.querySelector(".product-modal-details");
 
-  if (!modal || !button) return;
+  if (!details) return;
 
-  if (!modal.querySelector(".product-ingredient-information")) {
-    button.insertAdjacentHTML(
-      "afterend",
+  if (!details.querySelector(".product-ingredient-information")) {
+    details.insertAdjacentHTML(
+      "beforeend",
       createProductIngredientDisclosure()
     );
   }
@@ -977,12 +1034,13 @@ function initializeProductIngredientPopups() {
   modal.querySelector("[data-view-full-label]")
     ?.addEventListener("click", event => {
       event.preventDefault();
-      closeProductPreview();
-      openProductLabel();
+      const returnFocus = lastFocusedElement;
+      closeDialog(modal, false);
+      openProductLabel(returnFocus);
     });
 }
 
-function openProductPreview(productId) {
+function openProductPreview(productId, trigger) {
   const product = getProductById(productId);
   const modal = getElement("productModal");
 
@@ -990,23 +1048,18 @@ function openProductPreview(productId) {
 
   setElementText("productModalTitle", product.name);
   setElementText("productModalSize", product.size);
-  setElementText(
-    "productModalPrice",
-    formatProductPrice(product)
-  );
+  setElementText("productModalDescription", product.description);
+  const price = formatProductPrice(product);
+  setElementText("productModalPrice", price);
+  getElement("productModalPrice").hidden = !price;
 
   const image = getElement("productModalImage");
 
   if (image) {
     image.src = product.image;
-    image.alt = product.name;
-  }
-
-  const button = getElement("productModalAdd");
-
-  if (button) {
-    button.disabled = true;
-    button.textContent = "ORDERING COMING SOON";
+    image.alt = `007-NRG ${product.name.toLowerCase()}`;
+    image.width = product.width;
+    image.height = product.height;
   }
 
   const disclosure = modal.querySelector(
@@ -1015,10 +1068,7 @@ function openProductPreview(productId) {
 
   if (disclosure) disclosure.open = true;
 
-  const details = modal.querySelector(".product-modal-details");
-  if (details) details.scrollTop = 0;
-
-  openDialog(modal, getElement("closeProductModal"));
+  openDialog(modal, getElement("closeProductModal"), trigger);
 }
 
 function closeProductPreview() {
@@ -1050,31 +1100,14 @@ function initializeProductPreview() {
    SHOPPING CART START
    ============================================================ */
 
-function updateCartDisplay() {
-  setElementText("cartCount", "0");
-  setElementText("cartSubtotal", "—");
-
-  const items = getElement("cartItems");
-
-  if (items) {
-    items.innerHTML = `
-      <div class="empty-cart">
-        <p>YOUR BAG IS EMPTY.</p>
-        <p>Explore the 007-NRG collection.</p>
-      </div>
-    `;
-  }
-}
-
 function openShoppingCart() {
-  updateCartDisplay();
-
   const overlay = getElement("cartOverlay");
   if (overlay) overlay.hidden = false;
 
   openDialog(
     getElement("cartDrawer"),
-    getElement("closeCart")
+    getElement("closeCart"),
+    getElement("cartTrigger")
   );
 }
 
@@ -1086,8 +1119,6 @@ function closeShoppingCart() {
 }
 
 function initializeShoppingCart() {
-  updateCartDisplay();
-
   getElement("cartTrigger")?.addEventListener(
     "click",
     openShoppingCart
@@ -1100,7 +1131,13 @@ function initializeShoppingCart() {
 
   getElement("continueShopping")?.addEventListener(
     "click",
-    closeShoppingCart
+    () => {
+      closeShoppingCart();
+      const collection = getElement("shop");
+      collection.setAttribute("tabindex", "-1");
+      collection.focus({ preventScroll: true });
+      collection.scrollIntoView();
+    }
   );
 
   getElement("cartOverlay")?.addEventListener(
@@ -1117,22 +1154,43 @@ function initializeShoppingCart() {
    ============================================================ */
 
 let ingredientSearchQuery = "";
-let activeIngredientFilter = "all";
+let activeIngredientFilter = "blend";
 
-function generateIngredientCard(ingredient) {
+function generateIngredientCard(ingredient, canCompare = false) {
+  const name = escapeHTML(ingredient.name);
+
   return `
-    <article class="ingredient-card reveal visible">
-      <span class="eyebrow">
-        ${escapeHTML(ingredient.category)}
-      </span>
-
-      <h3>${escapeHTML(ingredient.name)}</h3>
-      <p>${escapeHTML(ingredient.description)}</p>
-
+    <article class="ingredient-card ingredient-card--browse${canCompare ? " ingredient-tool-card" : ""}">
       <details class="ingredient-details">
-        <summary>LEARN MORE</summary>
-        <p>${escapeHTML(ingredient.details)}</p>
+        <summary>
+          <span class="ingredient-card-heading">
+            <span>
+              <span class="eyebrow">${escapeHTML(ingredient.category)}</span>
+              <strong class="ingredient-card-name">${name}</strong>
+            </span>
+            <span class="disclosure-chevron" aria-hidden="true"></span>
+          </span>
+        </summary>
+        <div class="ingredient-card-body">
+          <p>${escapeHTML(ingredient.description)}</p>
+          <p>${escapeHTML(ingredient.details)}</p>
+          ${canCompare && ingredient.group === "blend" ? `
+            <p class="ingredient-footnote">
+              The label lists the total blend amount. Individual amounts are undisclosed.
+            </p>
+          ` : ""}
+        </div>
       </details>
+      ${canCompare ? `
+        <button
+          class="button button-secondary ingredient-compare-button"
+          type="button"
+          aria-label="Compare ${name}"
+          data-select-ingredient="${escapeHTML(ingredientIdentifier(ingredient.name))}"
+        >
+          Compare
+        </button>
+      ` : ""}
     </article>
   `;
 }
@@ -1160,10 +1218,11 @@ function renderIngredientExplorer() {
   });
 
   grid.innerHTML = filtered.length
-    ? filtered.map(generateIngredientCard).join("")
+    ? filtered.map(ingredient => generateIngredientCard(ingredient)).join("")
     : `<p class="tool-empty-state">
-         No ingredients match your search.
+         Try another search or select a different category.
        </p>`;
+  setElementText("ingredientSearchStatus", `${filtered.length} results.`);
 }
 
 function initializeIngredientExplorer() {
@@ -1224,6 +1283,7 @@ function initializeIngredientExplorer() {
         OTHER INGREDIENTS
       </button>
     </div>
+    <p class="sr-only" id="ingredientSearchStatus" role="status"></p>
   `;
 
   grid.before(controls);
@@ -1280,8 +1340,8 @@ function initializeIngredientLabelSummary() {
       <h3>WHAT'S ON THE LABEL</h3>
 
       <p>
-        A quick overview of the ingredients
-        identified on the supplied product artwork.
+        Browse the proprietary blend and other ingredients
+        listed on the 007-NRG label.
       </p>
     </div>
 
@@ -1356,25 +1416,20 @@ function updateLabelZoom() {
   const image = getElement("modalLabelImage");
   if (!image) return;
 
-  image.style.transform = `scale(${labelZoomLevel})`;
-  image.style.transformOrigin = "center center";
+  image.style.width = `${labelZoomLevel * 100}%`;
+  getElement("zoomOut").setAttribute("aria-disabled", String(labelZoomLevel <= 1));
+  getElement("zoomIn").setAttribute("aria-disabled", String(labelZoomLevel >= 3));
 }
 
-function openProductLabel() {
+function openProductLabel(returnFocus) {
   const modal = getElement("labelModal");
   if (!modal) return;
 
   labelZoomLevel = 1;
 
-  const image = getElement("modalLabelImage");
-
-  if (image) {
-    image.src = PRODUCT_IMAGES.productLabel;
-    image.alt = "007-NRG product label artwork";
-  }
-
   updateLabelZoom();
-  openDialog(modal, getElement("closeLabel"));
+  openDialog(modal, getElement("closeLabel"), returnFocus);
+  getElement("labelViewport").scrollTo(0, 0);
 }
 
 function closeProductLabel() {
@@ -1384,12 +1439,12 @@ function closeProductLabel() {
 function initializeProductLabelViewer() {
   getElement("openLabelButton")?.addEventListener(
     "click",
-    openProductLabel
+    event => openProductLabel(event.currentTarget)
   );
 
   getElement("labelPreview")?.addEventListener(
     "click",
-    openProductLabel
+    event => openProductLabel(event.currentTarget)
   );
 
   getElement("closeLabel")?.addEventListener(
@@ -1403,7 +1458,7 @@ function initializeProductLabelViewer() {
   });
 
   getElement("zoomOut")?.addEventListener("click", () => {
-    labelZoomLevel = Math.max(0.5, labelZoomLevel - 0.25);
+    labelZoomLevel = Math.max(1, labelZoomLevel - 0.25);
     updateLabelZoom();
   });
 
@@ -1446,6 +1501,8 @@ function initializeToolNavigation() {
   }
 
   tabs.forEach(tab => {
+    const panel = [...panels].find(item => item.dataset.toolPanel === tab.dataset.tool);
+    if (panel) tab.setAttribute("aria-controls", panel.id);
     tab.addEventListener("click", () => {
       selectTool(tab.dataset.tool);
     });
@@ -1462,23 +1519,20 @@ function initializeToolNavigation() {
    ============================================================ */
 
 function calculateNetCarbs() {
+  const form = getElement("netCarbForm");
   const totalCarbs = Number(getElement("totalCarbs")?.value);
   const fiber = Number(getElement("dietaryFiber")?.value);
   const servings = Number(getElement("carbServings")?.value);
 
   if (
-    ![totalCarbs, fiber, servings].every(Number.isFinite) ||
-    totalCarbs < 0 ||
-    totalCarbs > 10000 ||
-    fiber < 0 ||
-    fiber > totalCarbs ||
-    servings <= 0 ||
-    servings > 1000
+    !form?.checkValidity() || fiber > totalCarbs
   ) {
     setElementText("netCarbValue", "—");
     setElementText(
       "netCarbExplanation",
-      "Enter valid amounts. Fiber cannot exceed total carbs."
+      fiber > totalCarbs
+        ? "Fiber cannot exceed total carbohydrates."
+        : "Enter total carbohydrates, fiber, and a valid serving amount."
     );
     return;
   }
@@ -1551,6 +1605,7 @@ function readTimerSettings() {
   const rounds = Number(getElement("timerRounds")?.value);
 
   if (
+    !getElement("restSeconds").value ||
     !Number.isInteger(work) ||
     !Number.isInteger(rest) ||
     !Number.isInteger(rounds) ||
@@ -1661,7 +1716,8 @@ function updateWorkoutTimer() {
   const timer = WORKOUT_TIMER;
   if (!timer.running || timer.deadline === null) return;
 
-  let remaining = timer.deadline - Date.now();
+  const now = performance.now();
+  let remaining = timer.deadline - now;
   let transitions = 0;
 
   while (remaining <= 0 && timer.running && transitions < 300) {
@@ -1673,14 +1729,18 @@ function updateWorkoutTimer() {
     if (!timer.running) break;
 
     remaining = timer.phaseDurationMilliseconds - overshoot;
-    timer.deadline = Date.now() + remaining;
+    timer.deadline = now + remaining;
   }
 
   if (timer.running) {
     timer.remainingMilliseconds = Math.max(0, remaining);
   }
 
+  const pausedControlFocused = document.activeElement === getElement("pauseTimer");
   renderWorkoutTimer();
+  if (!timer.running && pausedControlFocused) {
+    getElement("startTimer").focus({ preventScroll: true });
+  }
 }
 
 function startWorkoutTimer() {
@@ -1701,28 +1761,28 @@ function startWorkoutTimer() {
   }
 
   timer.running = true;
-  timer.deadline = Date.now() + timer.remainingMilliseconds;
+  timer.deadline = performance.now() + timer.remainingMilliseconds;
 
   stopWorkoutTimerInterval();
   timer.intervalId = setInterval(updateWorkoutTimer, 100);
 
   renderWorkoutTimer();
+  getElement("pauseTimer").focus({ preventScroll: true });
 }
 
 function pauseWorkoutTimer() {
   const timer = WORKOUT_TIMER;
   if (!timer.running) return;
 
-  timer.remainingMilliseconds = Math.max(
-    0,
-    timer.deadline - Date.now()
-  );
+  updateWorkoutTimer();
+  if (!timer.running) return;
 
   timer.running = false;
   timer.deadline = null;
 
   stopWorkoutTimerInterval();
   renderWorkoutTimer();
+  getElement("startTimer").focus({ preventScroll: true });
 }
 
 function resetWorkoutTimer() {
@@ -1896,6 +1956,12 @@ function initializeKetoMacroCalculator() {
   if (!form) return;
 
   form.addEventListener("submit", calculateKetoMacros);
+  form.addEventListener("input", () => {
+    ["macroCalories", "macroProtein", "macroFat", "macroCarbs"].forEach(id =>
+      setElementText(id, "—")
+    );
+    setElementText("macroExplanation", "Calculate to update your daily targets.");
+  });
 }
 
 /* === KETO MACRO CALCULATOR END === */
@@ -1953,39 +2019,11 @@ function renderIngredientToolCards() {
   });
 
   grid.innerHTML = matching.length
-    ? matching.map(ingredient => `
-        <article class="ingredient-card ingredient-tool-card">
-          <span class="eyebrow">
-            ${escapeHTML(ingredient.category)}
-          </span>
-
-          <h4>${escapeHTML(ingredient.name)}</h4>
-          <p>${escapeHTML(ingredient.description)}</p>
-
-          <details class="ingredient-details">
-            <summary>EXPLORE THIS INGREDIENT</summary>
-            <p>${escapeHTML(ingredient.details)}</p>
-            <p class="ingredient-footnote">
-              Individual ingredient quantity is not disclosed
-              in the supplied proprietary blend label,
-              where applicable.
-            </p>
-          </details>
-
-          <button
-            class="button button-secondary"
-            type="button"
-            data-select-ingredient="${escapeHTML(
-              ingredientIdentifier(ingredient.name)
-            )}"
-          >
-            COMPARE INGREDIENT
-          </button>
-        </article>
-      `).join("")
+    ? matching.map(ingredient => generateIngredientCard(ingredient, true)).join("")
     : `<p class="tool-empty-state">
-         No ingredients match those filters.
+         Try a different search or category.
        </p>`;
+  setElementText("ingredientToolStatus", `${matching.length} results.`);
 
   grid.querySelectorAll("[data-select-ingredient]")
     .forEach(button => {
@@ -1996,13 +2034,14 @@ function renderIngredientToolCards() {
 
         if (!first || !second) return;
 
-        if (!first.value || first.value === identifier) {
+        if (!first.value) {
           first.value = identifier;
-        } else {
+        } else if (first.value !== identifier) {
           second.value = identifier;
         }
 
-        showToast("Ingredient added to comparison.");
+        if (second.value) compareSelectedIngredients();
+        getElement("ingredientComparisonHeading").focus();
       });
     });
 }
@@ -2110,6 +2149,10 @@ function initializeIngredientExplorerTool() {
     compareSelectedIngredients
   );
 
+  ["compareIngredientA", "compareIngredientB"].forEach(id => {
+    getElement(id)?.addEventListener("change", compareSelectedIngredients);
+  });
+
   document.querySelectorAll(".ingredient-quick-compare")
     .forEach(button => {
       button.addEventListener("click", () => {
@@ -2120,6 +2163,7 @@ function initializeIngredientExplorerTool() {
           button.dataset.compareB;
 
         compareSelectedIngredients();
+        getElement("ingredientComparisonHeading").focus();
       });
     });
 
@@ -2360,6 +2404,21 @@ function shuffleItems(items) {
   return shuffled;
 }
 
+function getMealTotals(meals) {
+  return meals.reduce((total, meal) => ({
+    calories: total.calories + meal.calories,
+    protein: total.protein + meal.protein,
+    fat: total.fat + meal.fat,
+    netCarbs: total.netCarbs + meal.netCarbs
+  }), { calories: 0, protein: 0, fat: 0, netCarbs: 0 });
+}
+
+function getMealPlanTypes(includeSnacks) {
+  return includeSnacks
+    ? ["breakfast", "lunch", "dinner", "snack"]
+    : ["breakfast", "lunch", "dinner"];
+}
+
 function generateKetoMealPlan(event) {
   event?.preventDefault();
 
@@ -2382,54 +2441,41 @@ function generateKetoMealPlan(event) {
     return;
   }
 
-  const types = includeSnacks
-    ? ["breakfast", "lunch", "dinner", "snack"]
-    : ["breakfast", "lunch", "dinner"];
+  const types = getMealPlanTypes(includeSnacks);
+  const combinations = types.reduce(
+    (days, type) => days.flatMap(day =>
+      getMealsByType(type, style).map(meal => [...day, meal])
+    ), [[]]
+  ).map(meals => ({ meals, totals: getMealTotals(meals) }));
 
-  const pools = {};
-
-  for (const type of types) {
-    const available = getMealsByType(type, style);
-
-    if (!available.length) {
-      showToast(`No ${type} meals match this preference.`);
-      return;
-    }
-
-    pools[type] = shuffleItems(available);
+  if (!combinations.length) {
+    showToast("Choose a different meal preference to build a full plan.");
+    return;
   }
 
-  const days = [];
+  const lowestCarbs = Math.min(...combinations.map(day => day.totals.netCarbs));
+  const eligible = combinations.filter(day =>
+    day.totals.netCarbs <= Math.max(carbGoal, lowestCarbs)
+  );
+  const mealCounts = new Map();
+  const repetitionScore = day => day.meals.reduce(
+    (total, meal) => total + (mealCounts.get(meal.id) || 0), 0
+  );
+  const days = Array.from({ length: 7 }, (_, index) => {
+    const { meals, totals } = shuffleItems(eligible).reduce((best, candidate) =>
+      repetitionScore(candidate) < repetitionScore(best) ? candidate : best
+    );
 
-  for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
-    const selectedMeals = [];
-
-    for (const type of types) {
-      const available = pools[type];
-
-      selectedMeals.push(
-        available[dayIndex % available.length]
-      );
-    }
-
-    const totals = selectedMeals.reduce((total, meal) => ({
-      calories: total.calories + meal.calories,
-      protein: total.protein + meal.protein,
-      fat: total.fat + meal.fat,
-      netCarbs: total.netCarbs + meal.netCarbs
-    }), {
-      calories: 0,
-      protein: 0,
-      fat: 0,
-      netCarbs: 0
+    meals.forEach(meal => {
+      mealCounts.set(meal.id, (mealCounts.get(meal.id) || 0) + 1);
     });
 
-    days.push({
-      day: dayIndex + 1,
-      meals: selectedMeals.map(meal => meal.id),
+    return {
+      day: index + 1,
+      meals: meals.map(meal => meal.id),
       totals
-    });
-  }
+    };
+  });
 
   currentMealPlan = {
     servings,
@@ -2439,13 +2485,13 @@ function generateKetoMealPlan(event) {
     days
   };
 
-  saveLocalData(
+  const saved = saveLocalData(
     SITE_CONFIG.storageKeys.mealPlanner,
     currentMealPlan
   );
 
   renderKetoMealPlan();
-  showToast("Your seven-day meal plan is ready!");
+  if (!saved) showToast("Your plan is ready. This browser could not save it for your next visit.");
 }
 
 function getMealById(mealId) {
@@ -2507,8 +2553,7 @@ function renderKetoMealPlan() {
 
         ${exceedsGoal ? `
           <p class="tool-disclaimer">
-            This sample day exceeds your selected
-            ${carbGoal} g net-carb target.
+            This day exceeds your ${carbGoal} g net-carb target.
           </p>
         ` : ""}
       </article>
@@ -2518,7 +2563,7 @@ function renderKetoMealPlan() {
   setElementText(
     "mealPlannerSummary",
     `7 days · ${servings} serving${servings === 1 ? "" : "s"} ` +
-    `per meal · ${carbGoal} g daily net-carb target`
+    `per meal · ${carbGoal} g daily net-carb target per person`
   );
 
   getElement("printMealPlan").disabled = false;
@@ -2566,9 +2611,8 @@ function renderGroceryList() {
 
   content.innerHTML = `
     <p class="ingredient-footnote">
-      Quantities below represent repeated recipe ingredient
-      portions, not consolidated package sizes.
-      Multiply each listed recipe amount by the number shown.
+      Multiply each ingredient amount by the number of portions shown.
+      The same ingredient may appear in more than one amount.
     </p>
 
     <ul class="grocery-list-items">
@@ -2601,17 +2645,17 @@ function copyMealPlannerGroceryList() {
       `${item.ingredient} × ${item.quantity}`
     ),
     "",
-    "Quantities are recipe portions, not package totals."
+    "Multiply each listed amount by the number of portions shown."
   ].join("\n");
 
   if (!navigator.clipboard?.writeText) {
-    showToast("Clipboard access is unavailable in this browser.");
+    showToast("Clipboard access is unavailable. You can print the list with your meal plan.");
     return;
   }
 
   navigator.clipboard.writeText(text)
     .then(() => showToast("Grocery list copied!"))
-    .catch(() => showToast("Could not copy grocery list."));
+    .catch(() => showToast("Could not copy the list. You can print it with your meal plan."));
 }
 
 function printKetoMealPlan() {
@@ -2653,7 +2697,7 @@ function printKetoMealPlan() {
     <body>
       <h1>007-NRG — 7-Day Meal Plan</h1>
       <p>Servings per meal: ${currentMealPlan.servings}</p>
-      <p>Daily net-carb target: ${currentMealPlan.carbGoal} g</p>
+      <p>Daily net-carb target per person: ${currentMealPlan.carbGoal} g</p>
 
       ${currentMealPlan.days.map(day => `
         <section>
@@ -2668,7 +2712,7 @@ function printKetoMealPlan() {
             }).join("")}
           </ul>
           <strong>
-            Estimated daily total:
+            Estimated daily total per person:
             ${day.totals.netCarbs} g net carbs
           </strong>
         </section>
@@ -2696,10 +2740,31 @@ function printKetoMealPlan() {
   printWindow.document.write(html);
   printWindow.document.close();
 
-  printWindow.addEventListener("load", () => {
-    printWindow.focus();
-    printWindow.print();
-  }, { once: true });
+  printWindow.focus();
+  printWindow.print();
+}
+
+function restoreKetoMealPlan(saved) {
+  if (
+    !Array.isArray(saved?.days) || saved.days.length !== 7 ||
+    !Number.isInteger(saved.servings) || saved.servings < 1 || saved.servings > 12 ||
+    !Number.isInteger(saved.carbGoal) || saved.carbGoal < 10 || saved.carbGoal > 150 ||
+    !["balanced", "budget", "quick", "vegetarian"].includes(saved.style) ||
+    typeof saved.includeSnacks !== "boolean"
+  ) return null;
+
+  const types = getMealPlanTypes(saved.includeSnacks);
+  const days = [];
+
+  for (const day of saved.days) {
+    if (!Array.isArray(day?.meals) || day.meals.length !== types.length) return null;
+    const meals = day.meals.map(getMealById);
+    if (meals.some((meal, index) => meal?.type !== types[index])) return null;
+
+    days.push({ day: days.length + 1, meals: day.meals, totals: getMealTotals(meals) });
+  }
+
+  return { ...saved, days };
 }
 
 function initializeKetoMealPlanner() {
@@ -2723,24 +2788,15 @@ function initializeKetoMealPlanner() {
     printKetoMealPlan
   );
 
-  const saved = readLocalData(
-    SITE_CONFIG.storageKeys.mealPlanner
+  currentMealPlan = restoreKetoMealPlan(
+    readLocalData(SITE_CONFIG.storageKeys.mealPlanner)
   );
 
-  if (
-    saved &&
-    Array.isArray(saved.days) &&
-    saved.days.length === 7 &&
-    saved.days.every(day =>
-      Array.isArray(day.meals) &&
-      day.meals.every(id => Boolean(getMealById(id)))
-    ) &&
-    Number.isInteger(saved.servings) &&
-    saved.servings >= 1 &&
-    saved.servings <= 12 &&
-    Number.isFinite(saved.carbGoal)
-  ) {
-    currentMealPlan = saved;
+  if (currentMealPlan) {
+    getElement("mealPlannerServings").value = currentMealPlan.servings;
+    getElement("mealPlannerCarbs").value = currentMealPlan.carbGoal;
+    getElement("mealPlannerStyle").value = currentMealPlan.style;
+    getElement("mealPlannerSnacks").value = currentMealPlan.includeSnacks ? "yes" : "no";
     renderKetoMealPlan();
   }
 }
@@ -2753,6 +2809,9 @@ function initializeKetoMealPlanner() {
    ============================================================ */
 
 let foodTrackerEntries = [];
+let foodTrackerGoal = 25;
+let foodTrackerHasUnsavedEntries = false;
+const FOOD_TRACKER_MEALS = ["breakfast", "lunch", "dinner", "snack"];
 
 function getLocalDateString(date = new Date()) {
   const year = date.getFullYear();
@@ -2763,28 +2822,46 @@ function getLocalDateString(date = new Date()) {
 }
 
 function getSelectedFoodTrackerDate() {
-  return getElement("foodTrackerDate")?.value ||
-    getLocalDateString();
+  const dateInput = getElement("foodTrackerDate");
+  if (!dateInput.value) dateInput.value = getLocalDateString();
+  return dateInput.value;
 }
 
-function getFoodTrackerGoal() {
-  const value = Number(
-    getElement("foodTrackerCarbGoal")?.value
-  );
+function readFoodTrackerEntries(fallback = []) {
+  const entries = readLocalData(SITE_CONFIG.storageKeys.foodTracker, fallback);
+  if (!Array.isArray(entries)) return fallback;
 
-  return Number.isFinite(value)
-    ? clampNumber(value, 0, 150)
-    : 25;
+  return entries.filter(entry =>
+    typeof entry?.id === "string" &&
+    typeof entry.date === "string" &&
+    typeof entry.name === "string" &&
+    FOOD_TRACKER_MEALS.includes(entry.meal) &&
+    [entry.calories, entry.totalCarbs, entry.fiber, entry.protein, entry.fat]
+      .every(value => Number.isFinite(value) && value >= 0) &&
+    entry.fiber <= entry.totalCarbs
+  );
 }
 
-function saveFoodTrackerEntries() {
-  const saved = saveLocalData(
-    SITE_CONFIG.storageKeys.foodTracker,
-    foodTrackerEntries
-  );
+async function updateFoodTrackerEntries(changeEntries, message) {
+  function update() {
+    if (!foodTrackerHasUnsavedEntries) {
+      foodTrackerEntries = readFoodTrackerEntries(foodTrackerEntries);
+    }
+    foodTrackerEntries = changeEntries(foodTrackerEntries);
+    foodTrackerHasUnsavedEntries = !saveLocalData(
+      SITE_CONFIG.storageKeys.foodTracker,
+      foodTrackerEntries
+    );
+    renderFoodTracker();
+    showToast(foodTrackerHasUnsavedEntries
+      ? "Log updated for this visit. This browser could not save the change."
+      : message);
+  }
 
-  if (!saved) {
-    showToast("Unable to save entries in this browser.");
+  if (navigator.locks?.request) {
+    await navigator.locks.request(SITE_CONFIG.storageKeys.foodTracker, update);
+  } else {
+    update();
   }
 }
 
@@ -2815,8 +2892,8 @@ function renderFoodTracker() {
     netCarbs: 0
   });
 
-  const goal = getFoodTrackerGoal();
-  const remaining = goal - totals.netCarbs;
+  const goal = foodTrackerGoal;
+  const remaining = Math.round((goal - totals.netCarbs) * 10) / 10;
 
   setElementText(
     "trackerNetCarbs",
@@ -2858,21 +2935,18 @@ function renderFoodTracker() {
 
   const container = getElement("foodLogEntries");
   if (!container) return;
+  getElement("clearFoodTrackerDay").disabled = !entries.length;
 
   if (!entries.length) {
     container.innerHTML = `
       <p class="tool-empty-state">
-        No foods logged for this date yet.
+        No foods logged for this date. Add an entry to see your daily totals.
       </p>
     `;
     return;
   }
 
-  const categories = [
-    "breakfast", "lunch", "dinner", "snack"
-  ];
-
-  container.innerHTML = categories.map(category => {
+  container.innerHTML = FOOD_TRACKER_MEALS.map(category => {
     const meals = entries.filter(entry =>
       entry.meal === category
     );
@@ -2920,16 +2994,16 @@ function renderFoodTracker() {
 
   container.querySelectorAll("[data-remove-food]")
     .forEach(button => {
-      button.addEventListener("click", () => {
+      button.addEventListener("click", async () => {
         const id = button.dataset.removeFood;
-
-        foodTrackerEntries = foodTrackerEntries.filter(
-          entry => entry.id !== id
+        await updateFoodTrackerEntries(
+          entries => entries.filter(entry => entry.id !== id),
+          "Food entry removed."
         );
-
-        saveFoodTrackerEntries();
-        renderFoodTracker();
-        showToast("Food entry removed.");
+        if (document.activeElement === document.body) {
+          const next = container.querySelector("[data-remove-food]") || getElement("foodEntryName");
+          next.focus();
+        }
       });
     });
 }
@@ -2951,14 +3025,19 @@ function addFoodTrackerEntry(event) {
 
   if (
     !name ||
-    !["breakfast", "lunch", "dinner", "snack"].includes(meal) ||
+    !FOOD_TRACKER_MEALS.includes(meal) ||
     ![calories, totalCarbs, fiber, protein, fat]
       .every(Number.isFinite) ||
     [calories, totalCarbs, fiber, protein, fat]
-      .some(value => value < 0) ||
-    fiber > totalCarbs
+      .some(value => value < 0)
   ) {
     showToast("Please check the food entry values.");
+    return;
+  }
+
+  if (fiber > totalCarbs) {
+    showToast("Fiber cannot exceed total carbohydrates.");
+    getElement("foodEntryFiber").focus();
     return;
   }
 
@@ -2975,13 +3054,8 @@ function addFoodTrackerEntry(event) {
     fat
   };
 
-  foodTrackerEntries.push(entry);
-
-  saveFoodTrackerEntries();
-  renderFoodTracker();
-
   form.reset();
-  showToast("Food added to your daily log!");
+  updateFoodTrackerEntries(entries => [...entries, entry], "Food added to your daily log.");
 }
 
 function clearSelectedFoodTrackerDay() {
@@ -3002,14 +3076,10 @@ function clearSelectedFoodTrackerDay() {
     return;
   }
 
-  foodTrackerEntries = foodTrackerEntries.filter(entry =>
-    entry.date !== selectedDate
+  updateFoodTrackerEntries(
+    entries => entries.filter(entry => entry.date !== selectedDate),
+    "Food entries for this date were cleared."
   );
-
-  saveFoodTrackerEntries();
-  renderFoodTracker();
-
-  showToast("Selected day's entries cleared.");
 }
 
 function initializeKetoFoodTracker() {
@@ -3028,60 +3098,40 @@ function initializeKetoFoodTracker() {
     );
   }
 
-  const savedGoal = readLocalData(
-    SITE_CONFIG.storageKeys.foodTrackerGoal,
-    25
-  );
-
-  if (
-    goalInput &&
-    Number.isFinite(savedGoal) &&
-    savedGoal >= 0 &&
-    savedGoal <= 150
-  ) {
-    goalInput.value = savedGoal;
+  function restoreGoal() {
+    const savedGoal = readLocalData(SITE_CONFIG.storageKeys.foodTrackerGoal, 25);
+    if (Number.isFinite(savedGoal) && savedGoal >= 0 && savedGoal <= 150) {
+      foodTrackerGoal = savedGoal;
+    }
+    goalInput.value = foodTrackerGoal;
   }
+  restoreGoal();
 
-  goalInput?.addEventListener("change", () => {
-    const goal = getFoodTrackerGoal();
-
-    goalInput.value = goal;
-
-    saveLocalData(
-      SITE_CONFIG.storageKeys.foodTrackerGoal,
-      goal
-    );
+  goalInput.addEventListener("change", () => {
+    if (!goalInput.checkValidity()) {
+      goalInput.value = foodTrackerGoal;
+      showToast("Enter a goal from 0 to 150 g, with up to one decimal place.");
+      return;
+    }
+    foodTrackerGoal = goalInput.valueAsNumber;
+    if (!saveLocalData(SITE_CONFIG.storageKeys.foodTrackerGoal, foodTrackerGoal)) {
+      showToast("Goal updated for this visit. This browser could not save it.");
+    }
 
     renderFoodTracker();
   });
 
-  const savedEntries = readLocalData(
-    SITE_CONFIG.storageKeys.foodTracker,
-    []
-  );
-
-  foodTrackerEntries = Array.isArray(savedEntries)
-    ? savedEntries.filter(entry =>
-        entry &&
-        typeof entry.id === "string" &&
-        typeof entry.date === "string" &&
-        typeof entry.name === "string" &&
-        ["breakfast", "lunch", "dinner", "snack"]
-          .includes(entry.meal) &&
-        [
-          entry.calories,
-          entry.totalCarbs,
-          entry.fiber,
-          entry.protein,
-          entry.fat
-        ].every(value =>
-          typeof value === "number" &&
-          Number.isFinite(value) &&
-          value >= 0
-        ) &&
-        entry.fiber <= entry.totalCarbs
-      )
-    : [];
+  foodTrackerEntries = readFoodTrackerEntries();
+  window.addEventListener("storage", event => {
+    if (event.key === SITE_CONFIG.storageKeys.foodTracker && !foodTrackerHasUnsavedEntries) {
+      foodTrackerEntries = readFoodTrackerEntries();
+      renderFoodTracker();
+    }
+    if (event.key === SITE_CONFIG.storageKeys.foodTrackerGoal) {
+      restoreGoal();
+      renderFoodTracker();
+    }
+  });
 
   form.addEventListener("submit", addFoodTrackerEntry);
 
@@ -3182,6 +3232,7 @@ function initializeKeyboardControls() {
         'input:not([disabled]), ' +
         'select:not([disabled]), ' +
         'textarea:not([disabled]), ' +
+        'summary, ' +
         '[tabindex]:not([tabindex="-1"])'
       )
     ).filter(element =>
@@ -3320,7 +3371,12 @@ function initializeGoogleReviews() {
     `);
   }
 
-  if (!links.length) return;
+  const showReviews = links.length > 0;
+  reviewsSection.hidden = !showReviews;
+  document.querySelectorAll('a[href="#reviews"]').forEach(link => {
+    link.hidden = !showReviews;
+  });
+  if (!showReviews) return;
 
   const actions = document.createElement("div");
   actions.className = "google-review-actions";
@@ -3425,24 +3481,6 @@ function initializeApplication() {
 
   /* === ACCESSIBILITY & VISUAL EFFECTS END === */
 
-
-  /* === INITIALIZATION COMPLETE === */
-
-  console.info(
-    "[007-NRG] Website initialized successfully."
-  );
-
-  console.info(
-    "[007-NRG] Product collection and ingredient tools ready."
-  );
-
-  console.info(
-    "[007-NRG] Fitness and nutrition tools initialized."
-  );
-
-  console.info(
-    "[007-NRG] Checkout remains disabled."
-  );
 
 }
 
